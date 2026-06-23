@@ -11,7 +11,7 @@
  *
  * Environment variables:
  *   PORT                  — HTTP port (default 3000)
- *   VITE_ANTHROPIC_API_KEY — Anthropic secret key (required)
+ *   ANTHROPIC_API_KEY      — Anthropic secret key (required)
  */
 
 import http from 'node:http';
@@ -26,7 +26,7 @@ const PORT = Number(process.env.PORT ?? 3000);
 const MODEL = 'claude-sonnet-4-6';
 
 const anthropic = new Anthropic({
-  apiKey: process.env.VITE_ANTHROPIC_API_KEY,
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 // ---- MIME types for static file serving ----
@@ -168,7 +168,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`[server] Listening on http://localhost:${PORT}`);
-  if (!process.env.VITE_ANTHROPIC_API_KEY) {
-    console.warn('[server] WARNING: VITE_ANTHROPIC_API_KEY is not set — Claude API calls will fail');
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.warn('[server] WARNING: ANTHROPIC_API_KEY is not set — Claude API calls will fail');
   }
 });
