@@ -1,9 +1,16 @@
 /* ============================================================
    EasyBook Next — B2B Storefront · image asset registry
-   All image paths are root-relative URLs (served as static files).
-   The assets/ directory lives at the project root and is served
-   directly by the dev server and production host.
+   Images are imported as ES modules so Vite resolves, hashes and
+   bundles them correctly at build time.
    ============================================================ */
+
+/* ---- Alpitour World master logo (header) ---- */
+import _alpitourWorldLogo from '../../../assets/alpitour-world.png';
+
+/* ---- synthetic persona photos ---- */
+import _francescoCiuccarelli from '../../../alpitour/storefront/personas/francesco-ciuccarelli.png';
+import _fabioOlgiati         from '../../../alpitour/storefront/personas/fabio-olgiati.png';
+import _giuseppeParello      from '../../../alpitour/storefront/personas/giuseppe-parello.png';
 
 /* ---- brand logos ---- */
 export const brandLogos: Record<string, string | null> = {
@@ -15,7 +22,7 @@ export const brandLogos: Record<string, string | null> = {
 };
 
 /* ---- Alpitour World master logo (header) ---- */
-export const alpitourWorldLogo = 'assets/alpitour-world.png';
+export const alpitourWorldLogo: string = _alpitourWorldLogo;
 
 /* ---- partner / platform logos ---- */
 export const partnerLogos = {
@@ -31,9 +38,9 @@ export const iconSprite = 'assets/ds/icons/sprite.svg';
 
 /* ---- synthetic persona photos ---- */
 export const personaPhotos: Record<string, string> = {
-  francesco: 'alpitour/storefront/personas/francesco-ciuccarelli.png',
-  fabio:     'alpitour/storefront/personas/fabio-olgiati.png',
-  giuseppe:  'alpitour/storefront/personas/giuseppe-parello.png',
+  francesco: _francescoCiuccarelli,
+  fabio:     _fabioOlgiati,
+  giuseppe:  _giuseppeParello,
 };
 
 /* ---- Kyndryl Vital logo (used in persona cohort) ---- */
