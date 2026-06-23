@@ -1,0 +1,5 @@
+[deploy]
+startCommand = "node --import tsx/esm server.ts"
+
+[variables]
+RAILPACK_NO_SPA = "1"
