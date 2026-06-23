@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alpitour AI Lab · Co-Creation Walkthrough</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="alpitour/boards.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--bg-2); }
+  #root { height: 100%; }
+  .wt-arrow {
+    position: fixed; top: 50%; transform: translateY(-50%); z-index: 20;
+    width: 52px; height: 52px; border-radius: 999px; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 21px;
+    font-family: var(--font-sans); transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+  }
+  .wt-arrow:hover:not(:disabled) { transform: translateY(-50%) scale(1.08); }
+  .wt-arrow:disabled { opacity: 0.22; cursor: default; }
+  .wt-next { right: 22px; background: var(--k-warm-red-50); color: #fff; box-shadow: 0 10px 26px rgba(255,70,45,0.4); }
+  .wt-prev { left: 22px; background: #fff; color: var(--fg-1); border: 1px solid var(--border-1); box-shadow: 0 4px 14px rgba(15,23,42,0.12); }
+  .wt-step-btn { background: transparent; border: none; cursor: pointer; font-family: var(--font-sans); padding: 0 14px; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 3px; border-bottom: 3px solid transparent; border-top: 3px solid transparent; min-width: 0; }
+  .wt-step-row { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+  .wt-step-title { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wt-step-time { font-family: var(--font-mono); font-size: 9.5px; color: var(--fg-muted); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+  .wt-toggle { display: flex; background: var(--bg-3); border-radius: 999px; padding: 3px; cursor: pointer; }
+  .wt-toggle span { padding: 6px 14px; border-radius: 999px; font-size: 11.5px; font-weight: 600; transition: background 0.12s ease, color 0.12s ease; }
+  @media (max-width: 1320px) { .wt-step-title { display: none; } }
+  @media (max-width: 1000px) { .wt-step-time { display: none; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="alpitour/parts.jsx"></script>
+<script type="text/babel" src="alpitour/frame.jsx"></script>
+<script type="text/babel" src="alpitour/work.jsx"></script>
+<script type="text/babel" src="alpitour/close.jsx"></script>
+<script type="text/babel" src="alpitour/toolkit.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+// flat slide sequence the single arrow walks through
+const SLIDES = [
+  { phase: "frame",   comp: "Overview",      w: 1680, h: 960,  noEx: true, mins: 2 },
+  { phase: "frame",   comp: "Contract",      w: 1680, h: 1060, mins: 8 },
+  { phase: "frame",   comp: "FutureSuccess", w: 1680, h: 1010, mins: 12 },
+  { phase: "provoke", comp: "Problem",       w: 1680, h: 620,  mins: 3 },
+  { phase: "provoke", comp: "DemoArtifact",  w: 1680, h: 980,  mins: 9 },
+  { phase: "enact",   comp: "RolePlay",      w: 1680, h: 1160, noEx: true, mins: 28 },
+  { phase: "capture", comp: "CommandCenter", w: 1680, h: 940,  mins: 20 },
+  { phase: "capture", comp: "Blueprint",     w: 1680, h: 1060, mins: 25 },
+  { phase: "distill", comp: "Harvest",       w: 1680, h: 1000, mins: 8 },
+  { phase: "distill", comp: "MBA",           w: 1680, h: 1040, mins: 7 },
+  { phase: "toolkit", comp: "Superpowers",   w: 1680, h: 1060, mins: 15 },
+  { phase: "toolkit", comp: "Remix",         w: 1680, h: 980,  mins: 15 },
+  { phase: "toolkit", comp: "ConceptStudio", w: 1680, h: 1040, mins: 15 },
+  { phase: "toolkit", comp: "Theatre",       w: 1680, h: 940,  mins: 15 },
+  { phase: "toolkit", comp: "AILayer",       w: 1680, h: 980,  noEx: true, mins: 10 },
+];
+
+const WT_LS = "alpitour.walkthrough.v1";
+function loadState() {
+  let s = { slide: 0, ex: false };
+  try { s = { ...s, ...(JSON.parse(localStorage.getItem(WT_LS)) || {}) }; } catch (e) {}
+  const sp = new URLSearchParams(location.search);
+  const sl = sp.get("slide");
+  if (sl !== null) { const n = parseInt(sl, 10) - 1; if (n >= 0 && n < SLIDES.length) s.slide = n; }
+  const ph = sp.get("phase");
+  if (ph) { const i = SLIDES.findIndex((x) => x.phase === ph); if (i >= 0) s.slide = i; }
+  if (s.slide < 0 || s.slide >= SLIDES.length) s.slide = 0;
+  return s;
+}
+
+function Stage({ w, h, frozen, children }) {
+  const ref = useRef(null);
+  const [scale, setScale] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    const fit = () => { const r = el.getBoundingClientRect(); setScale(Math.min((r.width - 48) / w, (r.height - 36) / h)); };
+    fit();
+    const ro = new ResizeObserver(fit); ro.observe(el);
+    return () => ro.disconnect();
+  }, [w, h]);
+  if (frozen) {
+    return (
+      <div ref={ref} style={{ flex: 1, minHeight: 0, overflow: "hidden" }}>
+        <div className="wt-cap" style={{ width: 1680, height: 1080, overflow: "hidden", background: "#fff" }}>
+          {children}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div ref={ref} style={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+      {scale > 0 ? (
+        <div style={{ width: w * scale, height: h * scale, flex: "0 0 auto" }}>
+          <div className="wt-cap" style={{ width: w, height: h, transform: `scale(${scale})`, transformOrigin: "top left", boxShadow: "0 18px 50px rgba(15,23,42,0.16)", borderRadius: 10, overflow: "hidden", background: "#fff" }}>
+            {children}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function Timer({ mins, slideKey, accent }) {
+  const total = Math.max(1, Math.round((mins || 10) * 60));
+  const [on, setOn] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [rem, setRem] = useState(total);
+  useEffect(() => { setRem(total); setRunning(false); }, [slideKey, total]);
+  useEffect(() => {
+    if (!running) return;
+    const id = setInterval(() => setRem((r) => (r <= 1 ? 0 : r - 1)), 1000);
+    return () => clearInterval(id);
+  }, [running]);
+  useEffect(() => { if (rem === 0) setRunning(false); }, [rem]);
+  const mm = String(Math.floor(rem / 60)).padStart(2, "0");
+  const ss = String(rem % 60).padStart(2, "0");
+  const done = rem === 0;
+  const warn = !done && rem <= 30;
+  const btn = { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: 999, border: "none", background: "transparent", color: "var(--fg-muted)", cursor: "pointer" };
+  const ic = { width: 15, height: 15, fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" };
+  const clock = (<svg viewBox="0 0 24 24" style={{ width: 18, height: 18, fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" }}><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>);
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, flex: "0 0 auto" }}>
+      {on ? (
+        <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 6px 4px 12px", borderRadius: 999, border: `1px solid ${done ? "var(--k-warm-red-50)" : warn ? "var(--k-status-warning-100)" : "var(--border-2)"}`, background: done ? "var(--k-status-error-10)" : "#fff" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 15, fontWeight: 600, fontVariantNumeric: "tabular-nums", color: done ? "var(--k-warm-red-60)" : warn ? "var(--k-status-warning-110)" : "var(--fg-1)", minWidth: 46, textAlign: "center" }}>{mm}:{ss}</span>
+          <button onClick={() => { if (done) setRem(total); setRunning((r) => !r); }} title={running ? "Pause" : "Start"} style={btn}>
+            {running ? (<svg viewBox="0 0 24 24" style={ic}><rect x="7" y="6" width="3.5" height="12"></rect><rect x="14" y="6" width="3.5" height="12"></rect></svg>)
+                     : (<svg viewBox="0 0 24 24" style={ic}><path d="M8 5l11 7-11 7z"></path></svg>)}
+          </button>
+          <button onClick={() => { setRem(total); setRunning(false); }} title="Reset" style={btn}>
+            <svg viewBox="0 0 24 24" style={ic}><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 4v4h4"></path></svg>
+          </button>
+        </div>
+      ) : null}
+      <button onClick={() => setOn((o) => !o)} title="Timer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 34, height: 34, borderRadius: 999, border: "none", cursor: "pointer", color: on ? accent : "var(--fg-muted)", background: on ? window.alHex(accent, 0.1) : "transparent", transition: "color 0.12s, background 0.12s" }}>{clock}</button>
+    </div>
+  );
+}
+
+function App() {
+  const init = useMemo(loadState, []);
+  const [slide, setSlide] = useState(init.slide);
+  const [ex, setEx] = useState(init.ex);
+  const s = SLIDES[slide];
+  const Comp = window.AL[s.comp];
+  const canEx = !s.noEx;
+
+  useEffect(() => { try { localStorage.setItem(WT_LS, JSON.stringify({ slide, ex })); } catch (e) {} }, [slide, ex]);
+
+  const go = (n) => setSlide(Math.max(0, Math.min(SLIDES.length - 1, n)));
+  const [frozen, setFrozen] = useState(false);
+  useEffect(() => { window.__wtGo = (n) => setSlide(Math.max(0, Math.min(SLIDES.length - 1, n))); window.__wtCount = SLIDES.length; window.__wtFreeze = (v) => setFrozen(!!v); }, []);
+  const goPhase = (ph) => { const i = SLIDES.findIndex((x) => x.phase === ph); if (i >= 0) go(i); };
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.target && e.target.isContentEditable) return;
+      if (e.key === "ArrowRight") go(slide + 1);
+      else if (e.key === "ArrowLeft") go(slide - 1);
+      else if (e.key.toLowerCase() === "e" && canEx) setEx((v) => !v);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [slide, canEx]);
+
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", fontFamily: "var(--font-sans)", color: "var(--fg-2)" }}>
+      {/* header */}
+      <header style={{ flex: "0 0 auto", height: 72, background: "#fff", borderBottom: "1px solid var(--border-1)", display: "flex", alignItems: "stretch", padding: "0 24px", gap: 18 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, flex: "0 0 auto" }}>
+          <img src="assets/kyndryl-vital-logo.png" alt="Kyndryl Vital" style={{ height: 28, display: "block" }} />
+          <span style={{ width: 1, height: 26, background: "var(--border-2)" }}></span>
+          <img src="assets/alpitour-world-logo.png" alt="Alpitour World" style={{ height: 26, display: "block" }} />
+        </div>
+
+        {/* phase stepper */}
+        <nav style={{ flex: 1, display: "flex", alignItems: "stretch", justifyContent: "center", minWidth: 0, overflow: "hidden" }}>
+          {window.AL_PHASES.map((p) => {
+            const active = p.id === s.phase;
+            const subs = SLIDES.filter((x) => x.phase === p.id);
+            return (
+              <button key={p.id} className="wt-step-btn" onClick={() => goPhase(p.id)} style={{ borderBottomColor: active ? p.color : "transparent", opacity: active ? 1 : 0.5, maxWidth: 180 }}>
+                <span className="wt-step-row">
+                  <span style={{ fontFamily: "var(--font-display)", fontWeight: 500, fontSize: 16, color: active ? p.color : "var(--fg-muted)" }}>{p.n}</span>
+                  <span className="wt-step-title" style={{ fontWeight: active ? 600 : 400, color: active ? "var(--fg-1)" : "var(--fg-muted)" }}>{p.label}</span>
+                </span>
+                <span className="wt-step-time">
+                  {p.time}
+                  {subs.length > 1 ? (
+                    <span style={{ display: "inline-flex", gap: 3 }}>
+                      {subs.map((sub, j) => { const gi = SLIDES.indexOf(sub); return <span key={j} style={{ width: 5, height: 5, borderRadius: 999, background: active && gi === slide ? p.color : "var(--border-2)" }}></span>; })}
+                    </span>
+                  ) : null}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* header right — timer + Blank / Example toggle */}
+        <div style={{ display: "flex", alignItems: "center", gap: 14, flex: "0 0 auto" }}>
+          <Timer mins={s.mins} slideKey={slide} accent={window.AL_PHASE(s.phase).color} />
+          {canEx ? (
+            <div className="wt-toggle" onClick={() => setEx(!ex)} title="Toggle reference examples (E)">
+              <span style={{ background: !ex ? "var(--k-dark-stone-90)" : "transparent", color: !ex ? "#fff" : "var(--fg-muted)" }}>Blank</span>
+              <span style={{ background: ex ? "var(--k-spruce-60)" : "transparent", color: ex ? "#fff" : "var(--fg-muted)" }}>Example</span>
+            </div>
+          ) : (
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fg-subtle)" }}>Reference</span>
+          )}
+        </div>
+      </header>
+
+      <Stage w={s.w} h={s.h} frozen={frozen}><Comp ex={ex} /></Stage>
+
+      {/* footer */}
+      <footer style={{ flex: "0 0 auto", height: 50, background: "#fff", borderTop: "1px solid var(--border-1)", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px" }}>
+        <span style={{ fontSize: 12, color: "var(--fg-muted)" }}>Kyndryl AI Innovation Lab · Future Travel Desk Studio · EasyBook Next · AlpiGPT · LyteAI · Easybooking</span>
+        <span style={{ fontSize: 11.5, color: "var(--fg-subtle)", fontFamily: "var(--font-mono)" }}>{String(slide + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}</span>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

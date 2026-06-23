@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpitour Operations on KAF · Agentic Spine</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css" />
+  <link rel="stylesheet" href="alpispine/app.css" />
+  <link rel="stylesheet" href="alpispine/agentic.css" />
+  <link rel="stylesheet" href="https://unpkg.com/reactflow@11.11.4/dist/style.css" />
+  <script src="assets/ds/icons/ki.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/reactflow@11.11.4/dist/umd/index.js"></script>
+  <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.14.0/dist/chartjs-chart-sankey.min.js"></script>
+  <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- data (plain) -->
+  <script src="alpispine/data.js"></script>
+  <script src="alpispine/pac-products.js"></script>
+  <script src="alpispine/agentic-data.js"></script>
+  <script src="alpispine/agentic-bus.js"></script>
+  <script src="alpispine/fe-bridge.js"></script>
+  <script src="alpispine/machine.js"></script>
+  <script src="alpispine/journeys.js"></script>
+
+  <!-- tweaks shell + primitives + shell + screens + root (babel, dependency order) -->
+  <script type="text/babel" src="alpispine/tweaks-panel.jsx"></script>
+  <script type="text/babel" src="alpispine/primitives.jsx"></script>
+  <script type="text/babel" src="alpispine/decision-graph.jsx"></script>
+  <script type="text/babel" src="alpispine/charts.jsx"></script>
+  <script type="text/babel" src="alpispine/nba-rail.jsx"></script>
+  <script type="text/babel" src="alpispine/agentic-pipeline.jsx"></script>
+  <script type="text/babel" src="alpispine/shell.jsx"></script>
+  <script type="text/babel" src="alpispine/event-band.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-brd.jsx"></script>
+  <script type="text/babel" src="alpispine/spine-run.jsx"></script>
+  <script type="text/babel" src="alpispine/workflow-dag.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-spine.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-ontology.jsx"></script>
+  <script type="text/babel" src="alpispine/node-modal.jsx"></script>
+  <script type="text/babel" src="alpispine/journeymap.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-flow.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-governance.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-backtest.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-queue.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-learning.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-controls.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-o2c.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-udp.jsx"></script>
+  <script type="text/babel" src="alpispine/screen-customer.jsx"></script>
+  <script type="text/babel" src="alpispine/main.jsx"></script>
+</body>
+</html>

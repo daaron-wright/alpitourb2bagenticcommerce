@@ -1,0 +1,221 @@
+/* Alpitour AI Lab — workshop walkthrough board styles.
+   Leans entirely on colors_and_type.css tokens. Calm, evidence-first,
+   border-led surfaces per the Kyndryl / Shidoka system. */
+
+.al-board {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  font-family: var(--font-sans);
+  color: var(--fg-2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* board header */
+.al-head {
+  flex: 0 0 auto;
+  padding: 34px 44px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+}
+.al-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.al-eyebrow .al-dot { width: 8px; height: 8px; border-radius: 999px; }
+.al-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--fg-1);
+  margin: 12px 0 0;
+  max-width: 1180px;
+  text-wrap: balance;
+}
+.al-sub {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  margin: 10px 0 0;
+  max-width: 980px;
+  text-wrap: pretty;
+}
+
+/* "leaves with" output pill */
+.al-output {
+  flex: 0 0 auto;
+  border: 1px solid var(--border-1);
+  border-radius: 10px;
+  padding: 10px 16px;
+  max-width: 300px;
+  background: var(--bg-2);
+}
+.al-output .al-output-k {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.al-output .al-output-v {
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--fg-1);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* facilitator script → now a plain subtitle under the title */
+.al-script {
+  margin: 12px 44px 0;
+  flex: 0 0 auto;
+  padding: 0;
+  display: block;
+}
+.al-script .al-script-t {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  font-weight: 400;
+  text-wrap: pretty;
+  max-width: 1200px;
+  display: block;
+}
+
+/* board body */
+.al-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 24px 44px 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* section kicker inside a board */
+.al-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.al-kicker::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-1);
+}
+
+/* generic card */
+.al-card {
+  border: 1px solid var(--border-1);
+  border-radius: 12px;
+  background: #fff;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+.al-card-h {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--fg-1);
+  line-height: 1.2;
+}
+.al-card-p { font-size: 13.5px; line-height: 1.5; color: var(--fg-2); }
+
+/* fill-in slot */
+.al-slot {
+  border: 1.5px dashed var(--border-2);
+  border-radius: 10px;
+  background: var(--bg-2);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 60px;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.al-slot-l {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.al-slot-e {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--k-spruce-70);
+}
+.al-slot-e .al-eg {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--k-spruce-40);
+  margin-right: 7px;
+  letter-spacing: 0.02em;
+}
+.al-slot.is-ex { border-style: solid; border-color: var(--k-spruce-20); background: var(--k-ai-spruce-06); }
+
+/* small chips / tags */
+.al-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border-1);
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-1);
+  background: #fff;
+  white-space: nowrap;
+}
+.al-chip .al-chip-n {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-muted);
+}
+
+/* inline editable token */
+.al-edit {
+  border-bottom: 1.5px dotted var(--k-spruce-40);
+  color: var(--fg-1);
+  font-weight: 500;
+  outline: none;
+  padding: 0 1px;
+  cursor: text;
+}
+.al-edit:focus { background: var(--k-ai-spruce-06); border-bottom-style: solid; }
+
+/* 1–5 score dots */
+.al-scale { display: inline-flex; gap: 6px; align-items: center; }
+.al-scale .al-pip {
+  width: 18px; height: 18px; border-radius: 999px;
+  border: 1.5px solid var(--border-2);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--fg-subtle);
+  font-family: var(--font-mono);
+}
+
+/* generic grid helpers */
+.al-grid { display: grid; gap: 14px; min-height: 0; }
+.al-row { display: flex; gap: 14px; min-height: 0; }

@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlpiGPT 2.0 — Flows &amp; Agentic Inventory · Deck</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css" />
+  <link rel="stylesheet" href="alpitour/deck.css" />
+  <script src="assets/ds/icons/ki.js"></script>
+  <style>html,body{margin:0;background:#0b0e12;}</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+  <!-- ===== 01 · TITLE ===== -->
+  <section data-label="Title">
+    <div class="slide center title-slide">
+      <div class="title-mark anim">
+        <div class="m">A</div>
+        <div><b>AlpiGPT 2.0</b><span>Alpitour · B2B2C</span></div>
+      </div>
+      <h1 class="anim2">Critical user flows &amp; agentic workflow inventory</h1>
+      <p class="sub anim3">From four siloed, read-only assistants to a single orchestrating Super-Agent and an agentic platform that executes the commercial process — and what the backend must inventory to build it.</p>
+      <div class="title-meta anim3">
+        <span class="chip"><svg class="ki"><use href="#icon-group"/></svg> 4 personas</span>
+        <span class="chip"><svg class="ki"><use href="#icon-recommend"/></svg> 7 flows + policy-as-code</span>
+        <span class="chip"><svg class="ki"><use href="#icon-document-chart"/></svg> For BE engineering &amp; product validation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 02 · THE SHIFT ===== -->
+  <section data-label="The shift">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">01</span> · The shift</span>
+      <h2 class="title anim">From four assistants to one orchestrated platform</h2>
+      <div class="shift2">
+        <div class="scol now anim2">
+          <span class="tag">Today</span>
+          <h3>Four siloed specialists</h3>
+          <ul>
+            <li><svg class="ki"><use href="#icon-chat-bot"/></svg> Pick an agent from a menu — flights, hotels, and two more — one domain at a time.</li>
+            <li><svg class="ki"><use href="#icon-document-chart"/></svg> Each reads its own knowledge base, maintained by hand in document repositories.</li>
+            <li><svg class="ki"><use href="#icon-information"/></svg> Informational only — it answers; it does not build, price, or book.</li>
+            <li><svg class="ki"><use href="#icon-warning-alt"/></svg> No memory of the customer, the quote, or the outcome across domains.</li>
+          </ul>
+        </div>
+        <div class="arrow anim2"><svg class="ki ki-44"><use href="#icon-arrow-up-right"/></svg></div>
+        <div class="scol next anim3">
+          <span class="tag">AlpiGPT 2.0</span>
+          <h3>Super-Agent + agentic platform</h3>
+          <ul>
+            <li><svg class="ki"><use href="#icon-network"/></svg> One orchestrator decomposes a complex brief and delegates to domain agents.</li>
+            <li><svg class="ki"><use href="#icon-recommend"/></svg> Action agents execute — assemble a quote, price it, upsell, book, re-book.</li>
+            <li><svg class="ki"><use href="#icon-warning-alt"/></svg> Policy-as-code governs the knowledge base and what every agent may do.</li>
+            <li><svg class="ki"><use href="#icon-group"/></svg> Humans stay in the loop where money, margin, or risk crosses a threshold.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · The shift <span class="pg">02 / 17</span></div>
+  </section>
+
+  <!-- ===== 03 · THE CAST ===== -->
+  <section data-label="Agents & systems">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">02</span> · Agents &amp; systems</span>
+      <h2 class="title anim" style="font-size:50px">The cast: who orchestrates, who reads, who acts</h2>
+      <div class="cast-wrap">
+        <div class="orch2 anim2">
+          <div class="oic"><svg class="ki ki-34"><use href="#icon-network"/></svg></div>
+          <div>
+            <h3>AlpiGPT Super-Agent <small>the orchestrator</small></h3>
+            <p>Understands a multi-domain request, decomposes it into a plan, delegates to read &amp; action agents, holds customer memory across the conversation, resolves conflicts, and composes one answer. The only agent the user talks to.</p>
+          </div>
+        </div>
+        <div class="cast-cols">
+          <div class="cast-block role-read anim3">
+            <div class="bh"><span class="pill"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read agents</span><span class="bd">retrieve grounded facts · never write</span></div>
+            <div class="agrid">
+              <div class="acard role-read"><span class="ic"><svg class="ki ki-20"><use href="#icon-arrow-up-right"/></svg></span><div><div class="nm">Flight</div><div class="ds">air fares &amp; schedules</div></div></div>
+              <div class="acard role-read"><span class="ic"><svg class="ki ki-20"><use href="#icon-dashboard"/></svg></span><div><div class="nm">Stay</div><div class="ds">hotels &amp; resorts</div></div></div>
+              <div class="acard role-read"><span class="ic"><svg class="ki ki-20"><use href="#icon-network"/></svg></span><div><div class="nm">Transfer</div><div class="ds">transfers &amp; transport</div></div></div>
+              <div class="acard role-read"><span class="ic"><svg class="ki ki-20"><use href="#icon-lightbulb"/></svg></span><div><div class="nm">Experience</div><div class="ds">excursions &amp; activities</div></div></div>
+              <div class="acard role-read"><span class="ic"><svg class="ki ki-20"><use href="#icon-analytics"/></svg></span><div><div class="nm">Destination</div><div class="ds">intel · entry · weather</div></div></div>
+              <div class="acard role-read"><span class="ic"><svg class="ki ki-20"><use href="#icon-document-chart"/></svg></span><div><div class="nm">Knowledge</div><div class="ds">unified, governed Q&amp;A</div></div></div>
+            </div>
+          </div>
+          <div class="cast-block role-act anim3">
+            <div class="bh"><span class="pill"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Action agents</span><span class="bd">execute operations · policy-gated</span></div>
+            <div class="agrid">
+              <div class="acard role-act"><span class="ic"><svg class="ki ki-20"><use href="#icon-document-chart"/></svg></span><div><div class="nm">Quote</div><div class="ds">assemble &amp; version</div></div></div>
+              <div class="acard role-act"><span class="ic"><svg class="ki ki-20"><use href="#icon-analytics"/></svg></span><div><div class="nm">Pricing &amp; Margin</div><div class="ds">dynamic price &amp; commission</div></div></div>
+              <div class="acard role-act"><span class="ic"><svg class="ki ki-20"><use href="#icon-group"/></svg></span><div><div class="nm">Profiling</div><div class="ds">dynamic buyer persona</div></div></div>
+              <div class="acard role-act"><span class="ic"><svg class="ki ki-20"><use href="#icon-recommend"/></svg></span><div><div class="nm">Offer</div><div class="ds">upsell &amp; cross-sell</div></div></div>
+              <div class="acard role-act"><span class="ic"><svg class="ki ki-20"><use href="#icon-checkmark-filled"/></svg></span><div><div class="nm">Booking</div><div class="ds">confirm inventory &amp; pay</div></div></div>
+              <div class="acard role-act"><span class="ic"><svg class="ki ki-20"><use href="#icon-anomaly"/></svg></span><div><div class="nm">Disruption</div><div class="ds">monitor &amp; re-book</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sys-strip anim3">
+          <span class="sl">Systems</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> GDS / air</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-dashboard"/></svg> bedbanks</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-analytics"/></svg> pricing &amp; contracts</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-group"/></svg> CRM / profile</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-checkmark-filled"/></svg> reservation / PNR</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-document-chart"/></svg> payments &amp; vouchers</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-warning-alt"/></svg> policy-as-code store</span>
+          <span class="systag2"><svg class="ki"><use href="#icon-chat-bot"/></svg> comms</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Agents &amp; systems <span class="pg">03 / 17</span></div>
+  </section>
+
+  <!-- ===== 04 · DAY IN THE LIFE ===== -->
+  <section data-label="Day in the life">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">03</span> · B2B anchor</span>
+      <h2 class="title anim">A day in the life of the travel agent</h2>
+      <div class="dil2">
+        <div class="dil2-row anim2">
+          <div class="dil2-time"><span class="clk">08:30</span><span class="ph">Open</span></div>
+          <div class="dil2-main">
+            <div class="dil2-act">Triage the overnight worklist<div class="kchips"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Lead response time</span></div></div>
+            <div class="dcell pain"><div class="l"><svg class="ki"><use href="#icon-warning-alt"/></svg> Today</div><p>Requests scattered across email, portal, phone. No prioritisation.</p></div>
+            <div class="dcell auto"><div class="l"><svg class="ki"><use href="#icon-recommend"/></svg> Automate</div><p>One ranked worklist, each item with a reason &amp; next action.</p></div>
+          </div>
+        </div>
+        <div class="dil2-row anim2">
+          <div class="dil2-time"><span class="clk">10:00</span><span class="ph">Build</span></div>
+          <div class="dil2-main">
+            <div class="dil2-act">Build a 5-domain package quote<div class="kchips"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Quote-to-book</span></div></div>
+            <div class="dcell pain"><div class="l"><svg class="ki"><use href="#icon-warning-alt"/></svg> Today</div><p>Query four agents separately, copy-paste, price by hand. 30–60 min.</p></div>
+            <div class="dcell auto"><div class="l"><svg class="ki"><use href="#icon-recommend"/></svg> Automate</div><p>One brief → priced multi-domain quote with two alternatives.</p></div>
+          </div>
+        </div>
+        <div class="dil2-row anim3">
+          <div class="dil2-time"><span class="clk">12:15</span><span class="ph">Refine</span></div>
+          <div class="dil2-main">
+            <div class="dil2-act">Customer wants changes<div class="kchips"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-down-right"/></svg> Handle time</span></div></div>
+            <div class="dcell pain"><div class="l"><svg class="ki"><use href="#icon-warning-alt"/></svg> Today</div><p>Rebuild from scratch; pricing drift &amp; version confusion.</p></div>
+            <div class="dcell auto"><div class="l"><svg class="ki"><use href="#icon-recommend"/></svg> Automate</div><p>Conversational edit; re-price live; every version traceable.</p></div>
+          </div>
+        </div>
+        <div class="dil2-row anim3">
+          <div class="dil2-time"><span class="clk">15:00</span><span class="ph">Convert</span></div>
+          <div class="dil2-main">
+            <div class="dil2-act">Confirm &amp; capture the upsell<div class="kchips"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Attach rate</span></div></div>
+            <div class="dcell pain"><div class="l"><svg class="ki"><use href="#icon-warning-alt"/></svg> Today</div><p>Ancillaries forgotten under time pressure.</p></div>
+            <div class="dcell auto"><div class="l"><svg class="ki"><use href="#icon-recommend"/></svg> Automate</div><p>Contextual upsells ranked by persona &amp; margin at confirmation.</p></div>
+          </div>
+        </div>
+        <div class="dil2-row anim3">
+          <div class="dil2-time"><span class="clk">16:40</span><span class="ph">Support</span></div>
+          <div class="dil2-main">
+            <div class="dil2-act">A client's flight is cancelled<div class="kchips"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-down-right"/></svg> Time-to-resolve</span></div></div>
+            <div class="dcell pain"><div class="l"><svg class="ki"><use href="#icon-warning-alt"/></svg> Today</div><p>Found out late; manual re-book; knock-on changes missed.</p></div>
+            <div class="dcell auto"><div class="l"><svg class="ki"><use href="#icon-recommend"/></svg> Automate</div><p>Detected; whole-itinerary re-book proposed; comms drafted.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Day in the life of the travel agent <span class="pg">04 / 17</span></div>
+  </section>
+
+  <!-- ===== 05 · FLOW OVERVIEW ===== -->
+  <section data-label="Flow inventory">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">04</span> · Critical user flows</span>
+      <h2 class="title anim">The flow inventory — seven flows across B2B &amp; B2C</h2>
+      <div class="fgrid">
+        <div class="fcard anim2"><div class="fn">01</div><h4>Quote building &amp; conversion</h4><p>One brief → an orchestrated, priced, multi-domain quote.</p><div class="side b2b">B2B</div></div>
+        <div class="fcard anim2"><div class="fn">02</div><h4>Personalized recommendation</h4><p>A vague desire → an explained, personalized itinerary.</p><div class="side x">B2B2C</div></div>
+        <div class="fcard anim2"><div class="fn">03</div><h4>Upsell &amp; cross-sell</h4><p>Contextual add-ons ranked by fit × margin at the point of sale.</p><div class="side x">B2B2C</div></div>
+        <div class="fcard anim2"><div class="fn">04</div><h4>Dynamic buyer profiling</h4><p>A living persona that sharpens every recommendation.</p><div class="side x">Cross-cutting</div></div>
+        <div class="fcard anim3"><div class="fn">05</div><h4>B2C self-serve booking</h4><p>The same engine in a guarded self-serve surface, to book &amp; pay.</p><div class="side b2c">B2C</div></div>
+        <div class="fcard anim3"><div class="fn">06</div><h4>In-trip disruption</h4><p>Detect, re-book around the whole trip, notify — human approves.</p><div class="side b2c">B2C</div></div>
+        <div class="fcard anim3"><div class="fn">07</div><h4>Unified knowledge Q&amp;A</h4><p>One cross-domain question, one grounded, cited answer.</p><div class="side x">B2B2C</div></div>
+        <div class="fcard anim3" style="background:var(--k-spruce-10);border-color:var(--k-spruce-20)"><div class="fn" style="background:var(--k-spruce-70)"><svg class="ki ki-20"><use href="#icon-warning-alt"/></svg></div><h4>Policy-as-code</h4><p>The configurer that governs the KB &amp; every flow above.</p><div class="side b2b" style="color:var(--k-spruce-70)">Governs all</div></div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow inventory <span class="pg">05 / 17</span></div>
+  </section>
+
+  <!-- ===== 06 · FLOW 01 ===== -->
+  <section data-label="Flow 01 · Quote building">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">01</div>
+        <div><h2>Quote building &amp; conversion</h2><div class="side2"><span class="sidechip2 b2b">B2B</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-group"/></svg> Travel agent · consultant</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> a multi-domain request — "family of four, Sharm, late July, sea-view resort, under €6,000" — needs a priced, bookable package fast.</p>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">Capture brief</div><div class="jx">Super-Agent parses constraints, party, budget.</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Gather domains</div><div class="jx">Flight, Stay, Transfer, Experience in parallel.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Assemble &amp; price</div><div class="jx">Quote + Pricing compose, with alternatives.</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Agent reviews</div><div class="jx">Conversational edit; re-prices live.</div></div>
+        <div class="jstep2"><div class="jn">05</div><div class="jt">Send &amp; convert</div><div class="jx">On accept → Booking Agent.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-read"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read</div><div class="fv"><span class="atag2 role-read"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Flight</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-dashboard"/></svg> Stay</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-network"/></svg> Transfer</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-lightbulb"/></svg> Experience</span></div></div>
+          <div class="frow2"><div class="fl role-act"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Act</div><div class="fv"><span class="atag2 role-act"><svg class="ki"><use href="#icon-document-chart"/></svg> Quote</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-analytics"/></svg> Pricing</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Booking</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">GDS</span><span class="systag2">bedbanks</span><span class="systag2">pricing engine</span><span class="systag2">quote store</span><span class="systag2">reservation</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-group"/></svg> Gate</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-group"/></svg> Agent approves final quote &amp; any discount beyond policy bound</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Quote build time</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Quote-to-book</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Quotes / agent / day</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Orchestration:</b> decomposition + parallel fan-out + merge for 4 domains</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Tool contracts:</b> search / quote / price / hold signatures &amp; idempotency</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Schema:</b> the canonical quote object &amp; versioning model</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Guardrails:</b> discount/margin bounds, availability TTL, price drift</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Fallback:</b> partial-domain failure → degrade, flag gaps</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 01 · Quote building &amp; conversion <span class="pg">06 / 17</span></div>
+  </section>
+
+  <!-- ===== 07 · FLOW 02 ===== -->
+  <section data-label="Flow 02 · Recommendation">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">02</div>
+        <div><h2>Personalized itinerary &amp; recommendation</h2><div class="side2"><span class="sidechip2 x">B2B2C</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-group"/></svg> Consultant · end traveler</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> an open-ended need — "somewhere warm in October, relaxed, good food, not a long flight" — with no product in mind. The orchestration is the whole value.</p>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">Understand intent</div><div class="jx">Vague desire → constraints + persona signals.</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Shape options</div><div class="jx">Destination + Stay + Flight propose itineraries.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Personalize</div><div class="jx">Profiling ranks; Offer enriches.</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Present &amp; explain</div><div class="jx">Top pick + the reason it fits + alternatives.</div></div>
+        <div class="jstep2"><div class="jn">05</div><div class="jt">Hand to quote</div><div class="jx">Flows into Flow 01 / 05.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-read"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read</div><div class="fv"><span class="atag2 role-read"><svg class="ki"><use href="#icon-analytics"/></svg> Destination</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-dashboard"/></svg> Stay</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Flight</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-lightbulb"/></svg> Experience</span></div></div>
+          <div class="frow2"><div class="fl role-act"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Act</div><div class="fv"><span class="atag2 role-act"><svg class="ki"><use href="#icon-group"/></svg> Profiling</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-recommend"/></svg> Offer</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-document-chart"/></svg> Quote (draft)</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">content KB</span><span class="systag2">CRM / profile</span><span class="systag2">accommodation</span><span class="systag2">GDS</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-information"/></svg> Gate</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-information"/></svg> None to present — gate applies only when it becomes a booking</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Recommendation acceptance</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Discovery-to-quote</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Ranking model:</b> persona-weighted scoring + diversity / explainability</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Grounding:</b> citation contract — every claim traces to a source</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Cold-start:</b> behaviour when no persona exists yet (Flow 04)</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Guardrails:</b> only surface bookable, in-policy, available inventory</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Eval:</b> recommendation acceptance &amp; downstream conversion</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 02 · Personalized recommendation <span class="pg">07 / 17</span></div>
+  </section>
+
+  <!-- ===== 08 · FLOW 03 ===== -->
+  <section data-label="Flow 03 · Upsell">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">03</div>
+        <div><h2>Upsell &amp; cross-sell at the point of sale</h2><div class="side2"><span class="sidechip2 x">B2B2C</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-group"/></svg> Agent-assisted · self-serve</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> a quote or basket is about to convert. The window to add relevant value — upgrade, lounge, transfer, excursions, insurance — is open but short.</p>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">Read context</div><div class="jx">Current basket + persona + trip shape.</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Generate offers</div><div class="jx">Offer Agent ranks by fit × margin.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Present in context</div><div class="jx">2–3 offers, never a wall — with the reason.</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Add &amp; re-price</div><div class="jx">Accepted offers flow back into the quote.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-read"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read</div><div class="fv"><span class="atag2 role-read"><svg class="ki"><use href="#icon-lightbulb"/></svg> Experience</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-network"/></svg> Transfer</span></div></div>
+          <div class="frow2"><div class="fl role-act"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Act</div><div class="fv"><span class="atag2 role-act"><svg class="ki"><use href="#icon-recommend"/></svg> Offer</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-group"/></svg> Profiling</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-analytics"/></svg> Pricing</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">offer catalog</span><span class="systag2">profile store</span><span class="systag2">pricing engine</span><span class="systag2">quote store</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg> Policy</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-warning-alt"/></svg> Policy caps offer frequency &amp; relevance threshold — no spam</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Attach rate</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Avg basket value</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Margin / booking</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Offer model:</b> fit × margin ranking + eligibility rules</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Policy:</b> max offers, relevance floor, brand-tone guardrails</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Attribution:</b> which agent / offer drove the add-on</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Eval:</b> attach rate vs. dismissal &amp; annoyance signals</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 03 · Upsell &amp; cross-sell <span class="pg">08 / 17</span></div>
+  </section>
+
+  <!-- ===== 09 · FLOW 04 ===== -->
+  <section data-label="Flow 04 · Profiling">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">04</div>
+        <div><h2>Dynamic buyer-persona profiling</h2><div class="side2"><span class="sidechip2 x">Cross-cutting</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-group"/></svg> Powers flows 02 · 03 · 05</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> any interaction. Today segmentation is static macro-clusters; this builds a living persona that sharpens every recommendation.</p>
+      <div class="phase-note anim"><svg class="ki ki-18"><use href="#icon-information"/></svg> Phased — start read-only, enable write once validated.</div>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">Collect signals</div><div class="jx">History, preferences, behaviour, outcomes.</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Resolve persona</div><div class="jx">Blend static cluster with dynamic signals.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Expose to agents</div><div class="jx">Persona is an input to ranking &amp; offers.</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Learn from outcome</div><div class="jx">Win/loss updates the persona &amp; model.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-act"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Act</div><div class="fv"><span class="atag2 role-act"><svg class="ki"><use href="#icon-group"/></svg> Profiling</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">CRM</span><span class="systag2">profile store</span><span class="systag2">behavioural events</span><span class="systag2">booking history</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-group"/></svg> Gate</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-warning-alt"/></svg> Consent &amp; privacy (GDPR) — lawful basis, retention, opt-out</span><span class="gatetag2"><svg class="ki"><use href="#icon-group"/></svg> Business signs off cluster → dynamic transition</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Personalization lift</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Repeat purchase rate</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Feature store:</b> what signals, freshness, identity resolution</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Privacy:</b> consent, lawful basis, retention, right to be forgotten</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Persona schema:</b> dimensions + static/dynamic blend</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Feedback loop:</b> outcome → model-update cadence &amp; guardrails</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Bias / fairness:</b> monitoring on offer differentiation</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 04 · Dynamic profiling <span class="pg">09 / 17</span></div>
+  </section>
+
+  <!-- ===== 10 · FLOW 05 ===== -->
+  <section data-label="Flow 05 · B2C self-serve">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">05</div>
+        <div><h2>B2C self-serve discovery → booking</h2><div class="side2"><span class="sidechip2 b2c">B2C</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-user"/></svg> End traveler</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> a traveler on a direct channel wants to explore and book themselves — the same orchestration the agent has, in a self-serve surface, with tighter guardrails.</p>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">Explore</div><div class="jx">Conversational discovery (Flow 02 engine).</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Configure</div><div class="jx">Adjust dates, party, board; re-prices live.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Add value</div><div class="jx">Contextual upsell (Flow 03).</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Book &amp; pay</div><div class="jx">Booking confirms inventory + payment.</div></div>
+        <div class="jstep2"><div class="jn">05</div><div class="jt">Confirm</div><div class="jx">Documents &amp; vouchers; trip is live.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-read"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read</div><div class="fv"><span class="atag2 role-read"><svg class="ki"><use href="#icon-analytics"/></svg> Destination</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-dashboard"/></svg> Stay</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Flight</span></div></div>
+          <div class="frow2"><div class="fl role-act"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Act</div><div class="fv"><span class="atag2 role-act"><svg class="ki"><use href="#icon-document-chart"/></svg> Quote</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-recommend"/></svg> Offer</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Booking</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-document-chart"/></svg> Document</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">GDS</span><span class="systag2">bedbanks</span><span class="systag2">reservation</span><span class="systag2">payments</span><span class="systag2">vouchers</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-group"/></svg> Gate</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-warning-alt"/></svg> Payment &amp; fraud check</span><span class="gatetag2"><svg class="ki"><use href="#icon-group"/></svg> Escalate to human on complex / high-value / exception</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Look-to-book</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-down-right"/></svg> Abandonment</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-down-right"/></svg> Cost-to-serve</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Self-serve guardrails:</b> tighter autonomy than agent-assisted</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Booking saga:</b> hold→pay→confirm + compensation on failure</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Payment / fraud:</b> PSP integration, 3DS, fraud rules</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Human handoff:</b> when &amp; how to escalate to a live agent</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Fallback:</b> inventory lost between quote &amp; pay → re-offer</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 05 · B2C self-serve booking <span class="pg">10 / 17</span></div>
+  </section>
+
+  <!-- ===== 11 · FLOW 06 ===== -->
+  <section data-label="Flow 06 · Disruption">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">06</div>
+        <div><h2>In-trip changes &amp; disruption handling</h2><div class="side2"><span class="sidechip2 b2c">B2C</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-user"/></svg> Existing traveler · + agent</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> something changes after booking — a cancelled flight, a schedule shift, a customer change — and the whole itinerary may need to flex around it.</p>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">Detect</div><div class="jx">Disruption Agent catches the event.</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Assess impact</div><div class="jx">Which legs, transfers, excursions hit.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Propose options</div><div class="jx">Re-book respecting the whole trip &amp; policy.</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Approve &amp; notify</div><div class="jx">Human approves; comms drafted &amp; sent.</div></div>
+        <div class="jstep2"><div class="jn">05</div><div class="jt">Re-issue</div><div class="jx">Booking + Document update the reservation.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-read"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read</div><div class="fv"><span class="atag2 role-read"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Flight</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-network"/></svg> Transfer</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-lightbulb"/></svg> Experience</span></div></div>
+          <div class="frow2"><div class="fl role-act"><svg class="ki ki-18"><use href="#icon-recommend"/></svg> Act</div><div class="fv"><span class="atag2 role-act"><svg class="ki"><use href="#icon-anomaly"/></svg> Disruption</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Booking</span><span class="atag2 role-act"><svg class="ki"><use href="#icon-document-chart"/></svg> Document</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">disruption feeds</span><span class="systag2">reservation</span><span class="systag2">comms</span><span class="systag2">vouchers</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-group"/></svg> Gate</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-group"/></svg> Human approves any cost-bearing re-book or refund</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-down-right"/></svg> Time-to-resolution</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Auto-resolved share</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> CSAT after disruption</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Event ingestion:</b> disruption feeds, match events to bookings</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Itinerary graph:</b> dependency model so a change cascades correctly</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Re-book policy:</b> auto vs. gated by cost / fare rules</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Comms:</b> templated, approved, multi-channel drafts</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Idempotency:</b> never double-rebook or double-refund</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 06 · In-trip disruption <span class="pg">11 / 17</span></div>
+  </section>
+
+  <!-- ===== 12 · FLOW 07 ===== -->
+  <section data-label="Flow 07 · Knowledge Q&A">
+    <div class="slide">
+      <div class="flow-top anim">
+        <div class="fnum">07</div>
+        <div><h2>Unified knowledge Q&amp;A across domains</h2><div class="side2"><span class="sidechip2 x">B2B2C</span><span class="sidechip2 persona"><svg class="ki ki-18"><use href="#icon-group"/></svg> Agent · traveler</span></div></div>
+      </div>
+      <p class="trigger2 anim"><b>Trigger:</b> a question that spans domains — "if the Naples flight is delayed, do we still make the transfer and the included excursion?" Today that means asking three agents and stitching it by hand.</p>
+      <div class="journey2 anim2">
+        <div class="jstep2"><div class="jn">01</div><div class="jt">One question</div><div class="jx">Asked once, in natural language.</div></div>
+        <div class="jstep2"><div class="jn">02</div><div class="jt">Fan out</div><div class="jx">Super-Agent routes to the relevant read agents.</div></div>
+        <div class="jstep2"><div class="jn">03</div><div class="jt">Synthesize</div><div class="jx">One grounded answer, cited, no contradictions.</div></div>
+        <div class="jstep2"><div class="jn">04</div><div class="jt">Offer next step</div><div class="jx">"Want me to rebook the transfer?" → action.</div></div>
+      </div>
+      <div class="flow-cols">
+        <div class="fc-left anim3">
+          <div class="frow2"><div class="fl role-read"><svg class="ki ki-18"><use href="#icon-information"/></svg> Read</div><div class="fv"><span class="atag2 role-read"><svg class="ki"><use href="#icon-document-chart"/></svg> Knowledge</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Flight</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-network"/></svg> Transfer</span><span class="atag2 role-read"><svg class="ki"><use href="#icon-lightbulb"/></svg> Experience</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-document-chart"/></svg> Sys</div><div class="fv"><span class="systag2">unified KB</span><span class="systag2">policy store</span><span class="systag2">live inventory</span><span class="systag2">reservation</span></div></div>
+          <div class="frow2"><div class="fl"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg> Policy</div><div class="fv"><span class="gatetag2"><svg class="ki"><use href="#icon-warning-alt"/></svg> Policy-as-code governs KB currency &amp; what may be stated as fact</span></div></div>
+          <div class="kpis2"><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Self-serve resolution</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-down-right"/></svg> Escalations</span><span class="kchip2"><svg class="ki"><use href="#icon-arrow-up-right"/></svg> Answer accuracy</span></div>
+        </div>
+        <div class="be2 anim3">
+          <div class="be2-h"><svg class="ki ki-18"><use href="#icon-warning-alt"/></svg><b>Backend to inventory</b><span>per flow</span></div>
+          <div class="be2-body">
+            <div class="be2-item"><span class="k">›</span><span><b>Routing:</b> which agents a question needs; multi-hop reasoning</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Grounding &amp; citation:</b> retrieval contract, source precedence</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Conflict resolution:</b> when two domains disagree</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Freshness:</b> KB currency via policy-as-code</span></div>
+            <div class="be2-item"><span class="k">›</span><span><b>Hallucination guard:</b> abstain when unsupported</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Flow 07 · Unified knowledge Q&amp;A <span class="pg">12 / 17</span></div>
+  </section>
+
+  <!-- ===== 13 · POLICY AS CODE ===== -->
+  <section data-label="Policy-as-code">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">05</span> · The configurer</span>
+      <h2 class="title anim">Policy-as-code as the knowledge-base configurer</h2>
+      <div class="pac2">
+        <div class="pac2-lead anim2">
+          <h3><svg class="ki ki-28"><use href="#icon-warning-alt"/></svg> One rule set, enforced at runtime — not a binder of PDFs</h3>
+          <p>Today the knowledge bases are maintained by hand — they drift, conflict, and can't be enforced. Policy-as-code turns that into governed, executable rules: what is current, what each agent may read or do, and where a human steps in. It governs every flow.</p>
+          <div class="code2"><span class="cm"># knowledge currency</span><br><span class="kw">rule</span> kb.source.stale <span class="kw">when</span> age &gt; <span class="st">ttl[domain]</span> → <span class="st">flag + refresh</span><br><span class="cm"># autonomy bound</span><br><span class="kw">rule</span> discount.beyond_bound → <span class="st">route(human: agent)</span><br><span class="cm"># compliance</span><br><span class="kw">rule</span> destination.entry_change → <span class="st">propagate(KB) + notify(bookings)</span></div>
+        </div>
+        <div class="pac2-side">
+          <div class="pac2-card anim3">
+            <h4><svg class="ki ki-24"><use href="#icon-document-chart"/></svg> What it configures</h4>
+            <ul>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> KB currency &amp; source-of-truth precedence per domain</li>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> What each agent may read, and may write</li>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Pricing, discount &amp; commission bounds</li>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Where a human gate is mandatory</li>
+            </ul>
+          </div>
+          <div class="pac2-card anim3">
+            <h4><svg class="ki ki-24"><use href="#icon-recommend"/></svg> Why it matters</h4>
+            <ul>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> The KB stops drifting — currency is enforced</li>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Agents can act safely — bounds are explicit</li>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> One change propagates to every flow &amp; channel</li>
+              <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Every action audits against the rule that governed it</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Policy-as-code as KB configurer <span class="pg">13 / 17</span></div>
+  </section>
+
+  <!-- ===== 14 · PLATFORM PRIMITIVES ===== -->
+  <section data-label="Platform primitives">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">06</span> · Cross-cutting</span>
+      <h2 class="title anim">Platform primitives every flow relies on</h2>
+      <div class="prims2">
+        <div class="prim2 anim2"><div class="pic"><svg class="ki ki-28"><use href="#icon-chat-bot"/></svg></div><h4>Chat orchestrator</h4><p>The single conversational surface where the Super-Agent understands, plans and responds.</p><div class="frm">surface · the Super-Agent</div></div>
+        <div class="prim2 anim2"><div class="pic"><svg class="ki ki-28"><use href="#icon-network"/></svg></div><h4>Workflow DAG</h4><p>A visible plan/trace — decompose, delegate, act, merge — so orchestration is legible, not a black box.</p><div class="frm">explainability · the plan visible</div></div>
+        <div class="prim2 anim2"><div class="pic"><svg class="ki ki-28"><use href="#icon-group"/></svg></div><h4>Human-in-the-loop queue</h4><p>Where gated decisions land — discounts, refunds, exceptions. Evidence attached; approve / modify / reject.</p><div class="frm">user agency · the gate</div></div>
+        <div class="prim2 anim3"><div class="pic"><svg class="ki ki-28"><use href="#icon-checkmark-filled"/></svg></div><h4>Execution confirmation</h4><p>After an action runs — what it did and its blast radius: booked, charged, re-issued, who was notified.</p><div class="frm">consequence transparency</div></div>
+        <div class="prim2 anim3"><div class="pic"><svg class="ki ki-28"><use href="#icon-document-chart"/></svg></div><h4>Explainability &amp; provenance</h4><p>Every recommendation cites its sources; every number carries a reason. The grounding contract.</p><div class="frm">trust · cited, not asserted</div></div>
+        <div class="prim2 anim3"><div class="pic"><svg class="ki ki-28"><use href="#icon-recommend"/></svg></div><h4>Learning &amp; accountability log</h4><p>Outcomes and overrides become teaching signals and an audit trail — the system improves, stays accountable.</p><div class="frm">the feedback loop</div></div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Platform primitives <span class="pg">14 / 17</span></div>
+  </section>
+
+  <!-- ===== 15 · NEXT / HERO FLOWS ===== -->
+  <section data-label="Hero flows to prototype">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">07</span> · Next</span>
+      <h2 class="title anim">Two hero flows to prototype next</h2>
+      <p class="lede anim" style="margin-top:14px">One B2B, one B2C — together they exercise the orchestrator, the action agents, a human gate, and the explainability surface.</p>
+      <div class="proto2">
+        <div class="proto2-card anim2">
+          <span class="pt">Hero · B2B</span>
+          <h3>Quote building &amp; conversion <small>· Flow 01</small></h3>
+          <p>The travel agent's console: one brief becomes an orchestrated, priced, multi-domain quote — workflow DAG visible, a conversational edit, and a discount that trips a human gate.</p>
+          <ul>
+            <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Exercises the Super-Agent, 4 read agents, Quote + Pricing</li>
+            <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Shows a HITL gate and execution confirmation</li>
+            <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Anchored in the agent's day</li>
+          </ul>
+        </div>
+        <div class="proto2-card b2c anim3">
+          <span class="pt">Hero · B2C</span>
+          <h3>Discovery → personalized itinerary <small>· Flow 02 + 05</small></h3>
+          <p>The traveler's self-serve surface: a vague desire becomes a personalized, explained itinerary, with contextual upsell, ending in book &amp; pay — the full B2C orchestration.</p>
+          <ul>
+            <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Exercises orchestration, Profiling, Offer, Booking</li>
+            <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Shows explainability — cited recommendations</li>
+            <li><svg class="ki"><use href="#icon-checkmark-filled"/></svg> Demonstrates one engine reused across B2B2C</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Recommended hero flows <span class="pg">15 / 17</span></div>
+  </section>
+
+  <!-- ===== 16 · PROTOTYPE B2B ===== -->
+  <section data-label="Prototype · B2B console">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">P1</span> · Wireframe prototype</span>
+      <h2 class="title anim">B2B — the quote-building console</h2>
+      <p class="lede anim" style="margin-top:12px;font-size:23px">Marco's agency console: one brief becomes an orchestrated, priced, multi-domain quote — with a human gate on the discount.</p>
+      <div class="film">
+        <figure class="shot anim2" style="--shot-w:548px;--shot-h:358px">
+          <div class="shot-frame"><iframe class="shot-if" src="Alpitour%20AlpiGPT%202.0%20-%20Wireframe%20Prototype.html?flow=b2b&step=0&embed=1" style="width:1180px;height:770px;transform:scale(0.464)" scrolling="no"></iframe></div>
+          <figcaption class="shot-cap"><div class="sn"><b>1</b><h4>Worklist</h4></div><p>Every channel triaged into one ranked worklist, each with a reason.</p><span class="tag spruce"><svg class="ki"><use href="#icon-network"/></svg> Orchestrator</span></figcaption>
+        </figure>
+        <figure class="shot anim2" style="--shot-w:548px;--shot-h:358px">
+          <div class="shot-frame"><iframe class="shot-if" src="Alpitour%20AlpiGPT%202.0%20-%20Wireframe%20Prototype.html?flow=b2b&step=2&embed=1" style="width:1180px;height:770px;transform:scale(0.464)" scrolling="no"></iframe></div>
+          <figcaption class="shot-cap"><div class="sn"><b>3</b><h4>Orchestration</h4></div><p>Flight, Stay, Transfer, Experience run in parallel — the plan is visible.</p><span class="tag spruce"><svg class="ki"><use href="#icon-document-chart"/></svg> Explainability</span></figcaption>
+        </figure>
+        <figure class="shot anim3" style="--shot-w:548px;--shot-h:358px">
+          <div class="shot-frame"><iframe class="shot-if" src="Alpitour%20AlpiGPT%202.0%20-%20Wireframe%20Prototype.html?flow=b2b&step=4&embed=1" style="width:1180px;height:770px;transform:scale(0.464)" scrolling="no"></iframe></div>
+          <figcaption class="shot-cap"><div class="sn"><b>5</b><h4>Edit + human gate</h4></div><p>Conversational edit; an 8% discount exceeds the bound and routes to approval.</p><span class="tag warn"><svg class="ki"><use href="#icon-group"/></svg> HITL gate</span></figcaption>
+        </figure>
+      </div>
+      <div class="proto-note anim3"><svg class="ki ki-20"><use href="#icon-information"/></svg> <span>Clickable wireframe — six steps end to end: <b>worklist → brief → orchestration → quote → edit + gate → confirmation.</b></span></div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Prototype · B2B quote console <span class="pg">16 / 17</span></div>
+  </section>
+
+  <!-- ===== 17 · PROTOTYPE B2C ===== -->
+  <section data-label="Prototype · B2C traveler">
+    <div class="slide">
+      <span class="eyebrow anim"><span class="num">P2</span> · Wireframe prototype</span>
+      <h2 class="title anim">B2C — discovery → personalized itinerary</h2>
+      <div class="film" style="margin-top:8px">
+        <figure class="shot anim2" style="--shot-w:258px;--shot-h:448px">
+          <div class="shot-frame"><iframe class="shot-if" src="Alpitour%20AlpiGPT%202.0%20-%20Wireframe%20Prototype.html?flow=b2c&step=0&embed=1" style="width:460px;height:800px;transform:scale(0.561)" scrolling="no"></iframe></div>
+          <figcaption class="shot-cap"><div class="sn"><b>1</b><h4>Discovery</h4></div><p>A vague desire — no product, dates or destination in mind.</p><span class="tag spruce"><svg class="ki"><use href="#icon-chat-bot"/></svg> Intent</span></figcaption>
+        </figure>
+        <figure class="shot anim2" style="--shot-w:258px;--shot-h:448px">
+          <div class="shot-frame"><iframe class="shot-if" src="Alpitour%20AlpiGPT%202.0%20-%20Wireframe%20Prototype.html?flow=b2c&step=2&embed=1" style="width:460px;height:800px;transform:scale(0.561)" scrolling="no"></iframe></div>
+          <figcaption class="shot-cap"><div class="sn"><b>3</b><h4>Recommendation</h4></div><p>One itinerary, with the cited reason it won.</p><span class="tag spruce"><svg class="ki"><use href="#icon-document-chart"/></svg> Explainability</span></figcaption>
+        </figure>
+        <figure class="shot anim3" style="--shot-w:258px;--shot-h:448px">
+          <div class="shot-frame"><iframe class="shot-if" src="Alpitour%20AlpiGPT%202.0%20-%20Wireframe%20Prototype.html?flow=b2c&step=4&embed=1" style="width:460px;height:800px;transform:scale(0.561)" scrolling="no"></iframe></div>
+          <figcaption class="shot-cap"><div class="sn"><b>5</b><h4>Book &amp; pay</h4></div><p>Self-serve booking with payment + fraud guardrails.</p><span class="tag warn"><svg class="ki"><use href="#icon-warning-alt"/></svg> Guardrail</span></figcaption>
+        </figure>
+      </div>
+      <div class="proto-note anim3"><svg class="ki ki-20"><use href="#icon-information"/></svg> <span>The same orchestration engine as B2B — six steps: <b>discovery → understanding → results → itinerary + upsell → book → confirmation.</b></span></div>
+    </div>
+    <div class="foot"><svg class="ki"><use href="#icon-network"/></svg> <b>AlpiGPT 2.0</b> · Prototype · B2C traveler <span class="pg">17 / 17</span></div>
+  </section>
+
+</deck-stage>
+<script src="alpitour/deck-stage.js"></script>
+</body>
+</html>

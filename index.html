@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlpiConcierge 2.0 — Guided demo · the agent workspace</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css" />
+  <link rel="stylesheet" href="alpitour/storefront/styles.css" />
+  <script src="assets/ds/icons/ki.js"></script>
+  <style>
+    html, body { margin: 0; }
+    body { background: var(--bg-2, #F8FAFC); }
+    #root .sf-app { height: 100vh !important; }
+  </style>
+</head>
+<body>
+  <!-- agent workspace (EasyBook Next) — the only persona -->
+  <div id="root"></div>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#14181B"/>
+      <circle cx="38" cy="50" r="15" fill="#fff"/>
+      <circle cx="62" cy="50" r="15" fill="#FF462D"/>
+      <rect x="20" y="74" width="60" height="7" rx="3.5" fill="#4D9AA5"/>
+    </svg>
+  </template>
+
+  <script type="module" src="/src/entries/guided-demo.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpitour · Synthetic Persona Cohort</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css" />
+  <script src="assets/ds/icons/ki.js"></script>
+  <style>
+    html, body { margin: 0; background: var(--bg-2, #F4F7F8); font-family: var(--font-sans, system-ui, sans-serif); color: var(--fg-1, #1F2A30); }
+    .ch-wrap { max-width: 1280px; margin: 0 auto; padding: 40px 32px 64px; }
+    .ch-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 6px; }
+    .ch-eyb { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--k-spruce-70, #1F5A63); }
+    .ch-wrap h1 { font-family: var(--font-display, system-ui); font-size: 38px; font-weight: 500; letter-spacing: -0.02em; margin: 8px 0 10px; }
+    .ch-sub { font-size: 14.5px; color: var(--fg-2, #475569); max-width: 720px; line-height: 1.6; }
+    .ch-logos { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .ch-logos img { height: 30px; display: block; }
+    .ch-logos .sep { width: 1px; height: 26px; background: var(--border-1, #E2E8F0); }
+    .ch-note { font-size: 11.5px; color: var(--fg-muted, #64748B); margin: 18px 0 22px; display: inline-flex; align-items: center; gap: 7px; }
+    .ch-note .d { width: 7px; height: 7px; border-radius: 50%; background: var(--k-warm-red-50, #FF462D); }
+    .ch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    @media (max-width: 960px) { .ch-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .ch-grid { grid-template-columns: 1fr; } }
+    .ch-tile { background: #fff; border: 1px solid var(--border-1, #E2E8F0); border-radius: 14px; padding: 18px 18px 15px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow .16s ease, border-color .16s ease, transform .16s ease; min-width: 0; }
+    .ch-tile:hover { border-color: var(--tone); box-shadow: 0 10px 26px rgba(15,23,42,.10); transform: translateY(-2px); }
+    .ch-id { display: flex; align-items: center; gap: 13px; }
+    .ch-id .ava { width: 60px; height: 60px; border-radius: 12px; flex: 0 0 auto; object-fit: cover; display: block; box-shadow: inset 0 0 0 2px var(--tone); }
+    .ch-id .init { width: 60px; height: 60px; border-radius: 12px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display, system-ui); font-weight: 600; font-size: 21px; color: #fff; }
+    .ch-id .nm { font-family: var(--font-display, system-ui); font-weight: 500; font-size: 16px; line-height: 1.12; display: block; }
+    .ch-id .rl { font-size: 11.5px; color: var(--fg-muted, #64748B); margin-top: 3px; display: block; }
+    .ch-q { font-family: var(--font-display, system-ui); font-style: italic; font-size: 14.5px; line-height: 1.4; color: var(--fg-1); flex: 1; text-wrap: pretty; }
+    .ch-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ch-tags span { font-size: 10.5px; color: var(--fg-2, #334155); border: 1px solid var(--border-1, #E2E8F0); border-radius: 999px; padding: 3px 9px; }
+    .ch-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid var(--bg-2, #F1F5F9); padding-top: 11px; }
+    .ch-foot code { font-family: var(--font-mono, ui-monospace, monospace); font-size: 9.5px; color: var(--fg-subtle, #94A3B8); }
+    .ch-foot .talk { font-size: 11px; font-weight: 600; color: #fff; background: var(--tone); border-radius: 999px; padding: 4px 12px; }
+    .ch-seg { display: inline-flex; background: #fff; border: 1px solid var(--border-1, #E2E8F0); border-radius: 999px; padding: 3px; margin-top: 14px; }
+    .ch-seg button { border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 600; color: var(--fg-muted, #64748B); padding: 5px 13px; border-radius: 999px; cursor: pointer; }
+    .ch-seg button.on { background: var(--k-spruce-60, #29707A); color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="ch-wrap">
+    <div class="ch-top">
+      <div>
+        <div class="ch-eyb">People · synthetic cohort</div>
+        <h1>The voices in the room</h1>
+        <p class="ch-sub">A synthetic cohort for validating AlpiConcierge 2.0 — the stakeholders who govern and build it, and the travel advisors who live in it every day. Each is an AI stand-in, grounded in the demo brief. Open any one to interrogate their view, or read their profile.</p>
+        <div class="ch-seg" role="tablist">
+          <button data-mode="talk" class="on">Open to Talk</button>
+          <button data-mode="profile">Open to Profile</button>
+        </div>
+      </div>
+      <div class="ch-logos">
+        <img src="assets/alpitour-world.png" alt="Alpitour World" />
+        <span class="sep"></span>
+        <img src="alpitour/storefront/personas/kyndryl-vital-logo.png" alt="Kyndryl Vital" onerror="this.style.display='none'" />
+      </div>
+    </div>
+    <div class="ch-note"><span class="d"></span> Synthetic personas — composite stand-ins for validation, not records of real people.</div>
+    <div class="ch-grid" id="ch-grid"></div>
+  </div>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#14181B"/>
+      <circle cx="36" cy="42" r="13" fill="#fff"/>
+      <circle cx="64" cy="42" r="13" fill="#FF462D"/>
+      <circle cx="50" cy="66" r="13" fill="#29707A"/>
+    </svg>
+  </template>
+
+  <script type="module" src="/src/entries/cohort.tsx"></script>
+</body>
+</html>

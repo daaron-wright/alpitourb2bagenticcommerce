@@ -1,0 +1,515 @@
+AlpiGPT
+B2B Travel Agent ConciergeAgentic Orchestration Blueprint
+AI Lab Initiative — Alpitour WorldPrepared for: Alpitour Leadership · Kyndryl Stakeholders · AI Lab ParticipantsOrchestration Platform: KAF (Kyndryl Agentic Framework)
+Evolving AlpiGPT from information retrieval to agentic orchestrationacross the full B2B travel agent sales journey
+1. Executive Summary
+Alpitour World operates at the intersection of tour operating, aviation (Neos), hospitality, and a vast agency network through Welcome Travel Group. With brands including Alpitour, Eden Viaggi, Francorosso, Bravo, and Turisanda, the group serves internal teams, B2B agency partners, and B2C consumers through a multi-brand portfolio.
+This blueprint defines how AlpiGPT evolves from an information retrieval assistant into an agentic orchestration layer supporting travel agents across the full sales journey — from initial inquiry through needs capture, personalised recommendation, itinerary creation, proposal preparation, and booking support with next-best-action intelligence.
+The orchestration substrate is the Kyndryl Agentic Framework (KAF), which coordinates a specialised agent inventory through MCP toolsets against Alpitour's inventory, CRM, and booking platform services. The result is a single conversational touchpoint that delivers the right solution at the right time, reducing manual effort while increasing conversion and agent productivity.
+Strategic objective: Transform AlpiGPT into the B2B concierge orchestration layer for ~80% of agency bookings via EasyBook
+Scope: Seven-stage sales journey with ten specialised AI agents coordinated through KAF
+Target impact: −50% quote turnaround, +30% agent productivity, +25% proposal acceptance
+Phase 1 pilot: Standard package quote with sold-out alternative handling — highest volume, lowest integration risk
+2. Future User Journey
+The future user journey structures the travel agent experience as seven sequential stages. Each stage maps to one or more specialised agents orchestrated through KAF, reusing shared inventory, customer, and booking services.
+Figure 1: Seven-Stage Future User Journey with Agent Mapping
+Figure 2: Agentic Orchestration Pipeline — Travel Agent through Modification Agent
+Step
+Stage
+Primary Agents
+Agent Experience
+1
+Inquiry
+Intent Agent
+Customer request arrives; agent opens AlpiGPT
+2
+Needs Capture
+Requirements Agent
+Guided clarifying questions structure the request
+3
+Context &amp; Persona Signals
+Context Agent
+Agency tier, client history, preferences applied
+4
+Search &amp; Recommend
+Inventory · Recommendation · Upsell
+Ranked packages, alternatives, upsell options
+5
+Itinerary Creation
+Itinerary Agent
+Customised multi-segment travel solution composed
+6
+Proposal Preparation
+Pricing · Proposal Agents
+Agency-branded quote ready for review
+7
+Booking Support &amp; NBA
+Booking · Upsell Agents
+Hold, confirm, upsell, next best actions
+1. Inquiry
+Business Goal: Capture the customer request immediately and initiate an orchestrated work package with zero friction for the travel agent.
+User Actions: Travel agent receives client inquiry; opens AlpiGPT within EasyBook; submits natural-language request describing destination, dates, and traveller profile.
+AI Agents Involved: Intent Agent (applies policy-as-code early validation after initial parsing and before intent classification is finalised)
+Data Sources Accessed: EasyBook session context; channel authentication; agency credentials; policy-as-code guidelines (rules, constraints, and behavioural guardrails) via OPA MCP
+Inputs: Natural-language inquiry; agency ID; session metadata
+Outputs: PaC-classified intent; initial work package; conversation thread ID
+Business Value: Instant request acceptance eliminates manual triage; every inquiry enters a traceable orchestration pipeline from the first interaction.
+2. Needs Capture
+Business Goal: Transform ambiguous requests into structured, actionable requirements before any inventory search begins.
+User Actions: Agent responds to guided clarifying questions; confirms dates, party size, budget, brand preference, and special requirements.
+AI Agents Involved: Requirements Agent (guided by Intent Agent)
+Data Sources Accessed: OrchestrationService clarification API; conversation history; agency booking patterns
+Inputs: Partial intent; agent clarifications; constraint signals
+Outputs: Structured requirements object (destination, dates, pax, budget, brand, constraints)
+Business Value: Reduces rework and failed searches; ensures downstream agents operate on complete, validated requirements.
+3. Context &amp; Persona Signals
+Business Goal: Enrich the request with agency tier, client history, and preference signals to enable personalised orchestration — including real-time product and destination retrieval during the conversation.
+User Actions: Agent optionally identifies repeat client or references past bookings; reviews AI-surfaced context summary; asks specific product questions (e.g. amenities, inclusions, family facilities) at any point in the dialogue.
+AI Agents Involved: Context Agent (identity enrichment and real-time information retrieval)
+Data Sources Accessed: CRM (agency tier, commission structure); client profiles; booking history API; loyalty data; RAG product catalogues and destination content
+Inputs: Structured requirements; agency ID; optional client identifier; in-conversation retrieval queries
+Outputs: Enriched context profile (tier, commission, preferences, past destinations, spend patterns); retrieved product facts for in-conversation Q&amp;A
+Business Value: Personalisation without manual CRM lookup; agency-tier pricing and recommendations applied automatically; instant answers to specific product questions without leaving the orchestration flow.
+The future-state experience evolves beyond pure information retrieval, but retrieval remains a foundational capability. The Context Agent can answer specific product and destination questions in real time — such as "Does this hotel have a baby pool?", "Is airport transfer included?", "Does this resort provide childcare services?", or "What amenities are available for families?" — while using that context to drive more proactive recommendations.
+Retrieval-to-Orchestration Example (Demo Scenario)
+Travel Agent: "Does this hotel have a baby pool?"
+System: Retrieves the amenity information from product catalogues in real time.
+Then proactively suggests: 
+Family-friendly activities at the property and destination
+Nearby water parks
+Similar family-oriented properties
+Relevant upsell opportunities (e.g. childcare services, family excursion packages)
+4. Search &amp; Recommend
+Business Goal: Deliver a ranked shortlist of relevant packages, alternatives, and upsell opportunities aligned to agency and client context.
+User Actions: Agent reviews ranked options; requests alternatives for sold-out properties; explores upsell suggestions.
+AI Agents Involved: Inventory Agent; Recommendation Agent; Upsell Agent
+Data Sources Accessed: Inventory API (packages, hotels, Neos flights, allotments); RAG product catalogues; yield status; CRM purchase history
+Inputs: Structured requirements; enriched context; search constraints
+Outputs: Ranked option shortlist; availability status; alternative proposals; upsell candidates
+Business Value: Cuts manual search time by up to 50%; intelligent alternatives prevent lost sales on sold-out inventory.
+5. Itinerary Creation
+Business Goal: Compose a customised, multi-segment travel solution that satisfies all captured constraints and client preferences.
+User Actions: Agent reviews composed itinerary; requests segment adjustments (hotel changes, transfer additions, excursion inclusions).
+AI Agents Involved: Itinerary Agent
+Data Sources Accessed: Inventory API; itinerary composition rules; destination content (RAG); transfer and excursion catalogues
+Inputs: Selected options; structured requirements; context profile
+Outputs: Multi-segment itinerary (hotels, flights, transfers, excursions); constraint validation report
+Business Value: Enables complex custom trips without call-centre escalation; dynamic KAF workflows handle multi-segment composition.
+6. Proposal Preparation
+Business Goal: Generate an agency-branded, commercially accurate proposal ready for client presentation.
+User Actions: Agent reviews priced proposal; verifies commission visibility; approves or requests revision before client sharing.
+AI Agents Involved: Pricing Agent; Proposal Agent
+Data Sources Accessed: Pricing engine (B2B markup, commission rules); OPA policy guardrails; brand templates; cancellation and insurance policies (RAG)
+Inputs: Composed itinerary; agency tier; commercial rules; brand guidelines
+Outputs: Structured quote/proposal (PDF or in-app); commission breakdown; compliance annotations
+Business Value: Proposal assembly automated from hours to minutes; consistent commercial accuracy and brand compliance.
+7. Booking Support &amp; Next Best Actions
+Business Goal: Complete the sale with booking holds or confirmations, contextual upsells, and proactive follow-up actions.
+User Actions: Agent confirms booking or places hold; selects upsell options; receives confirmation reference and next-best-action recommendations.
+AI Agents Involved: Booking Agent; Upsell Agent
+Data Sources Accessed: Booking Platform APIs (EasyBook); hold/reservation services; notification services; CRM for follow-up triggers
+Inputs: Approved proposal; agent confirmation; upsell selections
+Outputs: Booking reference or hold confirmation; upsell attachments; client notification; next-best-action alerts
+Business Value: Accelerates conversion at point of decision; contextual upsells increase average order value; automated follow-up reduces drop-off.
+Post-Booking / Proposal Modification Self-Service
+A major pain point for agency partners is the volume of support requests generated after proposals are created or bookings are confirmed. This extension enables travel agents to manage changes directly within AlpiGPT — without opening support tickets.
+Self-Service Change Examples
+Change travel dates
+Modify flight departures
+Change hotels
+Update traveller details
+Adjust package components
+AI Agents Involved: Modification Agent
+Agent Purpose: Validate requested changes against policy rules; check inventory availability; recalculate pricing; and update booking records via the booking platform APIs.
+Business Value: 
+Reduced support tickets
+Reduced operational workload
+Faster response times
+Increased travel agent autonomy
+Improved customer experience
+3. Agent Inventory
+Eleven specialised AI agents form the B2B concierge orchestration inventory. Each agent is invoked by KAF based on journey stage and request complexity, reading from and writing to a shared Travel Work Context object within the work package graph.
+Agent
+Journey Stage(s)
+Primary Responsibility
+Key Capabilities
+Intent Agent
+1. Inquiry
+Request intake and classification
+Parse NL requests; reference pre-defined policy-as-code guidelines (rules, constraints, and behavioural guardrails) as an early gating step after initial parsing and before intent classification is locked in; validate and finalise intent against those guidelines; initiate KAF work package
+Requirements Agent
+2. Needs Capture
+Structured requirement extraction
+Guided clarification; constraint validation; requirements object assembly
+Context Agent
+3. Context &amp; Persona
+Identity enrichment and real-time information retrieval
+Agency tier resolution; client profile; booking history; persona signals; real-time product and destination retrieval (amenities, inclusions, family facilities)
+Inventory Agent
+4. Search &amp; Recommend
+Product and availability search
+Package/hotel/flight search; allotment checks; sold-out detection
+Recommendation Agent
+4. Search &amp; Recommend
+Personalised ranking and scoring
+Profile-aware ranking; similarity scoring; alternative matching
+Pricing Agent
+6. Proposal Preparation
+Commercial rule application
+Commission, markup, promotions; dynamic yield; OPA guardrails
+Itinerary Agent
+5. Itinerary Creation
+Multi-segment trip composition
+Segment assembly; constraint validation; transfer/excursion integration
+Proposal Agent
+6. Proposal Preparation
+Branded proposal generation
+Structured quote assembly; PDF/HTML output; compliance annotations
+Booking Agent
+7. Booking Support
+Reservation handoff and confirmation
+Hold creation; PNR generation; booking platform API mapping
+Upsell Agent
+4, 7 Search &amp; Booking
+Revenue enrichment opportunities
+Excursions, transfers, insurance, upgrades; contextual NBA suggestions
+Modification Agent
+Post-Booking / Proposal Modification
+Self-service booking and proposal changes
+Validate change requests; check availability; recalculate pricing; update booking records
+4. Detailed Orchestration Flow
+AlpiGPT sits as the conversational layer above KAF. The orchestration router selects static workflows for standard package quotes or dynamic multi-agent graphs for custom itineraries. All agents access the same Inventory, Customer, and Booking services via MCP toolsets.
+Figure 3: KAF Alignment — Layered Architecture from AlpiGPT to Domain Systems
+Orchestration Lifecycle
+Phase
+Description
+Agents Involved
+KAF Component
+Discover
+Parse intent, enrich context, clarify gaps
+Intent → Requirements → Context
+OrchestrationService
+Plan
+Search inventory, rank options, compose itinerary
+Inventory → Recommendation → Itinerary
+GraphService (DAG)
+Validate
+Apply pricing, compliance, and policy checks
+Pricing → Proposal
+AgentService + OPA MCP
+Commit
+Hand off to booking platform; trigger upsells and notifications
+Booking → Upsell
+booking-platform-mcp
+Workflow Selection Logic
+Request Type
+Workflow Mode
+Agent Graph
+Typical Duration
+Standard package quote
+Static workflow
+Intent → Requirements → Context → Inventory → Recommendation → Pricing → Proposal → Booking
+&lt; 5 minutes
+Sold-out alternatives
+Static workflow (branch)
+Intent → Inventory → Recommendation → Itinerary → Proposal → Booking
+&lt; 3 minutes
+Custom multi-destination
+Dynamic workflow
+Full agent graph with Itinerary Agent composition
+&lt; 10 minutes
+Group / corporate inquiry
+Dynamic workflow + escalation
+Full graph → internal operator handoff
+&lt; 15 minutes
+5. Agent Interaction Map
+The agent interaction map illustrates how specialised agents coordinate through KAF's orchestration router, sharing context via the Travel Work Context object and accessing common domain services.
+Figure 4: Agent Interaction Map — Coordination via KAF and Shared Services
+Inter-Agent Communication Patterns
+From Agent
+To Agent
+Shared Artefact
+Purpose
+Intent Agent
+Requirements Agent
+Policy-validated inquiry + classification
+Trigger structured needs capture
+Requirements Agent
+Context Agent
+Structured requirements
+Enable persona enrichment
+Context Agent
+Inventory Agent
+Enriched context profile
+Context-aware search parameters
+Inventory Agent
+Recommendation Agent
+Raw search results
+Personalised ranking
+Recommendation Agent
+Itinerary Agent
+Ranked shortlist
+Itinerary composition input
+Itinerary Agent
+Pricing Agent
+Composed itinerary
+Commercial rule application
+Pricing Agent
+Proposal Agent
+Priced itinerary
+Branded proposal generation
+Proposal Agent
+Booking Agent
+Approved proposal
+Reservation handoff
+Booking Agent
+Upsell Agent
+Booking confirmation
+Post-booking enrichment
+Upsell Agent
+Recommendation Agent
+Upsell signals
+Cross-sell in search stage
+6. Systems &amp; Data Sources
+All agents access Alpitour domain systems through KAF MCP toolsets. This section catalogues the systems, data sources, and integration points required for B2B concierge orchestration.
+Data Source / System
+Type
+Accessed By
+Data Provided
+EasyBook Portal
+Channel / UI
+Travel Agent, AlpiGPT
+Session context, agency authentication, booking entry point
+Agency &amp; Client CRM
+Master data
+Context Agent, Upsell Agent
+Agency tier, commission, client profiles, booking history
+Inventory API
+Transactional
+Inventory Agent, Itinerary Agent
+Packages, hotels, Neos flights, allotments, yield status
+Pricing Engine
+Commercial rules
+Pricing Agent
+B2B markup, commission rules, promotions, dynamic yield
+Product Catalogues (RAG)
+Knowledge base
+Inventory Agent, Recommendation Agent
+Destination guides, brand catalogues, hotel descriptions
+Policy Documents (RAG)
+Knowledge base
+Proposal Agent, Pricing Agent
+Cancellation terms, insurance rules, brand guidelines
+Booking Platform APIs
+Transactional
+Booking Agent
+Holds, reservations, PNRs, confirmations
+Notification Services
+Integration
+Booking Agent, Upsell Agent
+Confirmations, diary links, follow-up alerts
+OPA Policy Engine
+Guardrails
+Pricing Agent, Proposal Agent
+Commission limits, pricing floors, compliance rules
+Observability Stack
+Monitoring
+All agents (via KAF)
+Conversion metrics, resolution time, agent success rates
+Inputs and Outputs by Journey Stage
+Stage
+Primary Inputs
+Primary Outputs
+Downstream Consumer
+1. Inquiry
+NL request, agency ID, session metadata
+PaC-classified intent, work package ID
+Requirements Agent
+2. Needs Capture
+Partial intent, agent clarifications
+Structured requirements object
+Context Agent
+3. Context &amp; Persona
+Requirements, agency/client identifiers
+Enriched context profile
+Inventory Agent
+4. Search &amp; Recommend
+Requirements, context, constraints
+Ranked shortlist, alternatives, upsells
+Itinerary Agent
+5. Itinerary Creation
+Shortlist, requirements, context
+Multi-segment itinerary
+Pricing Agent
+6. Proposal Preparation
+Itinerary, commercial rules, brand guidelines
+Priced proposal (PDF/in-app)
+Booking Agent
+7. Booking Support
+Approved proposal, agent confirmation
+Booking ref, upsells, NBA alerts
+Travel Agent / Client
+7. KAF Alignment
+KAF provides the orchestration substrate for AlpiGPT. Agent inquiries become KAF work packages; agents execute via MCP toolsets against Alpitour domain services with OPA guardrails ensuring commercial and policy compliance.
+AlpiGPT Concept
+KAF Implementation
+MCP Toolset / Service
+Agent inquiry
+WorkPackageCreate via WebsiteAPIService
+WebsiteAPIService
+Standard package quote
+Static workflow — fixed agent DAG
+GraphService
+Custom itinerary request
+Dynamic workflow — OrchestrationService build_steps
+OrchestrationService
+Inventory search
+Inventory Agent tool invocation
+travel-inventory-mcp
+Booking commit
+Booking Agent handoff
+booking-platform-mcp → EasyBook / Booking Platform APIs
+Agency context
+Context Agent enrichment
+crm-mcp
+Commercial rules
+Pricing Agent validation
+pricing-mcp + opa-mcp guardrails
+Product knowledge
+Recommendation Agent grounding
+rag-mcp — brand catalogues and destination guides
+Observability
+Agent execution tracing
+Grafana / Loki / Tempo
+KAF Component Responsibilities
+KAF Component
+Role in B2B Concierge
+Interaction Pattern
+WebsiteAPIService
+Channel ingress, authentication, work package creation
+AlpiGPT → KAF entry point
+OrchestrationService
+Complexity analysis, step generation, clarification, SSE streaming
+Routes to static or dynamic workflow
+GraphService
+Agent execution order, dependencies, parallel tasks
+Manages agent DAG per work package
+AgentService (ReAct + MCP)
+Specialised travel agent runtime with tool use
+Executes individual agents against MCP toolsets
+Custom MCP Servers
+Domain-specific tool interfaces
+Bridge agents to Alpitour systems
+OPA MCP
+Policy guardrails and compliance enforcement
+Validates pricing, commission, and policy rules
+8. Business Value
+The agentic orchestration blueprint delivers measurable business value across productivity, conversion, quality, and operational efficiency dimensions.
+Value Driver
+Description
+Mechanism
+Target Impact
+Faster Time to Offer
+Reduce time to prepare and respond to quotes
+Automated search, ranking, and proposal assembly
+−50% quote turnaround
+Reduced Manual Effort
+Eliminate repetitive search and comparison tasks
+Multi-agent orchestration replaces manual system switching
+−40% repetitive tasks
+Improved Agent Productivity
+More requests handled per agent per day
+Right information and actions surfaced at each journey stage
++30% requests per agent
+Higher Quality &amp; Relevance
+Personalised itineraries aligned to client needs
+Context Agent + Recommendation Agent persona signals
++25% proposal acceptance
+Increased Conversion
+Better recommendations driving more confirmed bookings
+Intelligent alternatives and contextual upsells
++25% self-service conversion
+Revenue Enrichment
+Higher average order value through contextual upsells
+Upsell Agent at search and booking stages
++15% AOV on upsell-eligible bookings
+Call-Centre Deflection
+Complex requests resolved without escalation
+Custom itinerary and group workflows with clean handoff paths
+−35% B2B support escalations
+Business Benefits by Stakeholder
+Stakeholder
+Primary Benefit
+Key Metric
+External Travel Agent
+Faster quotes, less searching, more selling time
+Time-to-offer &lt; 5 minutes
+Internal Booking Operator
+Clean escalations with full context visibility
+Escalation resolution time −40%
+Sales &amp; Customer Service
+Pipeline visibility and reduced queue pressure
+Support ticket volume −35%
+Product &amp; Content Teams
+Catalogue utilisation insights from agent analytics
+Catalogue coverage score +20%
+IT &amp; Data Operations
+Observable, governable agent platform on KAF
+Agent success rate &gt; 95%
+Alpitour Leadership
+Measurable ROI on AI Lab investment
+B2B conversion rate +25%
+Kyndryl / KAF Stakeholders
+Production-grade agentic reference architecture
+End-to-end orchestration demonstrator
+9. Future Expansion Opportunities
+The B2B concierge orchestration blueprint establishes a foundation for broader agentic capabilities across the Alpitour ecosystem. The following expansion opportunities build on the shared agent inventory and KAF orchestration substrate.
+Expansion Opportunity
+Description
+Prerequisite
+B2C Personalised Travel Concierge
+Extend the same agent inventory to direct consumers with channel-aware pricing, tone, and guardrails. Personalisation Agent and Recommendation Agent already support profile-aware ranking.
+Phase 1 B2B concierge pilot validated
+Internal Operational Efficiency
+Deploy Intent, Context, Inventory, and Analytics agents for internal sales tracking, customer service resolution, and operational reporting — reusing MCP toolsets without duplication.
+Phase 1 B2B concierge pilot validated
+Proactive Next-Best-Action Engine
+Evolve the Upsell Agent into a continuous NBA engine that monitors booking patterns, seasonal signals, and client lifecycle events to trigger proactive agent outreach.
+Phase 1 B2B concierge pilot validated
+Multi-Brand Orchestration Profiles
+Configure brand-specific orchestration profiles (Alpitour, Francorosso, Eden Viaggi) with tailored RAG knowledge bases, pricing rules, and proposal templates within a single platform.
+Phase 1 B2B concierge pilot validated
+Group &amp; Corporate Travel Automation
+Expand dynamic workflows for group bookings, MICE events, and corporate travel programmes with dedicated compliance and contract management agents.
+Phase 1 B2B concierge pilot validated
+Cross-Channel Continuity
+Enable seamless handoff between B2B agent sessions and B2C client interactions, preserving Travel Work Context across channels for unified customer experience.
+Phase 1 B2B concierge pilot validated
+Analytics &amp; Learning Loop
+Introduce an Analytics &amp; Learning Agent to capture outcome data, power A/B testing of recommendation strategies, and continuously improve agent performance.
+Phase 1 B2B concierge pilot validated
+Neos Aviation Integration
+Deepen Inventory Agent integration with Neos flight operations for real-time seat availability, yield management, and bundled package optimisation.
+Phase 1 B2B concierge pilot validated
+Recommended Roadmap
+Phase
+Scope
+Timeline
+Success Criteria
+Phase 1 — Pilot
+Standard package quote + sold-out alternatives (Scenarios 1–2)
+Q3 2026
+Quote in &lt; 60 seconds; 95% agent success rate
+Phase 2 — Expand
+Custom itineraries + context enrichment (Scenarios 3–5)
+Q4 2026
+Multi-segment composition; repeat-client personalisation
+Phase 3 — Scale
+Full seven-stage journey for all agency tiers
+H1 2027
+−50% quote turnaround; +25% conversion
+Phase 4 — Extend
+B2C concierge + internal ops + NBA engine
+H2 2027
+Unified platform across three channels
+Platform Reference: AlpiGPT operates as the conversational front-end to KAF-orchestrated agents. "Alpitour Booking Platform" and EasyBook refer to the group's reservation layer consumed via booking-platform-mcp (~80% of agency bookings through EasyBook). This document is prepared as part of the Alpitour AI Lab initiative.

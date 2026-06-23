@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpitour — Hotel & resort photo shot list</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font-sans, Roboto, system-ui, sans-serif); color: var(--fg-1, #1c2024); background: #f1f5f9; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    .page { max-width: 940px; margin: 0 auto; padding: 56px 60px 80px; background: #fff; }
+    .eyb { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--k-spruce-70, #1f5b63); }
+    h1 { font-family: var(--font-display, "TWK Everett", sans-serif); font-weight: 500; font-size: 34px; line-height: 1.1; margin: 8px 0 14px; letter-spacing: -0.01em; }
+    .lede { font-size: 15px; color: var(--fg-2, #475569); max-width: 70ch; }
+    .lede b { color: var(--fg-1, #1c2024); font-weight: 600; }
+    h2 { font-family: var(--font-display, "TWK Everett", sans-serif); font-weight: 500; font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+    .sec-sub { font-size: 13px; color: var(--fg-muted, #64748b); margin-bottom: 18px; }
+    section { margin-top: 44px; }
+    .divider { border: none; border-top: 1px solid var(--border-1, #e2e8f0); margin: 0; }
+
+    .how { background: var(--k-cool-gray-10, #f1f5f9); border: 1px solid var(--border-1, #e2e8f0); border-radius: 10px; padding: 20px 24px; margin-top: 24px; }
+    .how h3 { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 12px; color: var(--fg-2, #475569); }
+    .how ol { margin: 0; padding-left: 20px; }
+    .how li { font-size: 13.5px; margin-bottom: 7px; }
+    .how li:last-child { margin-bottom: 0; }
+    code { font-family: var(--font-mono, "Geist Mono", ui-monospace, monospace); font-size: 12.5px; background: #fff; border: 1px solid var(--border-1, #e2e8f0); border-radius: 4px; padding: 1px 5px; color: var(--k-spruce-80, #19474e); }
+
+    .shot { border: 1px solid var(--border-1, #e2e8f0); border-radius: 12px; padding: 22px 24px; margin-bottom: 16px; }
+    .shot-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .shot-head h3 { font-family: var(--font-display, "TWK Everett", sans-serif); font-weight: 500; font-size: 18px; margin: 0; }
+    .place { font-size: 12.5px; color: var(--fg-muted, #64748b); }
+    .brand-pill { font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; color: #fff; }
+    .prompt { margin: 14px 0 16px; font-size: 13.5px; color: var(--fg-1, #1c2024); background: var(--k-ai-spruce-08, #eef5f6); border-left: 3px solid var(--k-spruce-60, #29707a); border-radius: 0 6px 6px 0; padding: 12px 16px; }
+    .prompt .lbl { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--k-spruce-70, #1f5b63); margin-bottom: 5px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    th { text-align: left; font-weight: 600; color: var(--fg-muted, #64748b); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 0 12px 7px 0; border-bottom: 1px solid var(--border-1, #e2e8f0); }
+    td { padding: 8px 12px 8px 0; border-bottom: 1px solid var(--k-cool-gray-10, #f1f5f9); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    td.id code { white-space: nowrap; }
+    td.file { color: var(--fg-2, #475569); }
+    td.crop { color: var(--fg-muted, #64748b); }
+    .count { font-size: 12px; color: var(--fg-muted, #64748b); font-weight: 400; }
+
+    .idx td:first-child code { font-weight: 600; }
+    .note { font-size: 12.5px; color: var(--fg-muted, #64748b); margin-top: 10px; }
+    .tag-person { background: var(--k-spruce-60, #29707a); }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      .shot, .how { break-inside: avoid; }
+      section { break-inside: avoid-page; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="eyb">Alpitour B2B &amp; B2C · image production</div>
+    <h1>Hotel &amp; resort photo shot list</h1>
+    <p class="lede">Every <code>&lt;image-slot&gt;</code> across the Alpitour prototypes that needs a <b>genAI-generated photographic image</b>. Slots are grouped by <b>subject</b> — generate one image per hotel/resort/destination and reuse it across the listed slot IDs. The prompts are written to hand straight to an image-gen tool.</p>
+
+    <div class="how">
+      <h3>How to use this</h3>
+      <ol>
+        <li>Generate one photo per <b>subject</b> below using its prompt. Render at least at the largest crop listed (most are landscape ~16:9; portraits/squares are flagged).</li>
+        <li>Open the matching prototype, then <b>drag the image onto each slot</b> with the listed <code>id</code>. Dropped images persist in a single project-level <code>.image-slots.state.json</code>, so they survive reloads and show on share links.</li>
+        <li><b>Slot IDs are global.</b> Two slots with the same <code>id</code> (e.g. <code>hotel-hero-coral</code> across the proposal and the simple front door) share one image — fill it once. Different IDs of the <em>same hotel</em> (e.g. <code>hotel-coral</code> vs <code>hotel-hero-coral</code>) are separate slots but can reuse the same source photo at different crops.</li>
+        <li>Most resorts are <b>fictional brand names</b> — there's no real property to match. Generate a plausible, on-type resort photo; no signage, logos, or readable text in frame.</li>
+      </ol>
+    </div>
+
+    <!-- ============ SHARM CLUSTER ============ -->
+    <section>
+      <h2>Sharm el-Sheikh family cluster <span class="count">· the Bianchi journey</span></h2>
+      <p class="sec-sub">The core demo thread: a family of 3 to Sharm in August. These four properties carry the most slots across B2C and B2B.</p>
+
+      <div class="shot">
+        <div class="shot-head">
+          <h3>Coral Bay Family Resort</h3>
+          <span class="place">Sharm el-Sheikh, Egypt</span>
+          <span class="brand-pill" style="background:#0F62FE">Bravo</span>
+        </div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a 4-star all-inclusive family beach resort in Sharm el-Sheikh, Egypt. Large free-form swimming pool with a separate shallow baby pool and shaded kids' area, palm trees and sun loungers, low whitewashed resort buildings behind, the Red Sea and a sandy beach beyond. Warm late-afternoon light, calm, inviting, family-friendly. Bright natural colour, no text, no logos, no recognizable faces.</div>
+        <table>
+          <thead><tr><th>Slot id</th><th>Appears in</th><th>Shape · crop</th></tr></thead>
+          <tbody>
+            <tr><td class="id"><code>hotel-hero-coral</code></td><td class="file">Customer Front Door (Simple) · Bianchi Proposal (v1 &amp; current)</td><td class="crop">Rounded · landscape hero ~16:9</td></tr>
+            <tr><td class="id"><code>g-sharm</code></td><td class="file">Alpitour.it — AlpiGPT Front Door</td><td class="crop">Rect · landscape 16:9 (180h)</td></tr>
+            <tr><td class="id"><code>hotel-coral</code></td><td class="file">B2B Concierge PoC &amp; v2 (ranked option)</td><td class="crop">Rounded · wide banner (92h)</td></tr>
+            <tr><td class="id"><code>hotel-hero-coral</code></td><td class="file">EasyBook B2B Storefront / Platform (detail drawer)</td><td class="crop">Rounded · landscape (180h) — same id, shares above</td></tr>
+            <tr><td class="id"><code>tv-vm-coral</code></td><td class="file">Alpitour Platform (visual match)</td><td class="crop">Rounded · 4:3 — favour the <b>shaded baby pool</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="shot">
+        <div class="shot-head">
+          <h3>Jaz Mirabel Beach</h3>
+          <span class="place">Sharm el-Sheikh, Egypt · the "stayed in 2024" hotel</span>
+          <span class="brand-pill" style="background:#0F62FE">Bravo</span>
+        </div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a large established 5-star beach resort in Sharm el-Sheikh with a long, very shallow gently-sloping turquoise lagoon-style swimming pool, toddlers' splash area, rows of loungers under shade sails, mature palms and manicured gardens. Family-holiday feel, bright midday Red Sea light, vivid blue water. No text, no logos, no recognizable faces.</div>
+        <table>
+          <thead><tr><th>Slot id</th><th>Appears in</th><th>Shape · crop</th></tr></thead>
+          <tbody>
+            <tr><td class="id"><code>hotel-hero-jaz</code></td><td class="file">EasyBook B2B Storefront / Platform (detail drawer)</td><td class="crop">Rounded · landscape (180h)</td></tr>
+            <tr><td class="id"><code>hotel-jaz</code></td><td class="file">B2B Concierge PoC &amp; v2 (knowledge card)</td><td class="crop">Rounded · 3:2 (168×112)</td></tr>
+            <tr><td class="id"><code>tv-vm-jaz</code></td><td class="file">Alpitour Platform (visual match)</td><td class="crop">Rounded · 4:3 — favour the <b>shallow lagoon</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="shot">
+        <div class="shot-head">
+          <h3>Sinai Blue Lagoon Resort</h3>
+          <span class="place">Sharm el-Sheikh, Egypt · premium upgrade</span>
+          <span class="brand-pill" style="background:#7A2048">Francorosso</span>
+        </div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of an upscale 5-star family resort in Sharm el-Sheikh with an on-site water park — curving water slides, lazy river and a baby pool — plus premium family suites with terraces. Lush landscaping, blue skies, polished and high-end but family-oriented. Bright warm light, vivid colour. No text, no logos, no recognizable faces.</div>
+        <table>
+          <thead><tr><th>Slot id</th><th>Appears in</th><th>Shape · crop</th></tr></thead>
+          <tbody>
+            <tr><td class="id"><code>hotel-hero-sinai</code></td><td class="file">EasyBook B2B Storefront / Platform (detail drawer)</td><td class="crop">Rounded · landscape (180h)</td></tr>
+            <tr><td class="id"><code>hotel-sinai</code></td><td class="file">B2B Concierge PoC &amp; v2 (ranked option)</td><td class="crop">Rounded · wide banner (92h)</td></tr>
+            <tr><td class="id"><code>hotel-sinai-switch</code></td><td class="file">B2B Concierge PoC &amp; v2 (water-park alternative)</td><td class="crop">Rounded · 3:2 (190×122) — favour the <b>water park</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="shot">
+        <div class="shot-head">
+          <h3>Red Sea Palm Village</h3>
+          <span class="place">Marsa Alam, Egypt · best value</span>
+          <span class="brand-pill" style="background:#FF462D">Alpitour</span>
+        </div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a relaxed 4-star beach village resort in Marsa Alam on the Egyptian Red Sea coast — large palm-fringed pool, low bungalow-style buildings, a wide quiet sandy beach and house reef. Value-friendly, sunny, uncrowded, desert-meets-sea setting. Bright natural light. No text, no logos, no recognizable faces.</div>
+        <table>
+          <thead><tr><th>Slot id</th><th>Appears in</th><th>Shape · crop</th></tr></thead>
+          <tbody>
+            <tr><td class="id"><code>hotel-hero-redsea</code></td><td class="file">EasyBook B2B Storefront / Platform (detail drawer)</td><td class="crop">Rounded · landscape (180h)</td></tr>
+            <tr><td class="id"><code>hotel-redsea</code></td><td class="file">B2B Concierge PoC &amp; v2 (ranked option)</td><td class="crop">Rounded · wide banner (92h)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ============ OTHER CATALOGUE ============ -->
+    <section>
+      <h2>Wider catalogue <span class="count">· EasyBook storefront drawer</span></h2>
+      <p class="sec-sub">Single-slot properties, each shown when its card opens in the <code>hotel-hero-&lt;id&gt;</code> detail drawer. All rounded, landscape ~16:9 (180h).</p>
+
+      <div class="shot">
+        <div class="shot-head"><h3>Bravo Kiwengwa</h3><span class="place">Zanzibar, Tanzania</span><span class="brand-pill" style="background:#0F62FE">Bravo</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a 4-star beach resort on Kiwengwa Beach, Zanzibar — white powder sand, turquoise Indian Ocean, traditional makuti palm-thatch roofs, coconut palms, a beachfront pool. Tropical, vivid, entertainment-village feel. Bright equatorial light. No text, no logos, no recognizable faces. <em>Slot:</em> <code>hotel-hero-kiwengwa</code>.</div>
+      </div>
+      <div class="shot">
+        <div class="shot-head"><h3>SeaClub Filitheyo</h3><span class="place">Maldives, Faafu Atoll</span><span class="brand-pill" style="background:#7A2048">Francorosso</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a 5-star Maldives resort in Faafu Atoll — overwater villas on stilts above a clear turquoise lagoon, wooden jetty, house reef visible through the water, white sand and palms. Luxury, serene, full-board island feel. Bright tropical light, deep blues. No text, no logos, no recognizable faces. <em>Slot:</em> <code>hotel-hero-seaclub</code>.</div>
+      </div>
+      <div class="shot">
+        <div class="shot-head"><h3>Eden Village Calaserena</h3><span class="place">Sardinia, Italy</span><span class="brand-pill" style="background:#1F8A5B">Eden Viaggi</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a Mediterranean beach village resort on the south coast of Sardinia — direct access to a white-sand beach and clear blue-green sea, low pine-shaded bungalows, a pool and mini-club area. Relaxed Italian summer-holiday feel, natural light, fragrant maquis landscape. No text, no logos, no recognizable faces. <em>Slot:</em> <code>hotel-hero-calaserena</code>.</div>
+      </div>
+      <div class="shot">
+        <div class="shot-head"><h3>Santorini Secret Suites</h3><span class="place">Santorini, Greece</span><span class="brand-pill" style="background:#8a6116">Turisanda</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a boutique luxury hotel in Oia, Santorini — whitewashed cave suites carved into the caldera cliff, a small infinity pool overlooking the deep-blue Aegean and the volcanic bay, blue-domed churches in the distance. Adults-oriented, elegant, golden-hour light. No text, no logos, no recognizable faces. <em>Slot:</em> <code>hotel-hero-santorini</code>.</div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ============ DESTINATIONS ============ -->
+    <section>
+      <h2>Destination cards <span class="count">· AlpiGPT conversational front door</span></h2>
+      <p class="sec-sub">Result-card hero images in the consumer concierge. Rect, landscape 16:9 (180h). Slot id pattern <code>g-&lt;scenario&gt;</code>.</p>
+
+      <div class="shot">
+        <div class="shot-head"><h3>Puglia · Masseria San Vito</h3><span class="place">Itria Valley, Puglia, Italy</span><span class="brand-pill" style="background:#7A2048">Francorosso</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a restored stone masseria (farmhouse hotel) in the Itria Valley of Puglia, Italy — whitewashed dry-stone walls, ancient olive trees, a quiet pool in a courtyard, terracotta and warm stone tones, rolling countryside. Boutique, slow-travel, golden Mediterranean autumn light. No text, no logos, no recognizable faces. <em>Slot:</em> <code>g-puglia</code>.</div>
+      </div>
+      <div class="shot">
+        <div class="shot-head"><h3>Maldives · overwater villa</h3><span class="place">Vaavu Atoll · Bravo Premium Alimatha'</span><span class="brand-pill" style="background:#FF462D">Alpitour</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of an overwater villa in the Maldives' Vaavu Atoll at sunset — a single thatched villa with a private deck and steps into a glassy turquoise lagoon, a seaplane or distant island on the horizon. Honeymoon luxury, warm pink-gold New Year light, ultra-clear water. No text, no logos, no recognizable faces. <em>Slot:</em> <code>g-maldives</code>.</div>
+      </div>
+      <div class="shot">
+        <div class="shot-head"><h3>Crete · last minute</h3><span class="place">Heraklion, Greece</span><span class="brand-pill" style="background:#1F8A5B">Eden Viaggi</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic travel photo of a Crete family beach near Heraklion — soft gently-sloping golden sand into shallow calm blue sea, a few umbrellas, low hills behind. Easy, value, gentle-seabed feel (it pairs with a "shallow safe water" visual match). Bright Greek-summer light. No text, no logos, no recognizable faces. <em>Slot:</em> <code>tv-vm-creta</code> (Alpitour Platform · visual match · 4:3).</div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ============ PEOPLE ============ -->
+    <section>
+      <h2>People</h2>
+      <p class="sec-sub">Avatar portrait — square, circle-cropped.</p>
+      <div class="shot">
+        <div class="shot-head"><h3>Giulia Rossi</h3><span class="place">Travel agent · Rossi Travel</span><span class="brand-pill tag-person">Avatar</span></div>
+        <div class="prompt"><span class="lbl">genAI prompt</span>Photorealistic friendly professional headshot of an Italian woman travel agent in her 30s–40s, warm genuine smile, smart-casual, soft neutral office background, natural light, looking at camera. Square framing, centred for a circular crop. No text, no logos. <em>Slot:</em> <code>cv-agent-photo</code> (Bianchi Proposal · circle 52–56px).</div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ============ INDEX + EXCLUSIONS ============ -->
+    <section>
+      <h2>Full slot index</h2>
+      <p class="sec-sub">Every photo slot, flat. 20 unique IDs across the prototypes.</p>
+      <table class="idx">
+        <thead><tr><th>Slot id</th><th>Subject</th><th>File(s)</th></tr></thead>
+        <tbody>
+          <tr><td><code>hotel-hero-coral</code></td><td>Coral Bay Family Resort</td><td class="file">Front Door (Simple), Bianchi Proposal ×2, Storefront/Platform drawer</td></tr>
+          <tr><td><code>g-sharm</code></td><td>Coral Bay Family Resort</td><td class="file">AlpiGPT Front Door</td></tr>
+          <tr><td><code>hotel-coral</code></td><td>Coral Bay Family Resort</td><td class="file">Concierge PoC &amp; v2</td></tr>
+          <tr><td><code>tv-vm-coral</code></td><td>Coral Bay — baby pool</td><td class="file">Alpitour Platform</td></tr>
+          <tr><td><code>hotel-hero-jaz</code></td><td>Jaz Mirabel Beach</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>hotel-jaz</code></td><td>Jaz Mirabel Beach</td><td class="file">Concierge PoC &amp; v2</td></tr>
+          <tr><td><code>tv-vm-jaz</code></td><td>Jaz Mirabel — lagoon</td><td class="file">Alpitour Platform</td></tr>
+          <tr><td><code>hotel-hero-sinai</code></td><td>Sinai Blue Lagoon Resort</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>hotel-sinai</code></td><td>Sinai Blue Lagoon Resort</td><td class="file">Concierge PoC &amp; v2</td></tr>
+          <tr><td><code>hotel-sinai-switch</code></td><td>Sinai — water park</td><td class="file">Concierge PoC &amp; v2</td></tr>
+          <tr><td><code>hotel-hero-redsea</code></td><td>Red Sea Palm Village</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>hotel-redsea</code></td><td>Red Sea Palm Village</td><td class="file">Concierge PoC &amp; v2</td></tr>
+          <tr><td><code>hotel-hero-kiwengwa</code></td><td>Bravo Kiwengwa, Zanzibar</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>hotel-hero-seaclub</code></td><td>SeaClub Filitheyo, Maldives</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>hotel-hero-calaserena</code></td><td>Eden Village Calaserena, Sardinia</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>hotel-hero-santorini</code></td><td>Santorini Secret Suites</td><td class="file">Storefront/Platform drawer</td></tr>
+          <tr><td><code>g-puglia</code></td><td>Puglia · Masseria San Vito</td><td class="file">AlpiGPT Front Door</td></tr>
+          <tr><td><code>g-maldives</code></td><td>Maldives overwater villa</td><td class="file">AlpiGPT Front Door</td></tr>
+          <tr><td><code>tv-vm-creta</code></td><td>Crete beach</td><td class="file">Alpitour Platform</td></tr>
+          <tr><td><code>cv-agent-photo</code></td><td>Giulia Rossi (agent portrait)</td><td class="file">Bianchi Proposal ×2</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><b>User-input slot (not a catalogue photo):</b> <code>tv-mm-photo</code> in Alpitour Platform is the traveller's own "search with a photo" drop-target — leave it as a placeholder, or drop a sample shallow-pool snapshot to demo the multimodal flow.</p>
+    </section>
+
+  </div>
+</body>
+</html>

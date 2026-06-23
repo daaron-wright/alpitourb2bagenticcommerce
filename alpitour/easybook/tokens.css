@@ -1,0 +1,41 @@
+/* ============================================================
+   EasyBook Next — semantic tokens (per spec) + base
+   ============================================================ */
+:root {
+  --color-bg-canvas: #F6F7FA;
+  --color-bg-panel: #FFFFFF;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #8A94A4;
+  --color-border-subtle: #D7DCE4;
+  --color-border-faint: #E7EBF1;
+  --color-accent-primary: #0057D9;
+  --color-accent-soft: #EAF1FC;
+  --color-accent-border: #C3D7F4;
+  --color-success: #107C41;
+  --color-success-soft: #E2F2E8;
+  --color-warning: #B7791F;
+  --color-warning-soft: #FAEFD9;
+  --color-danger: #C53030;
+  --color-danger-soft: #FAE3E1;
+  --color-ai: #5B3FA8;
+  --color-ai-soft: #F0EBFA;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
+  --font-size-ui: 14px;
+  --font-ui: "Instrument Sans", "Helvetica Neue", sans-serif;
+  --font-head: "Sora", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --motion-fast: 120ms; --motion-normal: 180ms;
+  --shadow-card: 0 1px 3px rgba(17,24,39,.06);
+  --shadow-drawer: 0 18px 48px rgba(17,24,39,.22);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; font-family: var(--font-ui); font-size: var(--font-size-ui); color: var(--color-text-primary); background: var(--color-bg-canvas); -webkit-font-smoothing: antialiased; }
+h1,h2,h3,h4 { font-family: var(--font-head); font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+button { font-family: var(--font-ui); cursor: pointer; }
+button:disabled { cursor: default; opacity: .55; }
+.ki { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; display: inline-block; vertical-align: -3px; }
+@keyframes eb-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }

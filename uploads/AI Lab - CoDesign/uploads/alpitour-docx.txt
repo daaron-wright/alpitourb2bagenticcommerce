@@ -1,0 +1,298 @@
+Alpitour AI Lab Co-Creation Workshop for EasyBook Next and AlpiGPT
+Executive summary
+This workshop should not be run as a generic “AI ideation session.” It should be run as a decision-oriented validation workshop for a very specific proposition: can an embedded AlpiGPT concierge help external travel agents move from traveler brief to quote, alternative recovery, proposal, hold, and modification with materially less dependence on Alpitour support teams? The design center is therefore the B2B travel-agent workflow, not consumer chat, and the most important outputs are evidence about autonomy, trust, orchestration clarity, and embedded front-end fit inside EasyBook Next. fileciteturn0file0 fileciteturn0file1
+The strongest two-hour format is a mixed-persona, highly interactive workshop that combines four modes in sequence: explicit success framing, live roleplay against the deterministic demo, low-to-mid-fidelity front-end prototyping, and AI-assisted scenario stress testing. That sequence is supported by three complementary method families. Google’s PAIR work offers the right critique lenses for human-AI systems, especially user needs, mental models, explainability, control, and graceful failure; frog contributes excellent collaboration mechanics for cross-functional, possibly remote sessions; and IDEO contributes the most useful prototyping stance for AI-enabled products: start with intention, keep human-centered values visible, rethink fidelity, and use roleplay and experimentation instead of over-polished artifacts. [1]
+Because the current demo is a deterministic React prototype with no real APIs, the workshop should not try to validate live pricing truth, inventory truth, or systems integration. Instead, it should validate the things a prototype can legitimately test: whether participants understand what the agent is doing, whether they can see when to trust it and when to escalate, whether sold-out recovery preserves traveler intent, whether proposal and hold flows are commercially useful, whether modification is self-service enough to reduce support dependency, and whether the embedded UI behaves like a serious travel-sales workbench rather than “just another chat panel.” That distinction is important in human-AI design research, which shows that collaboration improves when people understand AI behavior, can calibrate reliance, and can interrogate limitations rather than treating the system as an opaque oracle. fileciteturn0file1 [2]
+If well facilitated, the workshop should leave the AI Lab with five concrete outputs: a ranked persona-and-metrics board, an annotated journey and orchestration map, a set of embedded EasyBook Next front-end concepts, a scored rubric across the demo beats, and a prioritized backlog for Demo v2. That is enough to give leadership a credible value story, product/design a next-sprint scope, support teams a clearer escalation boundary, and the AI Lab audience a stronger proof point that the concept is agentic workflow orchestration, not only question answering. fileciteturn0file0 fileciteturn0file1
+Research grounding
+The workshop design should borrow from three distinct but complementary evidence bases.
+Source family
+What it contributes
+Actionable takeaway for this workshop
+Google PAIR
+The official People + AI Guidebook is a major industry resource for human-centered AI. A comparative analysis identifies six PAIR concept areas: user needs and success definition, data collection and evaluation, mental models, explainability and trust, feedback and control, and errors and graceful failure. A later study of 31 practitioners found teams used the guidebook for education, cross-functional communication, and internal resources, but wanted more help with early ideation and problem formulation. [3]
+Use PAIR as the evaluation lens, not the whole workshop. Start by making success metrics explicit, then test mental models, trust, control, and failure handling in each activity.
+frog
+frog recommends structuring collaboration in the order outcome, team, process, tools. It also emphasizes a supportive creative climate, mixed perspectives, strong facilitation, and digital-canvas practices for remote collaboration; it explicitly suggests methods such as Person in the Pit, Mental Excursion, and Intrigue Selection for framing, engagement, and down-selection. [4]
+Make the first 15 minutes about outcomes and evidence; assign a board navigator/tool sherpa; use one divergent exercise and one convergent exercise only; keep selection criteria visible.
+IDEO
+IDEO frames design thinking as a human-centered, iterative practice of testing hypotheses and building on findings. IDEO U’s AI materials emphasize starting with intention, rethinking fidelity, roleplaying with AI, co-designing with people, and balancing AI-generated with human-centered design. Their live AI workshop materials also foreground prompt engineering, responsible AI use, data synthesis, and knowing when to use AI in the design process. [5]
+Keep prototypes rough; force participants to articulate intention before screen changes; make roleplay central; use AI as a crit partner and stress-testing tool, not a replacement for human judgment.
+A second layer of research sharpens how the workshop should test an agentic product. Recent HCI work on generative AI prototyping finds that collaborative teams increasingly use content-centric prototyping: they start with the content they want the system to produce, identify attributes and constraints, and iterate prompts and examples together. That is extremely relevant here, because the Alpitour demo’s value depends on whether proposal content, alternative rationales, and modifications are commercially useful and legible to a travel agent. [6]
+Other studies reinforce the need to make the agent’s strengths, limits, and boundaries visible. Showing behavior descriptions helps people identify AI failures and rely on the system when it is more accurate; natural-language onboarding rules can improve human-AI team performance; and UX designers need better support for model understanding and transparency in order to ideate responsibly. In practice, that means the workshop should produce not only UI concepts, but also a reliance rules card and a known-strengths / known-limits panel for the embedded experience. [7]
+Finally, a 2026 CHI workshop paper argues that LLM agents should often be designed as remote collaborators, not passive tools, because trust, awareness, common ground, and explicit signaling become central in human-agent work. That is a useful frame for this session: the question is not merely “did the chatbot answer?”, but “can the travel agent establish enough common ground with the system to safely delegate parts of the sales workflow?” [8]
+Workshop architecture
+The workshop should be framed around three objectives that match the lab-visit context and the prototype’s current maturity. First, validate the agentic orchestration story across the sales journey beats the demo already implies. Second, test support-deflection potential in the moments that currently trigger calls or tickets. Third, envision the embedded UI workbench that makes the orchestration trustworthy and operationally usable inside EasyBook Next. fileciteturn0file0 fileciteturn0file1
+Prioritized personas
+Persona
+Why they matter in this workshop
+What must be validated for them
+Travel agent
+Primary user; the workshop should optimize for their time, confidence, and autonomy.
+Can they move from traveler brief to proposal without feeling lost, unsupported, or over-controlled?
+Agency manager
+Cares about throughput, proposal quality, consistency, and controlled delegation to staff.
+Does the flow increase speed without increasing commercial or operational risk?
+Alpitour support
+Affected by support deflection and escalation quality.
+Which cases can be cleanly deflected, and which must still be escalated with structured context?
+Leadership sponsor
+Cares about business case and strategic proof point.
+Is there a credible line from demo beats to fewer tickets, faster quotes, higher acceptance, and better self-service?
+Product and design team
+Need actionable UX, instrumentation, and scope decisions.
+What should be built next in the front end, orchestration layer, and measurement stack?
+AI Lab audience
+Needs a compelling demonstration of agentic orchestration.
+Does the concept clearly advance beyond fragmented assistants or question-answering alone?
+The participant mix for 8–12 people should be two mixed groups, not functionally siloed groups. Each group should contain at least one travel-agent proxy, one downstream operational or support perspective, and one product/design/AI observer. frog’s emphasis on diverse perspectives and supportive climates makes this mix preferable to “all leaders at one table, all designers at another.” [9]
+Success metrics and prototype-aware proxies
+The business metrics are clear, but the workshop needs prototype-appropriate proxies because the artifact is deterministic and disconnected from real APIs.
+Business metric
+Workshop proxy
+Suggested evidence threshold for this session
+Reduced calls and tickets
+In each scenario, participants judge whether the task could be completed without support, with escalation, or only via support.
+At least 70% of tested scenarios are judged “self-service” or “self-service with structured escalation.”
+Faster quote time
+Time from traveler brief to draft proposal in roleplay.
+Median group time under 8 minutes in the primary quote scenario.
+Proposal acceptance potential
+Participant rating of proposal usefulness, completeness, and persuasiveness.
+Mean score of 4/5 or better from travel-agent and agency-manager proxies.
+Self-service modification rate
+Can groups successfully handle a date / hotel / board-basis change without support?
+At least 80% of groups can complete the modification scenario using only the concept and prompt pack.
+Prototype UX quality
+Confidence in provenance, clarity of agent actions, and ease of corrective control.
+Mean score of 4/5 or better on trust, control, and embedded fit.
+These thresholds should be treated as workshop quality gates, not production KPIs. That distinction matters because a deterministic prototype can test comprehension, orchestration legibility, and task fit, but not live operational performance. PAIR’s emphasis on success definition, mental models, feedback/control, and graceful failure is exactly why this workshop should separate experience validation from system-truth validation. [10]
+Constraints that should shape facilitation
+The workshop has four material constraints. The first is technical: no live APIs, so “availability,” “pricing,” and “policies” are simulated. The second is temporal: two hours is enough for validation and divergence, but not for a full service blueprint. The third is environmental: the format must work either in-person or remote. The fourth is narrative: this is an embedded B2B sales flow, so the front-end concept should behave like a travel-sales workbench with provenance, actions, and proposal controls, not just a chat pane. fileciteturn0file1
+Timed agenda
+The agenda below is intentionally compact. It keeps the number of activity modes low and the evidence loop tight: frame → roleplay → prototype → stress test → score. That structure follows frog’s outcome-first facilitation, IDEO’s iterative hypothesis testing, and Google PAIR’s emphasis on mental models, control, and graceful failure. [11]
+Time
+Activity
+Lead roles
+Facilitation script
+Materials
+Expected output
+00:00–00:10
+Welcome and constraints
+Lead facilitator, scribe
+“Today we are not proving live booking truth. We are testing whether this experience makes travel agents faster, more autonomous, and less dependent on support. Score what you see against those outcomes.”
+KPI board, persona cards, workshop rules
+Shared evidence lens
+00:10–00:20
+Demo fly-through
+Demo driver, lead facilitator
+“Watch for three things: where you trust the system, where you need proof, and where you would still call support.”
+Deterministic React demo, observation sheet
+Initial friction list
+00:20–00:35
+Persona and KPI alignment
+Lead facilitator
+“Dot-vote the persona whose success matters first, then the two KPIs leadership would need to believe.”
+Persona posters, metric dots, Miro/FigJam equivalent
+Ranked personas and metric priorities
+00:35–00:55
+Roleplay quote and hold
+Table hosts, demo driver
+“One person is the travel agent. One is the customer. One interrogates the AI. Push until you either trust the path or hit a support boundary.”
+Scenario card A, orchestration worksheet
+Evidence on retrieval-as-signal, proposal, hold
+00:55–01:10
+Sold-out recovery and support deflection
+Table hosts
+“Do not accept a ‘nice’ answer unless it preserves traveler intent. If sold out, what should the agent do next, and when should it escalate?”
+Scenario card B, escalation ladder
+Evidence on sold-out recovery and deflection
+01:10–01:30
+Rapid front-end prototyping
+Product/design lead, table hosts
+“Sketch the smallest embedded EasyBook Next workbench that would make this flow usable and trustworthy.”
+EasyBook Next shell templates, Figma frames, sticky notes
+Annotated front-end concepts
+01:30–01:45
+AI-assisted scenario testing
+AI operator, table hosts
+“Use the prompt pack to generate two edge cases and one failure mode. Then test whether your concept holds up.”
+Prompt cards, mock knowledge pack
+Red-team findings; reliance rules
+01:45–02:00
+Rubric scoring and close
+Lead facilitator, scribe
+“Name one keep, one change, one unanswered question. Then score the concept as if you had to decide whether to demo this to leadership next week.”
+Rubric sheet, priority board
+Scored concept, top backlog items
+For remote delivery, the same agenda works with two adaptations: assign one board navigator per breakout and preload all templates so no time is lost on setup. frog’s guidance is especially relevant here: digital canvas tools help groups “see and feel” emerging knowledge, but only if a facilitator or program manager curates the tools and flow in advance. [12]
+Activity design and AI prompts
+Why these activity choices fit a two-hour session
+Validation need
+Lower-value option
+Recommended option
+Why the recommended option is stronger
+Align the room quickly
+Slide recap of personas and KPIs
+Persona + KPI dot-vote
+Forces commitment and creates a visible decision frame instead of passive agreement.
+Validate the workflow
+Silent usability testing
+Live roleplay
+Agentic value appears in questioning, handoffs, fallback logic, and trust calibration, not only clicks.
+Envision the front end
+Detailed service blueprint
+Annotated embedded workbench sketch
+Faster, more concrete, and better matched to the EasyBook Next embedding question.
+Test AI variability despite deterministic demo
+Heuristic checklist only
+LLM-assisted scenario generation and recovery testing
+Introduces controlled variability, edge cases, and orchestration thinking without needing live APIs.
+The roleplay plus AI-stress-test combination is especially important. IDEO explicitly recommends roleplaying with AI to surface perspectives and pressure-test ideas, while current HCI research on content-centric prototyping shows teams need to iteratively test prompts, content examples, and design constraints together. [13]
+Persona and demo-beat mapping
+Activity
+Personas validated
+Demo beats exercised
+Demo fly-through
+Travel agent, support, leadership, product, AI Lab audience
+High-level overview of all beats
+Roleplay quote and hold
+Travel agent, agency manager, product team
+Retrieval-as-signal, proposal generation, hold
+Sold-out recovery and support deflection
+Travel agent, support, leadership
+Sold-out recovery, support deflection
+Rapid front-end prototyping
+Travel agent, agency manager, product team, AI Lab audience
+Retrieval visibility, proposal workspace, hold controls, modification entry points
+AI-assisted scenario testing
+Support, product team, leadership
+Modification, failure handling, support boundary, orchestration legibility
+Rubric close
+All personas
+Prioritization across all beats
+Model-agnostic prompt pack
+The prompt pack below is written to work in any strong LLM interface. It is most useful if the AI operator feeds the model only the scenario cards, mock product facts, and prototype constraints. That keeps the session grounded and avoids accidental invention. This approach aligns with content-centric prototyping research and with IDEO U’s emphasis on prompt engineering, responsible use, and balancing AI-generated with human-centered design. [14]
+Activity
+Prompt
+What to look for
+Persona and KPI alignment
+You are a workshop synthesis assistant. Input: prioritized personas, desired business outcomes, and prototype constraints. Output: five testable workshop questions, each with one observable signal and one failure condition. Keep the questions specific to a B2B travel agent selling a package holiday.
+Whether the room is aligned on evidence, not slogans.
+Roleplay quote and hold
+Act as a travel customer visiting an agency. Generate a realistic brief for a family asking for an all-inclusive Egypt holiday in August. Include stated preferences, one hidden constraint, and one point likely to require clarification. Do not solve the trip.
+Whether AlpiGPT asks the right questions before proposing options.
+Sold-out recovery
+Simulate an agentic concierge handling a sold-out preferred hotel. Preserve traveler intent. For each proposed alternative, label the rationale as: exact match, near match, commercial compromise, or unsupported guess. Then state when the system should recommend an escalation to support.
+Whether recovery preserves intent and trust instead of simply filling the screen with alternatives.
+Front-end prototyping
+Given an embedded travel-selling interface inside EasyBook Next, propose a low-to-mid-fidelity workbench with these zones: traveler brief, grounding/provenance, proposal workspace, action rail, and escalation state. Output only panel names, user actions, and what must remain editable by the agent.
+Whether the concept behaves like a workbench, not a chat log.
+Modification testing
+Using only the scripted scenario data, generate three post-proposal change requests: a simple date change, a hotel substitution, and a risky request that should trigger escalation. For each, specify what the user needs to see to trust the change.
+Whether modification logic is legible and self-service boundaries are clear.
+Workshop synthesis
+Summarize workshop notes into Keep / Change / Open Questions. For each item, map it to persona, demo beat, and business metric. Highlight any issue that would block leadership confidence in support deflection.
+Whether feedback converts cleanly into backlog-ready decisions.
+A small but important addition is a reliance card prompt, inspired by human-AI onboarding research:
+Draft three plain-language rules for when a travel agent should trust the concierge, when they should verify, and when they should escalate. Base the rules only on the current prototype’s known constraints.
+That kind of natural-language guidance helps participants reason about appropriate reliance instead of treating the system as universally authoritative. [15]
+Evaluation and follow-up
+The workshop should conclude with a visible scoring exercise, not an open-ended discussion. The most useful rubric is a 1–5 scale applied to seven dimensions.
+Dimension
+Scoring question
+What a strong score looks like
+Travel-agent usefulness
+Would this materially reduce friction in the selling journey?
+The flow feels faster, clearer, and easier than current fragmented tools.
+Trust and grounding
+Can users tell what is grounded, assumed, or uncertain?
+Retrieval/provenance is visible and trust is calibrated.
+Control and editability
+Can the agent override or correct the system easily?
+Proposal, hold, and modification remain user-steerable.
+Sold-out recovery quality
+Does the system preserve traveler intent when the preferred option fails?
+Alternatives feel reasoned, not random.
+Support deflection potential
+Does this reduce unnecessary calls and produce cleaner escalations?
+Support is reserved for true exceptions.
+Embedded front-end fit
+Does this belong in EasyBook Next?
+It behaves like a contextual workbench, not a detached chatbot.
+Feasibility for next prototype
+Can the chosen changes be represented in a deterministic demo soon?
+The concept is ambitious but still demonstrable.
+The discussion around this rubric should explicitly surface known strengths and limits. Research shows that high-level descriptions of AI behavior help people identify failure modes and calibrate reliance; the front end should therefore expose strengths, uncertainties, and escalation logic as first-class UI elements rather than leaving them implicit. [16]
+Materials and artifacts
+Material or template
+In-person format
+Remote format
+Artifact produced
+Persona + KPI board
+Printed A1 poster with dot stickers
+Miro/FigJam voting board
+Ranked personas and metric priorities
+Scenario cards
+Printed cards per table
+Miro cards or shared doc
+Evidence by scenario
+EasyBook Next front-end frames
+A3 printouts with markers
+Figma or FigJam frames
+Annotated embedded UI concepts
+Orchestration worksheet
+Swimlane sheet
+Miro swimlane
+Human/agent handoff map
+Prompt pack
+Handout cards
+Shared prompts doc
+AI-generated edge cases and reliance rules
+Scoring rubric
+Printed scoresheet
+Shared table
+Comparable concept scores
+Synthesis matrix
+Wall or whiteboard
+Miro summary frame
+Keep / Change / Open Questions
+The artifact set should be deliberately lean. The point is not to leave with perfect documentation; it is to leave with decision-grade evidence. The minimum useful package is: one photo/export per board, one scored rubric per group, one consolidated backlog, and one short leadership narrative that links findings back to the four business metrics. frog’s emphasis on contribution being visible and meaningful is a good reminder here: if participants cannot see how their outputs will change the next demo, the session will feel performative. [17]
+Recommended synthesis cadence
+A practical follow-up sequence is:
+Horizon
+Recommended synthesis step
+Output
+Immediately after
+Consolidate raw board captures and rubric scores
+Workshop archive
+Within one working day
+Cluster notes by persona, demo beat, and business metric
+Evidence matrix
+Within two working days
+Convert findings into UI deltas, orchestration assumptions, and measurement needs
+Prioritized v2 backlog
+Before the next demo review
+Produce a short readout: what was validated, what was not, what leadership can credibly claim
+Leadership-ready narrative
+The workshop should be considered successful if it produces all of the following: a shared primary-persona focus, evidence-backed judgments on support-deflection potential, one converged embedded front-end direction, explicit escalation boundaries, and a small set of high-confidence prototype changes tied to business metrics. If the room instead leaves with only generalized enthusiasm for “AI opportunities,” the workshop has failed its purpose. The goal is sharper than that: validate whether this agentic concierge can become a credible B2B sales-enablement experience for Alpitour’s agency partners. fileciteturn0file0 fileciteturn0file1
+[1] [3] https://pair.withgoogle.com/guidebook/
+https://pair.withgoogle.com/guidebook/
+[2] [7] [16] https://arxiv.org/abs/2301.06937
+https://arxiv.org/abs/2301.06937
+[4] [11] [12] [17] https://www.frog.co/designmind/9-keys-to-remote-collaboration
+https://www.frog.co/designmind/9-keys-to-remote-collaboration
+[5] https://www.ideo.com/about
+https://www.ideo.com/about
+[6] [14] https://arxiv.org/abs/2402.17721
+https://arxiv.org/abs/2402.17721
+[8] https://arxiv.org/abs/2602.05987
+https://arxiv.org/abs/2602.05987
+[9] https://www.frog.co/designmind/how-to-think-like-a-designer
+https://www.frog.co/designmind/how-to-think-like-a-designer
+[10] https://arxiv.org/abs/2010.11761
+https://arxiv.org/abs/2010.11761
+[13] https://www.ideou.com/products/ai-prototyping
+https://www.ideou.com/products/ai-prototyping
+[15] https://arxiv.org/abs/2311.01007
+https://arxiv.org/abs/2311.01007

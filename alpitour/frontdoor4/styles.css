@@ -1,0 +1,125 @@
+/* ============================================================
+   Alpitour.it — Customer front door (simple Q&A)
+   ChatGPT-style single column. One question at a time, big
+   tappable answers, one result, one handoff to the agency.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; font-family: var(--font-sans); color: var(--fg-1); background: #fff; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+button { font-family: var(--font-sans); cursor: pointer; }
+.ki { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; display: inline-block; vertical-align: -3px; }
+
+.q-app { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* header — minimal */
+.q-head { display: flex; align-items: center; gap: 10px; padding: 14px 20px; }
+.q-logo { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--k-warm-red-50); letter-spacing: -0.02em; cursor: pointer; }
+.q-logo span { color: var(--fg-muted); font-weight: 400; font-size: 13px; letter-spacing: 0; }
+.q-head .r { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.q-head .r button { font-size: 12.5px; color: var(--fg-2); background: none; border: 1px solid var(--border-1); border-radius: 999px; padding: 7px 14px; }
+.q-head .r button:hover { background: var(--bg-2); }
+
+/* start state — centered */
+.q-start { flex: 1; display: grid; place-items: center; padding: 24px; }
+.q-start-in { width: 100%; max-width: 580px; text-align: center; }
+.q-mark { width: 44px; height: 44px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 19px; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); }
+.q-start h1 { font-size: 32px; line-height: 1.1; }
+.q-start .sub { font-size: 15px; color: var(--fg-2); margin-top: 10px; line-height: 1.5; }
+
+/* conversation column */
+.q-chat { flex: 1; width: 100%; max-width: 620px; margin: 0 auto; padding: 10px 20px 150px; display: flex; flex-direction: column; gap: 14px; }
+.q-msg { display: flex; gap: 11px; animation: q-rise .3s ease-out both; }
+.q-msg .av { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; color: #fff; font-size: 12px; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); margin-top: 2px; }
+.q-msg .body { font-size: 15px; line-height: 1.6; padding-top: 4px; min-width: 0; }
+.q-msg .body b { font-weight: 600; }
+.q-msg.user { justify-content: flex-end; }
+.q-msg.user .body { background: var(--bg-2); border-radius: 16px 16px 4px 16px; padding: 10px 16px; max-width: 85%; font-size: 14.5px; }
+
+/* answer chips — big touch targets */
+.q-answers { display: flex; flex-wrap: wrap; gap: 9px; padding-left: 39px; animation: q-rise .3s ease-out both; }
+.q-answers button { font-size: 14px; font-weight: 500; color: var(--fg-1); background: #fff; border: 1.5px solid var(--border-2); border-radius: 999px; padding: 11px 18px; min-height: 44px; transition: border-color .15s, background .15s; }
+.q-answers button:hover { border-color: var(--k-spruce-60); background: var(--k-ai-spruce-06); }
+.q-answers .hint { width: 100%; font-size: 11.5px; color: var(--fg-muted); padding-top: 2px; }
+
+/* status */
+.q-status { display: flex; gap: 11px; align-items: center; padding-left: 0; color: var(--fg-muted); font-size: 13.5px; animation: q-rise .3s ease-out both; }
+.q-status .av { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; color: #fff; font-size: 12px; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); animation: q-breathe 1.6s ease-in-out infinite; }
+@keyframes q-breathe { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+/* summary chips */
+.q-brief { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.q-brief span { font-size: 12px; color: var(--k-spruce-80); background: var(--k-ai-spruce-06); border: 1px solid var(--k-spruce-20); border-radius: 999px; padding: 4px 11px; }
+
+/* sold-out note */
+.q-note { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--k-status-warning-110); background: var(--k-status-warning-10); border: 1px solid var(--k-status-warning-20); border-radius: 999px; padding: 5px 12px; margin-bottom: 7px; }
+
+/* result card — one, simple */
+.q-card { border: 1px solid var(--border-1); border-radius: 14px; overflow: hidden; margin-top: 4px; box-shadow: var(--shadow-sm); }
+.q-card image-slot { width: 100%; height: 200px; display: block; }
+.q-card .b { padding: 15px 18px 16px; }
+.q-card .top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.q-card h3 { font-size: 19px; }
+.q-card .stars { color: var(--k-warm-red-50); font-size: 11px; letter-spacing: 1.5px; }
+.q-card .sub { font-size: 13px; color: var(--fg-muted); margin-top: 3px; }
+.q-card .why { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.q-card .why .w { display: flex; gap: 8px; font-size: 13.5px; align-items: flex-start; line-height: 1.45; }
+.q-card .why .ki { color: var(--k-spruce-60); margin-top: 2px; width: 14px; height: 14px; }
+.q-card .foot { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--slate-100); flex-wrap: wrap; }
+.q-card .price { font-family: var(--font-display); font-size: 23px; font-weight: 600; }
+.q-card .price small { font-size: 12px; color: var(--fg-muted); font-weight: 400; font-family: var(--font-sans); }
+.q-card .verify { font-size: 11px; color: var(--fg-muted); display: flex; align-items: center; gap: 6px; }
+.q-card .verify .d { width: 6px; height: 6px; border-radius: 50%; background: var(--k-status-success-100); }
+
+/* follow-up actions */
+.q-follow { display: flex; flex-wrap: wrap; gap: 9px; padding-left: 39px; animation: q-rise .3s ease-out both; }
+.q-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600; border-radius: 999px; padding: 12px 20px; min-height: 44px; border: 1.5px solid var(--border-2); background: #fff; color: var(--fg-1); text-decoration: none; }
+.q-btn:hover { background: var(--bg-2); }
+.q-btn.red { background: var(--k-warm-red-50); border-color: var(--k-warm-red-50); color: #fff; }
+.q-btn.red:hover { background: var(--k-warm-red-60); }
+
+/* agent handoff — visible agent→agent moment, customer-friendly */
+.q-handoff { border-radius: 12px; padding: 12px 15px; font-size: 12.5px; background: linear-gradient(135deg, rgba(41,112,122,.05), rgba(255,70,45,.05)) padding-box, linear-gradient(135deg, rgba(41,112,122,.3), rgba(255,70,45,.3)) border-box; border: 1.5px solid transparent; }
+.q-handoff .hh { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--k-spruce-70); }
+.q-handoff .glyph { font-size: 13px; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.q-handoff .route { display: flex; align-items: center; gap: 8px; margin-top: 9px; flex-wrap: wrap; }
+.q-handoff .route span { font-size: 12px; font-weight: 600; background: #fff; border: 1px solid var(--border-1); border-radius: 7px; padding: 5px 11px; }
+.q-handoff .route .to { border-color: var(--k-spruce-30); color: var(--k-spruce-80); }
+.q-handoff .route .ki { color: var(--fg-muted); fill: currentColor; }
+.q-handoff .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.q-handoff .chips span { font-size: 11px; color: var(--fg-2); background: #fff; border: 1px solid var(--border-1); border-radius: 999px; padding: 3px 10px; }
+
+/* agency handoff card */
+.q-agency { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--k-spruce-20); background: var(--k-ai-spruce-06); border-radius: 12px; padding: 13px 16px; margin-top: 10px; }
+.q-agency .am { width: 38px; height: 38px; border-radius: 9px; background: var(--k-spruce-60); color: #fff; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 17px; flex-shrink: 0; }
+.q-agency .t { font-size: 13.5px; font-weight: 600; }
+.q-agency .s { font-size: 12.5px; color: var(--fg-2); line-height: 1.55; margin-top: 2px; }
+
+/* input dock */
+.q-dock { position: fixed; left: 0; right: 0; bottom: 0; background: linear-gradient(transparent, #fff 30%); padding: 24px 20px 18px; }
+.q-dock-in { max-width: 620px; margin: 0 auto; }
+.q-inputrow { position: relative; }
+.q-input { width: 100%; border: 1.5px solid var(--border-2); border-radius: 999px; padding: 15px 56px 15px 20px; font-size: 15px; font-family: var(--font-sans); color: var(--fg-1); outline: none; background: #fff; box-shadow: var(--shadow-sm); }
+.q-input:focus { border-color: var(--k-spruce-60); box-shadow: 0 0 0 3px var(--k-ai-spruce-12); }
+.q-send { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--k-warm-red-50); color: #fff; display: grid; place-items: center; }
+.q-send:hover { background: var(--k-warm-red-60); }
+.q-send:disabled { background: var(--k-cool-gray-30); cursor: default; }
+.q-dock-note { text-align: center; font-size: 11px; color: var(--fg-muted); margin-top: 9px; }
+
+/* start-state suggestions */
+.q-sugg { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; }
+.q-sugg button { font-size: 14px; color: var(--fg-1); background: #fff; border: 1px solid var(--border-1); border-radius: 12px; padding: 13px 16px; min-height: 44px; text-align: left; transition: border-color .15s, background .15s; }
+.q-sugg button:hover { border-color: var(--k-spruce-40); background: var(--k-ai-spruce-06); }
+.q-foot-note { font-size: 11.5px; color: var(--fg-muted); margin-top: 20px; }
+
+.q-toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); z-index: 80; background: var(--k-dark-stone-90); color: #fff; font-size: 12.5px; border-radius: 999px; padding: 10px 18px; box-shadow: var(--shadow-drawer); animation: q-rise .25s ease-out both; }
+
+@keyframes q-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+@media (max-width: 560px) {
+  .q-start h1 { font-size: 26px; }
+  .q-answers, .q-follow { padding-left: 0; }
+}

@@ -1,0 +1,3099 @@
+{
+  "Request Intake & Classification": {
+    "name": "Request Intake & Classification",
+    "description": "Classify the incoming interaction into ChemAssist, RegRadar, Supply Chain, proactive reorder, regulatory-change, or unsupported flow.",
+    "type": "initial",
+    "functions": [
+      "capture_user_query_or_signal",
+      "classify_request_type",
+      "create_case_context"
+    ],
+    "control_attribute": {
+      "attribute_name": "request_type",
+      "description": "Runtime decision value for Request Intake & Classification; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "product_recommendation",
+        "formulation_guidance",
+        "regulatory_question",
+        "proactive_reorder",
+        "supply_chain_disruption",
+        "regulatory_change",
+        "unsupported"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "create_case_context"
+    },
+    "transitions": [
+      {
+        "action": "Product recommendation request",
+        "source": "Request Intake & Classification",
+        "target": "Identity & Account Scope Gate",
+        "control_attribute": "request_type",
+        "control_attribute_value": "product_recommendation",
+        "condition": "request_type == product_recommendation"
+      },
+      {
+        "action": "Formulation guidance request",
+        "source": "Request Intake & Classification",
+        "target": "Identity & Account Scope Gate",
+        "control_attribute": "request_type",
+        "control_attribute_value": "formulation_guidance",
+        "condition": "request_type == formulation_guidance"
+      },
+      {
+        "action": "Regulatory question",
+        "source": "Request Intake & Classification",
+        "target": "Identity & Account Scope Gate",
+        "control_attribute": "request_type",
+        "control_attribute_value": "regulatory_question",
+        "condition": "request_type == regulatory_question"
+      },
+      {
+        "action": "Proactive reorder opportunity",
+        "source": "Request Intake & Classification",
+        "target": "Identity & Account Scope Gate",
+        "control_attribute": "request_type",
+        "control_attribute_value": "proactive_reorder",
+        "condition": "request_type == proactive_reorder"
+      },
+      {
+        "action": "Supply-chain disruption signal",
+        "source": "Request Intake & Classification",
+        "target": "Supply Chain Signal Assessment",
+        "control_attribute": "request_type",
+        "control_attribute_value": "supply_chain_disruption",
+        "condition": "request_type == supply_chain_disruption"
+      },
+      {
+        "action": "Regulatory change signal",
+        "source": "Request Intake & Classification",
+        "target": "RegRadar Change Detection",
+        "control_attribute": "request_type",
+        "control_attribute_value": "regulatory_change",
+        "condition": "request_type == regulatory_change"
+      },
+      {
+        "action": "Unsupported or ambiguous request",
+        "source": "Request Intake & Classification",
+        "target": "Human Escalation Router",
+        "control_attribute": "request_type",
+        "control_attribute_value": "unsupported",
+        "condition": "request_type == unsupported"
+      }
+    ],
+    "id": 1,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Request",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-1",
+        "similarity": 1.0,
+        "text_english": "The platform combines ChemAssist, RegRadar, and the Supply Chain Agentic Spine into a governed intelligence layer for customer and internal workflows.",
+        "source_section": "1 Executive Summary / 3 Product Vision",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "request_type": "product_recommendation|formulation_guidance|regulatory_question|proactive_reorder|supply_chain_disruption|regulatory_change|unsupported"
+    },
+    "additional_rego_rules": {
+      "request_type": "product_recommendation|formulation_guidance|regulatory_question|proactive_reorder|supply_chain_disruption|regulatory_change|unsupported"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Identity & Account Scope Gate": {
+    "name": "Identity & Account Scope Gate",
+    "description": "Authenticate the user, resolve account context, and determine whether account-specific product, order, commercial, or supply-chain data may be used.",
+    "type": "decision",
+    "functions": [
+      "authenticate_user",
+      "resolve_customer_account",
+      "evaluate_account_permissions"
+    ],
+    "control_attribute": {
+      "attribute_name": "access_scope",
+      "description": "Runtime decision value for Identity & Account Scope Gate; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "authorized",
+        "limited",
+        "unauthorized"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "evaluate_account_permissions"
+    },
+    "transitions": [
+      {
+        "action": "Account-specific access authorized",
+        "source": "Identity & Account Scope Gate",
+        "target": "Approved Source Retrieval",
+        "control_attribute": "access_scope",
+        "control_attribute_value": "authorized",
+        "condition": "access_scope == authorized"
+      },
+      {
+        "action": "Limited non-account context allowed",
+        "source": "Identity & Account Scope Gate",
+        "target": "Approved Source Retrieval",
+        "control_attribute": "access_scope",
+        "control_attribute_value": "limited",
+        "condition": "access_scope == limited"
+      },
+      {
+        "action": "Unauthorized for requested data",
+        "source": "Identity & Account Scope Gate",
+        "target": "Closed - Access Denied",
+        "control_attribute": "access_scope",
+        "control_attribute_value": "unauthorized",
+        "condition": "access_scope == unauthorized"
+      }
+    ],
+    "id": 2,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Identity",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-10.2-BR015",
+        "similarity": 1.0,
+        "text_english": "ChemAssist must support account-specific answers only after authentication and authorization.",
+        "source_section": "10.2 ChemAssist Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-DQ005",
+        "similarity": 1.0,
+        "text_english": "Customer data must be permissioned by account, user role, geography, and contractual rules.",
+        "source_section": "13.2 Data Quality Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "access_scope": "authorized|limited|unauthorized"
+    },
+    "additional_rego_rules": {
+      "access_scope": "authorized|limited|unauthorized"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Approved Source Retrieval": {
+    "name": "Approved Source Retrieval",
+    "description": "Retrieve only approved and current Dow product, technical, regulatory, formulation, account, and operations sources needed for the classified request.",
+    "type": "process",
+    "functions": [
+      "retrieve_approved_product_documents",
+      "retrieve_technical_and_regulatory_sources",
+      "retrieve_account_and_order_context",
+      "validate_source_currency_and_approval"
+    ],
+    "control_attribute": {
+      "attribute_name": "source_grounding_status",
+      "description": "Runtime decision value for Approved Source Retrieval; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "grounded",
+        "insufficient_sources",
+        "obsolete_or_unapproved_sources"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "validate_source_currency_and_approval"
+    },
+    "transitions": [
+      {
+        "action": "Approved current sources found",
+        "source": "Approved Source Retrieval",
+        "target": "Customer Intent Branch",
+        "control_attribute": "source_grounding_status",
+        "control_attribute_value": "grounded",
+        "condition": "source_grounding_status == grounded"
+      },
+      {
+        "action": "Insufficient approved sources",
+        "source": "Approved Source Retrieval",
+        "target": "Human Escalation Router",
+        "control_attribute": "source_grounding_status",
+        "control_attribute_value": "insufficient_sources",
+        "condition": "source_grounding_status == insufficient_sources"
+      },
+      {
+        "action": "Obsolete or unapproved source risk",
+        "source": "Approved Source Retrieval",
+        "target": "Human Escalation Router",
+        "control_attribute": "source_grounding_status",
+        "control_attribute_value": "obsolete_or_unapproved_sources",
+        "condition": "source_grounding_status == obsolete_or_unapproved_sources"
+      }
+    ],
+    "id": 3,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Sources",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR003-BR004",
+        "similarity": 1.0,
+        "text_english": "The platform must use approved Dow data sources and maintain source traceability for answers and agentic actions.",
+        "source_section": "10.1 Platform-Level Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-DQ001-DQ006",
+        "similarity": 1.0,
+        "text_english": "Customer-facing documents must be approved, current, and version-controlled; obsolete or superseded documents must not be used unless marked historical.",
+        "source_section": "13.2 Data Quality Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "source_grounding_status": "grounded|insufficient_sources|obsolete_or_unapproved_sources"
+    },
+    "additional_rego_rules": {
+      "source_grounding_status": "grounded|insufficient_sources|obsolete_or_unapproved_sources"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Customer Intent Branch": {
+    "name": "Customer Intent Branch",
+    "description": "Route customer-facing interactions to product recommendation, formulation guidance, regulatory compliance, or proactive reorder processing.",
+    "type": "decision",
+    "functions": [
+      "resolve_customer_workflow_from_request_type",
+      "validate_customer_workflow_scope"
+    ],
+    "control_attribute": {
+      "attribute_name": "customer_workflow",
+      "description": "Runtime decision value for Customer Intent Branch; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "product_recommendation",
+        "formulation_guidance",
+        "regulatory_question",
+        "proactive_reorder"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "validate_customer_workflow_scope"
+    },
+    "transitions": [
+      {
+        "action": "Run product selector",
+        "source": "Customer Intent Branch",
+        "target": "Product Recommendation Analysis",
+        "control_attribute": "customer_workflow",
+        "control_attribute_value": "product_recommendation",
+        "condition": "customer_workflow == product_recommendation"
+      },
+      {
+        "action": "Run formulation advisor",
+        "source": "Customer Intent Branch",
+        "target": "Formulation Guidance Analysis",
+        "control_attribute": "customer_workflow",
+        "control_attribute_value": "formulation_guidance",
+        "condition": "customer_workflow == formulation_guidance"
+      },
+      {
+        "action": "Run RegRadar compliance check",
+        "source": "Customer Intent Branch",
+        "target": "RegRadar Compliance Check",
+        "control_attribute": "customer_workflow",
+        "control_attribute_value": "regulatory_question",
+        "condition": "customer_workflow == regulatory_question"
+      },
+      {
+        "action": "Run proactive reorder analysis",
+        "source": "Customer Intent Branch",
+        "target": "Proactive Reorder Analysis",
+        "control_attribute": "customer_workflow",
+        "control_attribute_value": "proactive_reorder",
+        "condition": "customer_workflow == proactive_reorder"
+      }
+    ],
+    "id": 4,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Workflow",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-8.1",
+        "similarity": 1.0,
+        "text_english": "ChemAssist covers product selection, formulation guidance, regulatory answers, order intelligence, multilingual support, and escalation.",
+        "source_section": "8.1 ChemAssist",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "customer_workflow": "product_recommendation|formulation_guidance|regulatory_question|proactive_reorder"
+    },
+    "additional_rego_rules": {
+      "customer_workflow": "product_recommendation|formulation_guidance|regulatory_question|proactive_reorder"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Product Recommendation Analysis": {
+    "name": "Product Recommendation Analysis",
+    "description": "Extract application requirements and rank candidate Dow products using approved product registry, TDS, SDS, application guides, formulation examples, and regulatory documents.",
+    "type": "process",
+    "functions": [
+      "extract_application_requirements",
+      "run_product_selector",
+      "rank_candidate_products",
+      "generate_recommendation_rationale"
+    ],
+    "control_attribute": {
+      "attribute_name": "product_recommendation_status",
+      "description": "Runtime decision value for Product Recommendation Analysis; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "candidates_ranked",
+        "no_candidate_found",
+        "low_confidence"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "generate_recommendation_rationale"
+    },
+    "transitions": [
+      {
+        "action": "Candidate products ranked",
+        "source": "Product Recommendation Analysis",
+        "target": "RegRadar Compliance Check",
+        "control_attribute": "product_recommendation_status",
+        "control_attribute_value": "candidates_ranked",
+        "condition": "product_recommendation_status == candidates_ranked"
+      },
+      {
+        "action": "No suitable candidate found",
+        "source": "Product Recommendation Analysis",
+        "target": "Human Escalation Router",
+        "control_attribute": "product_recommendation_status",
+        "control_attribute_value": "no_candidate_found",
+        "condition": "product_recommendation_status == no_candidate_found"
+      },
+      {
+        "action": "Low confidence recommendation",
+        "source": "Product Recommendation Analysis",
+        "target": "Human Escalation Router",
+        "control_attribute": "product_recommendation_status",
+        "control_attribute_value": "low_confidence",
+        "condition": "product_recommendation_status == low_confidence"
+      }
+    ],
+    "id": 5,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Product Recommendation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-11.1",
+        "similarity": 1.0,
+        "text_english": "Product Selector must extract application requirements, match structured attributes, rank by fit, provide rationale and citations, and escalate where confidence is low.",
+        "source_section": "11.1 Intelligent Product Selector",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "product_recommendation_status": "candidates_ranked|no_candidate_found|low_confidence"
+    },
+    "additional_rego_rules": {
+      "product_recommendation_status": "candidates_ranked|no_candidate_found|low_confidence"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Formulation Guidance Analysis": {
+    "name": "Formulation Guidance Analysis",
+    "description": "Answer formulation and usage questions only when grounded in approved technical content; route novel, undocumented, or safety-sensitive scenarios to Technical Service.",
+    "type": "process",
+    "functions": [
+      "retrieve_formulation_guides",
+      "evaluate_formulation_support",
+      "draft_formulation_guidance_with_caveats"
+    ],
+    "control_attribute": {
+      "attribute_name": "formulation_guidance_status",
+      "description": "Runtime decision value for Formulation Guidance Analysis; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "supported_documented",
+        "safety_sensitive",
+        "undocumented_or_novel",
+        "low_confidence"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "draft_formulation_guidance_with_caveats"
+    },
+    "transitions": [
+      {
+        "action": "Supported documented guidance",
+        "source": "Formulation Guidance Analysis",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "formulation_guidance_status",
+        "control_attribute_value": "supported_documented",
+        "condition": "formulation_guidance_status == supported_documented"
+      },
+      {
+        "action": "Safety-sensitive formulation issue",
+        "source": "Formulation Guidance Analysis",
+        "target": "Technical Service Escalation",
+        "control_attribute": "formulation_guidance_status",
+        "control_attribute_value": "safety_sensitive",
+        "condition": "formulation_guidance_status == safety_sensitive"
+      },
+      {
+        "action": "Undocumented or novel formulation issue",
+        "source": "Formulation Guidance Analysis",
+        "target": "Technical Service Escalation",
+        "control_attribute": "formulation_guidance_status",
+        "control_attribute_value": "undocumented_or_novel",
+        "condition": "formulation_guidance_status == undocumented_or_novel"
+      },
+      {
+        "action": "Low confidence formulation guidance",
+        "source": "Formulation Guidance Analysis",
+        "target": "Human Escalation Router",
+        "control_attribute": "formulation_guidance_status",
+        "control_attribute_value": "low_confidence",
+        "condition": "formulation_guidance_status == low_confidence"
+      }
+    ],
+    "id": 6,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Formulation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-11.2",
+        "similarity": 1.0,
+        "text_english": "Formulation Advisor must provide guidance only when grounded in approved content and escalate novel or undocumented scenarios.",
+        "source_section": "11.2 Formulation Advisor",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "formulation_guidance_status": "supported_documented|safety_sensitive|undocumented_or_novel|low_confidence"
+    },
+    "additional_rego_rules": {
+      "formulation_guidance_status": "supported_documented|safety_sensitive|undocumented_or_novel|low_confidence"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "RegRadar Compliance Check": {
+    "name": "RegRadar Compliance Check",
+    "description": "Use RegRadar to retrieve current regulatory intelligence by product, jurisdiction, application, and regulation type; classify response as allowed, informational, sensitive, formal-certification, or restricted.",
+    "type": "process",
+    "functions": [
+      "identify_product_jurisdiction_application",
+      "query_regrada_intelligence",
+      "classify_regulatory_answer_boundary",
+      "attach_regulatory_source_metadata"
+    ],
+    "control_attribute": {
+      "attribute_name": "regulatory_check_status",
+      "description": "Runtime decision value for RegRadar Compliance Check; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "compliant_answer_ready",
+        "informational_only_with_disclaimer",
+        "uncertain_or_legal_sensitive",
+        "formal_certification_requested",
+        "non_compliant_or_restricted"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "attach_regulatory_source_metadata"
+    },
+    "transitions": [
+      {
+        "action": "Compliant answer ready",
+        "source": "RegRadar Compliance Check",
+        "target": "Supply Chain Availability & Risk Check",
+        "control_attribute": "regulatory_check_status",
+        "control_attribute_value": "compliant_answer_ready",
+        "condition": "regulatory_check_status == compliant_answer_ready"
+      },
+      {
+        "action": "Informational answer with disclaimer",
+        "source": "RegRadar Compliance Check",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "regulatory_check_status",
+        "control_attribute_value": "informational_only_with_disclaimer",
+        "condition": "regulatory_check_status == informational_only_with_disclaimer"
+      },
+      {
+        "action": "Uncertain or legally sensitive",
+        "source": "RegRadar Compliance Check",
+        "target": "Regulatory or Legal Escalation",
+        "control_attribute": "regulatory_check_status",
+        "control_attribute_value": "uncertain_or_legal_sensitive",
+        "condition": "regulatory_check_status == uncertain_or_legal_sensitive"
+      },
+      {
+        "action": "Formal certification requested",
+        "source": "RegRadar Compliance Check",
+        "target": "Regulatory or Legal Escalation",
+        "control_attribute": "regulatory_check_status",
+        "control_attribute_value": "formal_certification_requested",
+        "condition": "regulatory_check_status == formal_certification_requested"
+      },
+      {
+        "action": "Non-compliant or restricted",
+        "source": "RegRadar Compliance Check",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "regulatory_check_status",
+        "control_attribute_value": "non_compliant_or_restricted",
+        "condition": "regulatory_check_status == non_compliant_or_restricted"
+      }
+    ],
+    "id": 7,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "RegRadar",
+    "entity": "Regulatory Answer",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-10.3",
+        "similarity": 1.0,
+        "text_english": "RegRadar maintains regulatory intelligence by product, jurisdiction, application, and regulation type, provides source date/version/status, and routes uncertain or legal-sensitive questions.",
+        "source_section": "10.3 RegRadar Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "regulatory_check_status": "compliant_answer_ready|informational_only_with_disclaimer|uncertain_or_legal_sensitive|formal_certification_requested|non_compliant_or_restricted"
+    },
+    "additional_rego_rules": {
+      "regulatory_check_status": "compliant_answer_ready|informational_only_with_disclaimer|uncertain_or_legal_sensitive|formal_certification_requested|non_compliant_or_restricted"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Supply Chain Availability & Risk Check": {
+    "name": "Supply Chain Availability & Risk Check",
+    "description": "Query availability, regional supply risk, disruption status, customer commitments, and known constraints to make product or reorder guidance supply-aware.",
+    "type": "process",
+    "functions": [
+      "query_inventory_and_availability",
+      "query_supply_disruption_risk",
+      "evaluate_customer_commitments",
+      "summarize_supply_risk"
+    ],
+    "control_attribute": {
+      "attribute_name": "supply_chain_risk_status",
+      "description": "Runtime decision value for Supply Chain Availability & Risk Check; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "available_low_risk",
+        "constrained_with_alternatives",
+        "disrupted_or_unavailable",
+        "supply_data_unavailable"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "summarize_supply_risk"
+    },
+    "transitions": [
+      {
+        "action": "Available with low risk",
+        "source": "Supply Chain Availability & Risk Check",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "supply_chain_risk_status",
+        "control_attribute_value": "available_low_risk",
+        "condition": "supply_chain_risk_status == available_low_risk"
+      },
+      {
+        "action": "Constrained but alternatives available",
+        "source": "Supply Chain Availability & Risk Check",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "supply_chain_risk_status",
+        "control_attribute_value": "constrained_with_alternatives",
+        "condition": "supply_chain_risk_status == constrained_with_alternatives"
+      },
+      {
+        "action": "Disrupted or unavailable",
+        "source": "Supply Chain Availability & Risk Check",
+        "target": "Supply Chain Customer Guidance",
+        "control_attribute": "supply_chain_risk_status",
+        "control_attribute_value": "disrupted_or_unavailable",
+        "condition": "supply_chain_risk_status == disrupted_or_unavailable"
+      },
+      {
+        "action": "Supply data unavailable; answer with caveat",
+        "source": "Supply Chain Availability & Risk Check",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "supply_chain_risk_status",
+        "control_attribute_value": "supply_data_unavailable",
+        "condition": "supply_chain_risk_status == supply_data_unavailable"
+      }
+    ],
+    "id": 8,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Supply Chain Agentic Spine",
+    "entity": "Availability",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-2.3",
+        "similarity": 1.0,
+        "text_english": "Customer recommendations are incomplete unless availability, disruption risk, compliance, substitutes, reorder patterns, and policy constraints are understood.",
+        "source_section": "2.3 Enterprise-Level Problem",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "supply_chain_risk_status": "available_low_risk|constrained_with_alternatives|disrupted_or_unavailable|supply_data_unavailable"
+    },
+    "additional_rego_rules": {
+      "supply_chain_risk_status": "available_low_risk|constrained_with_alternatives|disrupted_or_unavailable|supply_data_unavailable"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Supply Chain Customer Guidance": {
+    "name": "Supply Chain Customer Guidance",
+    "description": "Prepare customer-facing supply guidance, alternative recommendations, or internal service routing when product availability or disruption risk affects the answer.",
+    "type": "process",
+    "functions": [
+      "identify_supply_alternatives",
+      "prepare_customer_supply_guidance",
+      "determine_service_routing"
+    ],
+    "control_attribute": {
+      "attribute_name": "customer_guidance_status",
+      "description": "Runtime decision value for Supply Chain Customer Guidance; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "alternatives_ready",
+        "route_sales_or_customer_service",
+        "no_safe_guidance"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "determine_service_routing"
+    },
+    "transitions": [
+      {
+        "action": "Supply alternatives ready",
+        "source": "Supply Chain Customer Guidance",
+        "target": "PAC Answer Policy Check",
+        "control_attribute": "customer_guidance_status",
+        "control_attribute_value": "alternatives_ready",
+        "condition": "customer_guidance_status == alternatives_ready"
+      },
+      {
+        "action": "Route to Sales or Customer Service",
+        "source": "Supply Chain Customer Guidance",
+        "target": "Customer Service or Sales Escalation",
+        "control_attribute": "customer_guidance_status",
+        "control_attribute_value": "route_sales_or_customer_service",
+        "condition": "customer_guidance_status == route_sales_or_customer_service"
+      },
+      {
+        "action": "No safe customer-facing guidance",
+        "source": "Supply Chain Customer Guidance",
+        "target": "Human Escalation Router",
+        "control_attribute": "customer_guidance_status",
+        "control_attribute_value": "no_safe_guidance",
+        "condition": "customer_guidance_status == no_safe_guidance"
+      }
+    ],
+    "id": 9,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Supply Chain Agentic Spine",
+    "entity": "Customer Guidance",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-12.4",
+        "similarity": 1.0,
+        "text_english": "Customer-facing teams should receive proactive risk or alternative recommendations where appropriate after supply-chain disruptions.",
+        "source_section": "12.4 Supply-Chain Disruption Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "customer_guidance_status": "alternatives_ready|route_sales_or_customer_service|no_safe_guidance"
+    },
+    "additional_rego_rules": {
+      "customer_guidance_status": "alternatives_ready|route_sales_or_customer_service|no_safe_guidance"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Proactive Reorder Analysis": {
+    "name": "Proactive Reorder Analysis",
+    "description": "Analyze order history, account permissions, reorder timing, supply risk, commercial constraints, and potential alternatives before prompting a customer or Sales.",
+    "type": "process",
+    "functions": [
+      "analyze_order_history",
+      "detect_reorder_cycle",
+      "validate_account_permissions_for_reorder",
+      "prepare_reorder_or_alternative_prompt"
+    ],
+    "control_attribute": {
+      "attribute_name": "reorder_analysis_status",
+      "description": "Runtime decision value for Proactive Reorder Analysis; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "prompt_ready",
+        "alternative_needed",
+        "not_due_or_not_allowed",
+        "route_sales"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "prepare_reorder_or_alternative_prompt"
+    },
+    "transitions": [
+      {
+        "action": "Prompt ready",
+        "source": "Proactive Reorder Analysis",
+        "target": "PAC Controlled Action Check",
+        "control_attribute": "reorder_analysis_status",
+        "control_attribute_value": "prompt_ready",
+        "condition": "reorder_analysis_status == prompt_ready"
+      },
+      {
+        "action": "Alternative needed",
+        "source": "Proactive Reorder Analysis",
+        "target": "Supply Chain Availability & Risk Check",
+        "control_attribute": "reorder_analysis_status",
+        "control_attribute_value": "alternative_needed",
+        "condition": "reorder_analysis_status == alternative_needed"
+      },
+      {
+        "action": "No reorder action allowed",
+        "source": "Proactive Reorder Analysis",
+        "target": "Closed - No Action",
+        "control_attribute": "reorder_analysis_status",
+        "control_attribute_value": "not_due_or_not_allowed",
+        "condition": "reorder_analysis_status == not_due_or_not_allowed"
+      },
+      {
+        "action": "Route to Sales",
+        "source": "Proactive Reorder Analysis",
+        "target": "Customer Service or Sales Escalation",
+        "control_attribute": "reorder_analysis_status",
+        "control_attribute_value": "route_sales",
+        "condition": "reorder_analysis_status == route_sales"
+      }
+    ],
+    "id": 10,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Reorder",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-12.5",
+        "similarity": 1.0,
+        "text_english": "ChemAssist validates account permissions, checks availability/risk, PAC checks commercial and customer-specific rules, and routes quote, reorder, or Sales workflow.",
+        "source_section": "12.5 Proactive Reorder Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "reorder_analysis_status": "prompt_ready|alternative_needed|not_due_or_not_allowed|route_sales"
+    },
+    "additional_rego_rules": {
+      "reorder_analysis_status": "prompt_ready|alternative_needed|not_due_or_not_allowed|route_sales"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "PAC Answer Policy Check": {
+    "name": "PAC Answer Policy Check",
+    "description": "Call PAC before customer-facing answers or recommendations to verify grounding, source approval, disclaimers, authorization, regulatory boundaries, and answer/action level.",
+    "type": "decision",
+    "functions": [
+      "execute_pac_customer_answer_policy",
+      "record_policy_decision",
+      "generate_policy_reason_chain"
+    ],
+    "control_attribute": {
+      "attribute_name": "pac_answer_decision",
+      "description": "Runtime decision value for PAC Answer Policy Check; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "allow",
+        "deny",
+        "route_to_human",
+        "simulation_only"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "generate_policy_reason_chain"
+    },
+    "transitions": [
+      {
+        "action": "PAC allows customer-facing answer",
+        "source": "PAC Answer Policy Check",
+        "target": "Cited Response Generation",
+        "control_attribute": "pac_answer_decision",
+        "control_attribute_value": "allow",
+        "condition": "pac_answer_decision == allow"
+      },
+      {
+        "action": "PAC denies customer-facing answer",
+        "source": "PAC Answer Policy Check",
+        "target": "Closed - Denied by Policy",
+        "control_attribute": "pac_answer_decision",
+        "control_attribute_value": "deny",
+        "condition": "pac_answer_decision == deny"
+      },
+      {
+        "action": "PAC routes answer to human",
+        "source": "PAC Answer Policy Check",
+        "target": "Human Escalation Router",
+        "control_attribute": "pac_answer_decision",
+        "control_attribute_value": "route_to_human",
+        "condition": "pac_answer_decision == route_to_human"
+      },
+      {
+        "action": "PAC simulation only; route to human",
+        "source": "PAC Answer Policy Check",
+        "target": "Human Escalation Router",
+        "control_attribute": "pac_answer_decision",
+        "control_attribute_value": "simulation_only",
+        "condition": "pac_answer_decision == simulation_only"
+      }
+    ],
+    "id": 11,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "PAC",
+    "entity": "Answer Policy",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR005",
+        "similarity": 1.0,
+        "text_english": "The platform must apply policy checks before committing automated or semi-automated action.",
+        "source_section": "10.1 Platform-Level Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-10.5",
+        "similarity": 1.0,
+        "text_english": "PAC returns allow, deny, or route-to-human decisions and records policy version, inputs, result, timestamp, and requesting agent.",
+        "source_section": "10.5 Policy-as-Code Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "pac_answer_decision": "allow|deny|route_to_human|simulation_only"
+    },
+    "additional_rego_rules": {
+      "pac_answer_decision": "allow|deny|route_to_human|simulation_only"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Cited Response Generation": {
+    "name": "Cited Response Generation",
+    "description": "Generate a customer or internal answer with source citations, assumptions, caveats, confidence indicators, next actions, and policy decision references.",
+    "type": "process",
+    "functions": [
+      "generate_grounded_answer",
+      "attach_source_citations",
+      "attach_assumptions_and_caveats",
+      "validate_no_unsupported_claims"
+    ],
+    "control_attribute": {
+      "attribute_name": "response_status",
+      "description": "Runtime decision value for Cited Response Generation; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "response_ready",
+        "needs_human_review",
+        "citation_gap"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "validate_no_unsupported_claims"
+    },
+    "transitions": [
+      {
+        "action": "Response ready",
+        "source": "Cited Response Generation",
+        "target": "Next Action Routing",
+        "control_attribute": "response_status",
+        "control_attribute_value": "response_ready",
+        "condition": "response_status == response_ready"
+      },
+      {
+        "action": "Response needs human review",
+        "source": "Cited Response Generation",
+        "target": "Human Escalation Router",
+        "control_attribute": "response_status",
+        "control_attribute_value": "needs_human_review",
+        "condition": "response_status == needs_human_review"
+      },
+      {
+        "action": "Citation gap detected",
+        "source": "Cited Response Generation",
+        "target": "Human Escalation Router",
+        "control_attribute": "response_status",
+        "control_attribute_value": "citation_gap",
+        "condition": "response_status == citation_gap"
+      }
+    ],
+    "id": 12,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Response",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR011-BR013",
+        "similarity": 1.0,
+        "text_english": "ChemAssist must explain rationale using approved sources, provide citations, and not invent specifications, regulatory claims, availability, pricing, or commitments.",
+        "source_section": "10.2 ChemAssist Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-AIG001-AIG004",
+        "similarity": 1.0,
+        "text_english": "Customer-facing product, formulation, and regulatory answers must be grounded, cited, and refuse or escalate unsupported questions.",
+        "source_section": "16 AI Governance Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "response_status": "response_ready|needs_human_review|citation_gap"
+    },
+    "additional_rego_rules": {
+      "response_status": "response_ready|needs_human_review|citation_gap"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Next Action Routing": {
+    "name": "Next Action Routing",
+    "description": "Route the user-selected or agent-recommended next action to sample, quote, reorder, Sales contact, Technical Service review, or closure.",
+    "type": "decision",
+    "functions": [
+      "capture_customer_next_action",
+      "validate_next_action_scope",
+      "resolve_target_workflow"
+    ],
+    "control_attribute": {
+      "attribute_name": "next_action",
+      "description": "Runtime decision value for Next Action Routing; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "request_sample",
+        "request_quote",
+        "reorder_request",
+        "sales_contact",
+        "technical_review",
+        "no_action"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "resolve_target_workflow"
+    },
+    "transitions": [
+      {
+        "action": "Request sample",
+        "source": "Next Action Routing",
+        "target": "System Workflow Trigger",
+        "control_attribute": "next_action",
+        "control_attribute_value": "request_sample",
+        "condition": "next_action == request_sample"
+      },
+      {
+        "action": "Request quote",
+        "source": "Next Action Routing",
+        "target": "System Workflow Trigger",
+        "control_attribute": "next_action",
+        "control_attribute_value": "request_quote",
+        "condition": "next_action == request_quote"
+      },
+      {
+        "action": "Reorder request",
+        "source": "Next Action Routing",
+        "target": "PAC Controlled Action Check",
+        "control_attribute": "next_action",
+        "control_attribute_value": "reorder_request",
+        "condition": "next_action == reorder_request"
+      },
+      {
+        "action": "Sales contact",
+        "source": "Next Action Routing",
+        "target": "Customer Service or Sales Escalation",
+        "control_attribute": "next_action",
+        "control_attribute_value": "sales_contact",
+        "condition": "next_action == sales_contact"
+      },
+      {
+        "action": "Technical review requested",
+        "source": "Next Action Routing",
+        "target": "Technical Service Escalation",
+        "control_attribute": "next_action",
+        "control_attribute_value": "technical_review",
+        "condition": "next_action == technical_review"
+      },
+      {
+        "action": "No next action",
+        "source": "Next Action Routing",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "next_action",
+        "control_attribute_value": "no_action",
+        "condition": "next_action == no_action"
+      }
+    ],
+    "id": 13,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "ChemAssist",
+    "entity": "Next Action",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-12.1",
+        "similarity": 1.0,
+        "text_english": "After ChemAssist generates a cited response, the customer selects a next action and CRM, sample, quote, or case workflow is triggered.",
+        "source_section": "12.1 Customer Product Recommendation Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "next_action": "request_sample|request_quote|reorder_request|sales_contact|technical_review|no_action"
+    },
+    "additional_rego_rules": {
+      "next_action": "request_sample|request_quote|reorder_request|sales_contact|technical_review|no_action"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "PAC Controlled Action Check": {
+    "name": "PAC Controlled Action Check",
+    "description": "Call PAC before any controlled recommendation, reorder, stock transfer, sourcing swap, system write, or automated/semi-automated action.",
+    "type": "decision",
+    "functions": [
+      "execute_pac_controlled_action_policy",
+      "record_policy_decision",
+      "generate_policy_reason_chain"
+    ],
+    "control_attribute": {
+      "attribute_name": "pac_action_decision",
+      "description": "Runtime decision value for PAC Controlled Action Check; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "allow",
+        "deny",
+        "route_to_human",
+        "simulation_only"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "generate_policy_reason_chain"
+    },
+    "transitions": [
+      {
+        "action": "PAC allows controlled action",
+        "source": "PAC Controlled Action Check",
+        "target": "Action Level Determination",
+        "control_attribute": "pac_action_decision",
+        "control_attribute_value": "allow",
+        "condition": "pac_action_decision == allow"
+      },
+      {
+        "action": "PAC denies controlled action",
+        "source": "PAC Controlled Action Check",
+        "target": "Closed - Denied by Policy",
+        "control_attribute": "pac_action_decision",
+        "control_attribute_value": "deny",
+        "condition": "pac_action_decision == deny"
+      },
+      {
+        "action": "PAC routes to human",
+        "source": "PAC Controlled Action Check",
+        "target": "Planner Evidence Screen",
+        "control_attribute": "pac_action_decision",
+        "control_attribute_value": "route_to_human",
+        "condition": "pac_action_decision == route_to_human"
+      },
+      {
+        "action": "PAC simulation only",
+        "source": "PAC Controlled Action Check",
+        "target": "Planner Evidence Screen",
+        "control_attribute": "pac_action_decision",
+        "control_attribute_value": "simulation_only",
+        "condition": "pac_action_decision == simulation_only"
+      }
+    ],
+    "id": 14,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "PAC",
+    "entity": "Controlled Action",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR033-BR034",
+        "similarity": 1.0,
+        "text_english": "Supply-chain agents must call PAC before committing or recommending controlled actions and write only when authorization, policy, and human approval are satisfied.",
+        "source_section": "10.4 Supply Chain Agentic Spine Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-17",
+        "similarity": 1.0,
+        "text_english": "PAC determines action level based on product, customer, jurisdiction, action type, risk, and policy version.",
+        "source_section": "17 Policy and Control Model",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "pac_action_decision": "allow|deny|route_to_human|simulation_only"
+    },
+    "additional_rego_rules": {
+      "pac_action_decision": "allow|deny|route_to_human|simulation_only"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Action Level Determination": {
+    "name": "Action Level Determination",
+    "description": "Determine whether the AI output is answer-only, recommendation-only, human-approved action, bounded auto-action, or prohibited.",
+    "type": "decision",
+    "functions": [
+      "determine_pac_action_level",
+      "validate_action_maturity_level",
+      "apply_autonomy_thresholds"
+    ],
+    "control_attribute": {
+      "attribute_name": "action_level",
+      "description": "Runtime decision value for Action Level Determination; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "level_0_answer_only",
+        "level_1_recommend",
+        "level_2_human_approved_action",
+        "level_3_bounded_auto_action",
+        "level_4_prohibited"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "apply_autonomy_thresholds"
+    },
+    "transitions": [
+      {
+        "action": "Answer only",
+        "source": "Action Level Determination",
+        "target": "Cited Response Generation",
+        "control_attribute": "action_level",
+        "control_attribute_value": "level_0_answer_only",
+        "condition": "action_level == level_0_answer_only"
+      },
+      {
+        "action": "Recommendation only",
+        "source": "Action Level Determination",
+        "target": "Planner Evidence Screen",
+        "control_attribute": "action_level",
+        "control_attribute_value": "level_1_recommend",
+        "condition": "action_level == level_1_recommend"
+      },
+      {
+        "action": "Human approval required",
+        "source": "Action Level Determination",
+        "target": "Planner Evidence Screen",
+        "control_attribute": "action_level",
+        "control_attribute_value": "level_2_human_approved_action",
+        "condition": "action_level == level_2_human_approved_action"
+      },
+      {
+        "action": "Bounded auto-action allowed",
+        "source": "Action Level Determination",
+        "target": "System of Record Write",
+        "control_attribute": "action_level",
+        "control_attribute_value": "level_3_bounded_auto_action",
+        "condition": "action_level == level_3_bounded_auto_action"
+      },
+      {
+        "action": "Prohibited action",
+        "source": "Action Level Determination",
+        "target": "Closed - Denied by Policy",
+        "control_attribute": "action_level",
+        "control_attribute_value": "level_4_prohibited",
+        "condition": "action_level == level_4_prohibited"
+      }
+    ],
+    "id": 15,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "PAC",
+    "entity": "Action Level",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-17",
+        "similarity": 1.0,
+        "text_english": "The platform must use a tiered action model from Level 0 answer-only through Level 3 bounded auto-action, with Level 4 prohibited actions escalated or stopped.",
+        "source_section": "17 Policy and Control Model",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "action_level": "level_0_answer_only|level_1_recommend|level_2_human_approved_action|level_3_bounded_auto_action|level_4_prohibited"
+    },
+    "additional_rego_rules": {
+      "action_level": "level_0_answer_only|level_1_recommend|level_2_human_approved_action|level_3_bounded_auto_action|level_4_prohibited"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "System Workflow Trigger": {
+    "name": "System Workflow Trigger",
+    "description": "Create the appropriate downstream workflow in CRM, case management, sample, quote, reorder, Sales, or customer service systems.",
+    "type": "process",
+    "functions": [
+      "create_sample_request",
+      "create_quote_request",
+      "create_reorder_request",
+      "create_crm_or_case_record"
+    ],
+    "control_attribute": {
+      "attribute_name": "workflow_trigger_status",
+      "description": "Runtime decision value for System Workflow Trigger; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "crm_case_created",
+        "sample_request_created",
+        "quote_request_created",
+        "reorder_request_created",
+        "system_write_failed"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "create_crm_or_case_record"
+    },
+    "transitions": [
+      {
+        "action": "CRM or case record created",
+        "source": "System Workflow Trigger",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "workflow_trigger_status",
+        "control_attribute_value": "crm_case_created",
+        "condition": "workflow_trigger_status == crm_case_created"
+      },
+      {
+        "action": "Sample request created",
+        "source": "System Workflow Trigger",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "workflow_trigger_status",
+        "control_attribute_value": "sample_request_created",
+        "condition": "workflow_trigger_status == sample_request_created"
+      },
+      {
+        "action": "Quote request created",
+        "source": "System Workflow Trigger",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "workflow_trigger_status",
+        "control_attribute_value": "quote_request_created",
+        "condition": "workflow_trigger_status == quote_request_created"
+      },
+      {
+        "action": "Reorder request created",
+        "source": "System Workflow Trigger",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "workflow_trigger_status",
+        "control_attribute_value": "reorder_request_created",
+        "condition": "workflow_trigger_status == reorder_request_created"
+      },
+      {
+        "action": "System workflow trigger failed",
+        "source": "System Workflow Trigger",
+        "target": "Human Escalation Router",
+        "control_attribute": "workflow_trigger_status",
+        "control_attribute_value": "system_write_failed",
+        "condition": "workflow_trigger_status == system_write_failed"
+      }
+    ],
+    "id": 16,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Integration",
+    "entity": "Workflow Trigger",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-14",
+        "similarity": 1.0,
+        "text_english": "CRM, case management, ERP, order management, and notification integrations route escalations, orders, samples, quotes, and approved actions.",
+        "source_section": "14 Integration Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "workflow_trigger_status": "crm_case_created|sample_request_created|quote_request_created|reorder_request_created|system_write_failed"
+    },
+    "additional_rego_rules": {
+      "workflow_trigger_status": "crm_case_created|sample_request_created|quote_request_created|reorder_request_created|system_write_failed"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Human Escalation Router": {
+    "name": "Human Escalation Router",
+    "description": "Route low-confidence, high-risk, unsupported, ambiguous, out-of-policy, or human-required cases to the correct expert owner with full context and evidence.",
+    "type": "decision",
+    "functions": [
+      "determine_escalation_owner",
+      "attach_context_and_sources",
+      "create_escalation_task"
+    ],
+    "control_attribute": {
+      "attribute_name": "escalation_route",
+      "description": "Runtime decision value for Human Escalation Router; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "technical_service",
+        "regulatory",
+        "legal",
+        "sales_or_customer_service",
+        "planner_finance_ops",
+        "content_owner"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "create_escalation_task"
+    },
+    "transitions": [
+      {
+        "action": "Route to Technical Service",
+        "source": "Human Escalation Router",
+        "target": "Technical Service Escalation",
+        "control_attribute": "escalation_route",
+        "control_attribute_value": "technical_service",
+        "condition": "escalation_route == technical_service"
+      },
+      {
+        "action": "Route to Regulatory",
+        "source": "Human Escalation Router",
+        "target": "Regulatory or Legal Escalation",
+        "control_attribute": "escalation_route",
+        "control_attribute_value": "regulatory",
+        "condition": "escalation_route == regulatory"
+      },
+      {
+        "action": "Route to Legal",
+        "source": "Human Escalation Router",
+        "target": "Regulatory or Legal Escalation",
+        "control_attribute": "escalation_route",
+        "control_attribute_value": "legal",
+        "condition": "escalation_route == legal"
+      },
+      {
+        "action": "Route to Sales or Customer Service",
+        "source": "Human Escalation Router",
+        "target": "Customer Service or Sales Escalation",
+        "control_attribute": "escalation_route",
+        "control_attribute_value": "sales_or_customer_service",
+        "condition": "escalation_route == sales_or_customer_service"
+      },
+      {
+        "action": "Route to Planner, Finance, or Operations",
+        "source": "Human Escalation Router",
+        "target": "Planner Evidence Screen",
+        "control_attribute": "escalation_route",
+        "control_attribute_value": "planner_finance_ops",
+        "condition": "escalation_route == planner_finance_ops"
+      },
+      {
+        "action": "Route knowledge gap to content owner",
+        "source": "Human Escalation Router",
+        "target": "Knowledge Gap Capture",
+        "control_attribute": "escalation_route",
+        "control_attribute_value": "content_owner",
+        "condition": "escalation_route == content_owner"
+      }
+    ],
+    "id": 17,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Escalation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR014",
+        "similarity": 1.0,
+        "text_english": "ChemAssist must escalate low-confidence, unsupported, high-risk, or novel questions to the appropriate human team.",
+        "source_section": "10.2 ChemAssist Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-BR006",
+        "similarity": 1.0,
+        "text_english": "The platform must support human review, approval, override, and escalation workflows.",
+        "source_section": "10.1 Platform-Level Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "escalation_route": "technical_service|regulatory|legal|sales_or_customer_service|planner_finance_ops|content_owner"
+    },
+    "additional_rego_rules": {
+      "escalation_route": "technical_service|regulatory|legal|sales_or_customer_service|planner_finance_ops|content_owner"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Technical Service Escalation": {
+    "name": "Technical Service Escalation",
+    "description": "Create a Technical Service case with full conversation history, account context, product references, documents retrieved, confidence, and suggested routing category.",
+    "type": "process",
+    "functions": [
+      "create_technical_service_case",
+      "attach_escalation_context",
+      "capture_technical_service_decision",
+      "update_reusable_knowledge_if_approved"
+    ],
+    "control_attribute": {
+      "attribute_name": "technical_service_status",
+      "description": "Runtime decision value for Technical Service Escalation; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "approved_answer",
+        "need_customer_clarification",
+        "rejected_or_unsupported"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "update_reusable_knowledge_if_approved"
+    },
+    "transitions": [
+      {
+        "action": "Technical Service approves answer",
+        "source": "Technical Service Escalation",
+        "target": "Cited Response Generation",
+        "control_attribute": "technical_service_status",
+        "control_attribute_value": "approved_answer",
+        "condition": "technical_service_status == approved_answer"
+      },
+      {
+        "action": "Clarification needed",
+        "source": "Technical Service Escalation",
+        "target": "Customer Clarification Request",
+        "control_attribute": "technical_service_status",
+        "control_attribute_value": "need_customer_clarification",
+        "condition": "technical_service_status == need_customer_clarification"
+      },
+      {
+        "action": "Unsupported; capture knowledge gap",
+        "source": "Technical Service Escalation",
+        "target": "Knowledge Gap Capture",
+        "control_attribute": "technical_service_status",
+        "control_attribute_value": "rejected_or_unsupported",
+        "condition": "technical_service_status == rejected_or_unsupported"
+      }
+    ],
+    "id": 18,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Technical Service",
+    "entity": "Escalation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-12.2",
+        "similarity": 1.0,
+        "text_english": "Technical escalations attach full context; Technical Service reviews and approved answers can be captured for knowledge-base improvement.",
+        "source_section": "12.2 Technical Escalation Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "technical_service_status": "approved_answer|need_customer_clarification|rejected_or_unsupported"
+    },
+    "additional_rego_rules": {
+      "technical_service_status": "approved_answer|need_customer_clarification|rejected_or_unsupported"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Regulatory or Legal Escalation": {
+    "name": "Regulatory or Legal Escalation",
+    "description": "Route uncertain, legally sensitive, formal-certification, or high-risk regulatory questions to Regulatory or Legal with source, jurisdiction, product, and customer context.",
+    "type": "process",
+    "functions": [
+      "create_regulatory_or_legal_case",
+      "attach_regulatory_context",
+      "capture_regulatory_or_legal_decision",
+      "issue_formal_document_if_required"
+    ],
+    "control_attribute": {
+      "attribute_name": "regulatory_review_status",
+      "description": "Runtime decision value for Regulatory or Legal Escalation; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "approved_informational_answer",
+        "formal_document_required",
+        "denied",
+        "need_customer_clarification"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "issue_formal_document_if_required"
+    },
+    "transitions": [
+      {
+        "action": "Approved informational answer",
+        "source": "Regulatory or Legal Escalation",
+        "target": "Cited Response Generation",
+        "control_attribute": "regulatory_review_status",
+        "control_attribute_value": "approved_informational_answer",
+        "condition": "regulatory_review_status == approved_informational_answer"
+      },
+      {
+        "action": "Formal document required",
+        "source": "Regulatory or Legal Escalation",
+        "target": "System Workflow Trigger",
+        "control_attribute": "regulatory_review_status",
+        "control_attribute_value": "formal_document_required",
+        "condition": "regulatory_review_status == formal_document_required"
+      },
+      {
+        "action": "Denied by Regulatory or Legal",
+        "source": "Regulatory or Legal Escalation",
+        "target": "Closed - Denied by Policy",
+        "control_attribute": "regulatory_review_status",
+        "control_attribute_value": "denied",
+        "condition": "regulatory_review_status == denied"
+      },
+      {
+        "action": "Clarification needed",
+        "source": "Regulatory or Legal Escalation",
+        "target": "Customer Clarification Request",
+        "control_attribute": "regulatory_review_status",
+        "control_attribute_value": "need_customer_clarification",
+        "condition": "regulatory_review_status == need_customer_clarification"
+      }
+    ],
+    "id": 19,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Regulatory/Legal",
+    "entity": "Escalation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-12.3",
+        "similarity": 1.0,
+        "text_english": "PAC determines whether direct response is permitted; if not, Regulatory reviews source, jurisdiction, product, and customer context and issues final answer or formal document.",
+        "source_section": "12.3 Regulatory Escalation Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "regulatory_review_status": "approved_informational_answer|formal_document_required|denied|need_customer_clarification"
+    },
+    "additional_rego_rules": {
+      "regulatory_review_status": "approved_informational_answer|formal_document_required|denied|need_customer_clarification"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Customer Service or Sales Escalation": {
+    "name": "Customer Service or Sales Escalation",
+    "description": "Route customer-facing commercial, order, quote, sample, or service issues to Sales or Customer Service with account and interaction context.",
+    "type": "process",
+    "functions": [
+      "create_sales_or_customer_service_case",
+      "attach_account_and_query_context",
+      "capture_service_next_action"
+    ],
+    "control_attribute": {
+      "attribute_name": "sales_service_status",
+      "description": "Runtime decision value for Customer Service or Sales Escalation; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "case_created",
+        "next_action_confirmed",
+        "need_customer_clarification"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "capture_service_next_action"
+    },
+    "transitions": [
+      {
+        "action": "Case created",
+        "source": "Customer Service or Sales Escalation",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "sales_service_status",
+        "control_attribute_value": "case_created",
+        "condition": "sales_service_status == case_created"
+      },
+      {
+        "action": "Next action confirmed",
+        "source": "Customer Service or Sales Escalation",
+        "target": "System Workflow Trigger",
+        "control_attribute": "sales_service_status",
+        "control_attribute_value": "next_action_confirmed",
+        "condition": "sales_service_status == next_action_confirmed"
+      },
+      {
+        "action": "Clarification needed",
+        "source": "Customer Service or Sales Escalation",
+        "target": "Customer Clarification Request",
+        "control_attribute": "sales_service_status",
+        "control_attribute_value": "need_customer_clarification",
+        "condition": "sales_service_status == need_customer_clarification"
+      }
+    ],
+    "id": 20,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Sales/Customer Service",
+    "entity": "Escalation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-11.4",
+        "similarity": 1.0,
+        "text_english": "Order and relationship workflows support quote, sample, reorder, Sales-contact routing, cross-sell, and account-specific history where permitted.",
+        "source_section": "11.4 Order and Relationship Intelligence",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "sales_service_status": "case_created|next_action_confirmed|need_customer_clarification"
+    },
+    "additional_rego_rules": {
+      "sales_service_status": "case_created|next_action_confirmed|need_customer_clarification"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Customer Clarification Request": {
+    "name": "Customer Clarification Request",
+    "description": "Ask the customer or internal user for missing application, jurisdiction, product, account, or action information required to continue safely.",
+    "type": "process",
+    "functions": [
+      "generate_clarifying_question",
+      "send_clarification_request",
+      "capture_clarification_response"
+    ],
+    "control_attribute": {
+      "attribute_name": "clarification_status",
+      "description": "Runtime decision value for Customer Clarification Request; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "received",
+        "not_received",
+        "abandoned"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "capture_clarification_response"
+    },
+    "transitions": [
+      {
+        "action": "Clarification received",
+        "source": "Customer Clarification Request",
+        "target": "Request Intake & Classification",
+        "control_attribute": "clarification_status",
+        "control_attribute_value": "received",
+        "condition": "clarification_status == received"
+      },
+      {
+        "action": "Waiting for clarification",
+        "source": "Customer Clarification Request",
+        "target": "Customer Clarification Request",
+        "control_attribute": "clarification_status",
+        "control_attribute_value": "not_received",
+        "condition": "clarification_status == not_received"
+      },
+      {
+        "action": "Clarification abandoned",
+        "source": "Customer Clarification Request",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "clarification_status",
+        "control_attribute_value": "abandoned",
+        "condition": "clarification_status == abandoned"
+      }
+    ],
+    "id": 21,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Clarification",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-2.1",
+        "similarity": 1.0,
+        "text_english": "Customers currently clarify requirements through follow-up messages; the future workflow must capture missing requirements cleanly.",
+        "source_section": "2.1 Customer Experience Problem",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "clarification_status": "received|not_received|abandoned"
+    },
+    "additional_rego_rules": {
+      "clarification_status": "received|not_received|abandoned"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Knowledge Gap Capture": {
+    "name": "Knowledge Gap Capture",
+    "description": "Log missing, unsupported, obsolete, or low-quality source gaps and route them to product, regulatory, technical, or content owners for future remediation.",
+    "type": "process",
+    "functions": [
+      "capture_knowledge_gap",
+      "route_gap_to_content_owner",
+      "link_gap_to_source_and_case"
+    ],
+    "control_attribute": {
+      "attribute_name": "knowledge_gap_status",
+      "description": "Runtime decision value for Knowledge Gap Capture; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "captured",
+        "content_update_required"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "link_gap_to_source_and_case"
+    },
+    "transitions": [
+      {
+        "action": "Gap captured",
+        "source": "Knowledge Gap Capture",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "knowledge_gap_status",
+        "control_attribute_value": "captured",
+        "condition": "knowledge_gap_status == captured"
+      },
+      {
+        "action": "Content update required",
+        "source": "Knowledge Gap Capture",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "knowledge_gap_status",
+        "control_attribute_value": "content_update_required",
+        "condition": "knowledge_gap_status == content_update_required"
+      }
+    ],
+    "id": 22,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Knowledge Governance",
+    "entity": "Knowledge Gap",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-DQ008",
+        "similarity": 1.0,
+        "text_english": "Knowledge-base gaps must be captured and routed to content owners.",
+        "source_section": "13.2 Data Quality Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-AIG009",
+        "similarity": 1.0,
+        "text_english": "Human overrides should improve rules, prompts, content, and knowledge gaps.",
+        "source_section": "16 AI Governance Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "knowledge_gap_status": "captured|content_update_required"
+    },
+    "additional_rego_rules": {
+      "knowledge_gap_status": "captured|content_update_required"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Supply Chain Signal Assessment": {
+    "name": "Supply Chain Signal Assessment",
+    "description": "Monitor approved ERP, MES, TMS, logistics, planning, and market feeds to detect signals that break planning assumptions.",
+    "type": "process",
+    "functions": [
+      "monitor_supply_chain_feeds",
+      "detect_planning_assumption_break",
+      "create_anomaly_ticket"
+    ],
+    "control_attribute": {
+      "attribute_name": "anomaly_status",
+      "description": "Runtime decision value for Supply Chain Signal Assessment; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "anomaly_detected",
+        "no_anomaly",
+        "insufficient_signal_quality"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "create_anomaly_ticket"
+    },
+    "transitions": [
+      {
+        "action": "Anomaly detected",
+        "source": "Supply Chain Signal Assessment",
+        "target": "Supply Chain Agent Analysis",
+        "control_attribute": "anomaly_status",
+        "control_attribute_value": "anomaly_detected",
+        "condition": "anomaly_status == anomaly_detected"
+      },
+      {
+        "action": "No anomaly",
+        "source": "Supply Chain Signal Assessment",
+        "target": "Closed - No Action",
+        "control_attribute": "anomaly_status",
+        "control_attribute_value": "no_anomaly",
+        "condition": "anomaly_status == no_anomaly"
+      },
+      {
+        "action": "Insufficient signal quality",
+        "source": "Supply Chain Signal Assessment",
+        "target": "Human Escalation Router",
+        "control_attribute": "anomaly_status",
+        "control_attribute_value": "insufficient_signal_quality",
+        "condition": "anomaly_status == insufficient_signal_quality"
+      }
+    ],
+    "id": 23,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Supply Chain Agentic Spine",
+    "entity": "Anomaly",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR028-BR029",
+        "similarity": 1.0,
+        "text_english": "The Anomaly Agent must monitor ERP, MES, TMS, logistics, and market feeds and create an alert when a signal breaks a planning assumption.",
+        "source_section": "10.4 Supply Chain Agentic Spine Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-11.5",
+        "similarity": 1.0,
+        "text_english": "The Anomaly Agent detects abnormal feedstock, freight, logistics, plant status, demand, inventory, or market signals.",
+        "source_section": "11.5 Supply-Chain Anomaly Detection",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "anomaly_status": "anomaly_detected|no_anomaly|insufficient_signal_quality"
+    },
+    "additional_rego_rules": {
+      "anomaly_status": "anomaly_detected|no_anomaly|insufficient_signal_quality"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Supply Chain Agent Analysis": {
+    "name": "Supply Chain Agent Analysis",
+    "description": "Coordinate Anomaly, Cost, Inventory, and Demand agents to recompute impact, model rebalancing, update risk, and prepare options.",
+    "type": "process",
+    "functions": [
+      "run_cost_agent_recompute",
+      "run_inventory_agent_rebalance",
+      "run_demand_agent_risk_update",
+      "assemble_agent_options"
+    ],
+    "control_attribute": {
+      "attribute_name": "agent_analysis_status",
+      "description": "Runtime decision value for Supply Chain Agent Analysis; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "options_ready",
+        "no_viable_options",
+        "margin_or_service_risk",
+        "needs_more_data"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "assemble_agent_options"
+    },
+    "transitions": [
+      {
+        "action": "Options ready",
+        "source": "Supply Chain Agent Analysis",
+        "target": "PAC Controlled Action Check",
+        "control_attribute": "agent_analysis_status",
+        "control_attribute_value": "options_ready",
+        "condition": "agent_analysis_status == options_ready"
+      },
+      {
+        "action": "No viable options",
+        "source": "Supply Chain Agent Analysis",
+        "target": "Planner Evidence Screen",
+        "control_attribute": "agent_analysis_status",
+        "control_attribute_value": "no_viable_options",
+        "condition": "agent_analysis_status == no_viable_options"
+      },
+      {
+        "action": "Margin or service risk",
+        "source": "Supply Chain Agent Analysis",
+        "target": "PAC Controlled Action Check",
+        "control_attribute": "agent_analysis_status",
+        "control_attribute_value": "margin_or_service_risk",
+        "condition": "agent_analysis_status == margin_or_service_risk"
+      },
+      {
+        "action": "Needs more data",
+        "source": "Supply Chain Agent Analysis",
+        "target": "Human Escalation Router",
+        "control_attribute": "agent_analysis_status",
+        "control_attribute_value": "needs_more_data",
+        "condition": "agent_analysis_status == needs_more_data"
+      }
+    ],
+    "id": 24,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Supply Chain Agentic Spine",
+    "entity": "Agent Analysis",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-8.3",
+        "similarity": 1.0,
+        "text_english": "Initial agents include Anomaly, Inventory, Demand, and Cost agents, with Anomaly monitoring feeds, Inventory rebalancing, Demand scoring risk, and Cost recomputing cost-to-serve.",
+        "source_section": "8.3 Supply Chain Agentic Spine",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-12.4",
+        "similarity": 1.0,
+        "text_english": "Supply-chain disruption flow runs Cost, Inventory, and Demand agents after Anomaly detection before PAC checks.",
+        "source_section": "12.4 Supply-Chain Disruption Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "agent_analysis_status": "options_ready|no_viable_options|margin_or_service_risk|needs_more_data"
+    },
+    "additional_rego_rules": {
+      "agent_analysis_status": "options_ready|no_viable_options|margin_or_service_risk|needs_more_data"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Planner Evidence Screen": {
+    "name": "Planner Evidence Screen",
+    "description": "Prepare a single evidence screen for planners or business approvers showing cause, affected products/customers, recommendations, policy checks, expected impact, approval path, and proposed writes.",
+    "type": "process",
+    "functions": [
+      "assemble_planner_evidence_screen",
+      "attach_policy_decisions",
+      "attach_financial_and_service_impact",
+      "prepare_approval_task"
+    ],
+    "control_attribute": {
+      "attribute_name": "evidence_screen_status",
+      "description": "Runtime decision value for Planner Evidence Screen; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "prepared",
+        "incomplete"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "prepare_approval_task"
+    },
+    "transitions": [
+      {
+        "action": "Evidence screen prepared",
+        "source": "Planner Evidence Screen",
+        "target": "Planner Finance or Business Approval",
+        "control_attribute": "evidence_screen_status",
+        "control_attribute_value": "prepared",
+        "condition": "evidence_screen_status == prepared"
+      },
+      {
+        "action": "Evidence incomplete",
+        "source": "Planner Evidence Screen",
+        "target": "Human Escalation Router",
+        "control_attribute": "evidence_screen_status",
+        "control_attribute_value": "incomplete",
+        "condition": "evidence_screen_status == incomplete"
+      }
+    ],
+    "id": 25,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Supply Chain Agentic Spine",
+    "entity": "Evidence",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR035",
+        "similarity": 1.0,
+        "text_english": "Supply-chain agents must provide planners an evidence screen showing cause, recommendation, policy checks, expected impact, and approval path.",
+        "source_section": "10.4 Supply Chain Agentic Spine Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-23.2",
+        "similarity": 1.0,
+        "text_english": "Planner evidence screen must show cause, impact, policy checks, data sources, and proposed action.",
+        "source_section": "23.2 Supply-Chain Acceptance Criteria",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "evidence_screen_status": "prepared|incomplete"
+    },
+    "additional_rego_rules": {
+      "evidence_screen_status": "prepared|incomplete"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Planner Finance or Business Approval": {
+    "name": "Planner Finance or Business Approval",
+    "description": "Capture planner, Finance, Operations, Sales, or business approval/rejection/modification for human-approved recommendations or actions.",
+    "type": "process",
+    "functions": [
+      "route_approval_task",
+      "capture_planner_finance_decision",
+      "capture_override_reason"
+    ],
+    "control_attribute": {
+      "attribute_name": "approval_decision",
+      "description": "Runtime decision value for Planner Finance or Business Approval; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "approved",
+        "rejected",
+        "modified",
+        "pending"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "capture_override_reason"
+    },
+    "transitions": [
+      {
+        "action": "Approved",
+        "source": "Planner Finance or Business Approval",
+        "target": "System of Record Write",
+        "control_attribute": "approval_decision",
+        "control_attribute_value": "approved",
+        "condition": "approval_decision == approved"
+      },
+      {
+        "action": "Rejected",
+        "source": "Planner Finance or Business Approval",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "approval_decision",
+        "control_attribute_value": "rejected",
+        "condition": "approval_decision == rejected"
+      },
+      {
+        "action": "Modified; re-check PAC",
+        "source": "Planner Finance or Business Approval",
+        "target": "PAC Controlled Action Check",
+        "control_attribute": "approval_decision",
+        "control_attribute_value": "modified",
+        "condition": "approval_decision == modified"
+      },
+      {
+        "action": "Awaiting decision",
+        "source": "Planner Finance or Business Approval",
+        "target": "Planner Finance or Business Approval",
+        "control_attribute": "approval_decision",
+        "control_attribute_value": "pending",
+        "condition": "approval_decision == pending"
+      }
+    ],
+    "id": 26,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Operations/Finance",
+    "entity": "Approval",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR006",
+        "similarity": 1.0,
+        "text_english": "The platform supports human review, approval, override, and escalation.",
+        "source_section": "10.1 Platform-Level Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-12.4",
+        "similarity": 1.0,
+        "text_english": "Planner approves, rejects, or modifies recommended supply-chain action before approved action writes to system of record.",
+        "source_section": "12.4 Supply-Chain Disruption Workflow",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "approval_decision": "approved|rejected|modified|pending"
+    },
+    "additional_rego_rules": {
+      "approval_decision": "approved|rejected|modified|pending"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "System of Record Write": {
+    "name": "System of Record Write",
+    "description": "Commit approved actions to ERP, CRM, case management, order management, planning systems, or document management only when policy and human approvals allow.",
+    "type": "process",
+    "functions": [
+      "validate_write_authorization",
+      "write_approved_action_to_system_of_record",
+      "capture_system_write_receipt"
+    ],
+    "control_attribute": {
+      "attribute_name": "system_write_status",
+      "description": "Runtime decision value for System of Record Write; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "written",
+        "blocked",
+        "write_not_allowed"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "capture_system_write_receipt"
+    },
+    "transitions": [
+      {
+        "action": "System write completed",
+        "source": "System of Record Write",
+        "target": "Downstream Notification",
+        "control_attribute": "system_write_status",
+        "control_attribute_value": "written",
+        "condition": "system_write_status == written"
+      },
+      {
+        "action": "System write blocked",
+        "source": "System of Record Write",
+        "target": "Human Escalation Router",
+        "control_attribute": "system_write_status",
+        "control_attribute_value": "blocked",
+        "condition": "system_write_status == blocked"
+      },
+      {
+        "action": "Write not allowed",
+        "source": "System of Record Write",
+        "target": "Closed - Denied by Policy",
+        "control_attribute": "system_write_status",
+        "control_attribute_value": "write_not_allowed",
+        "condition": "system_write_status == write_not_allowed"
+      }
+    ],
+    "id": 27,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Integration",
+    "entity": "System Write",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR034",
+        "similarity": 1.0,
+        "text_english": "Supply-chain agents write approved actions back to the system of record only when authorization, policy, and human approval are satisfied.",
+        "source_section": "10.4 Supply Chain Agentic Spine Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-7.2",
+        "similarity": 1.0,
+        "text_english": "System-of-record writes ensure approved actions are committed back to ERP, CRM, case management, order management, or planning systems.",
+        "source_section": "7.2 KAF and PAC Operating Model",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "system_write_status": "written|blocked|write_not_allowed"
+    },
+    "additional_rego_rules": {
+      "system_write_status": "written|blocked|write_not_allowed"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Downstream Notification": {
+    "name": "Downstream Notification",
+    "description": "Notify Sales, Customer Service, Technical Service, Regulatory, planners, or customers where approved after answers, system writes, disruptions, or regulatory changes.",
+    "type": "process",
+    "functions": [
+      "determine_notification_recipients",
+      "send_approved_notifications",
+      "capture_notification_status"
+    ],
+    "control_attribute": {
+      "attribute_name": "notification_status",
+      "description": "Runtime decision value for Downstream Notification; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "sent",
+        "not_required",
+        "failed"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "capture_notification_status"
+    },
+    "transitions": [
+      {
+        "action": "Notifications sent",
+        "source": "Downstream Notification",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "notification_status",
+        "control_attribute_value": "sent",
+        "condition": "notification_status == sent"
+      },
+      {
+        "action": "Notifications not required",
+        "source": "Downstream Notification",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "notification_status",
+        "control_attribute_value": "not_required",
+        "condition": "notification_status == not_required"
+      },
+      {
+        "action": "Notification failed; log and close",
+        "source": "Downstream Notification",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "notification_status",
+        "control_attribute_value": "failed",
+        "condition": "notification_status == failed"
+      }
+    ],
+    "id": 28,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Notification",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-14",
+        "similarity": 1.0,
+        "text_english": "Notification systems notify users of escalations, approvals, disruptions, and proactive prompts.",
+        "source_section": "14 Integration Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-9-UC6",
+        "similarity": 1.0,
+        "text_english": "Regulatory change can trigger account-level impact briefs and proactive customer guidance where approved.",
+        "source_section": "9 Unified End-to-End Use Cases",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "notification_status": "sent|not_required|failed"
+    },
+    "additional_rego_rules": {
+      "notification_status": "sent|not_required|failed"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "RegRadar Change Detection": {
+    "name": "RegRadar Change Detection",
+    "description": "Detect regulatory changes that may affect a product, region, application, customer-facing answer, inventory restriction, or customer commitment.",
+    "type": "process",
+    "functions": [
+      "monitor_regulatory_changes",
+      "match_change_to_product_region_application",
+      "open_regulatory_change_record"
+    ],
+    "control_attribute": {
+      "attribute_name": "regulatory_change_status",
+      "description": "Runtime decision value for RegRadar Change Detection; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "change_detected",
+        "no_relevant_change"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "open_regulatory_change_record"
+    },
+    "transitions": [
+      {
+        "action": "Relevant change detected",
+        "source": "RegRadar Change Detection",
+        "target": "Regulatory Change Validation",
+        "control_attribute": "regulatory_change_status",
+        "control_attribute_value": "change_detected",
+        "condition": "regulatory_change_status == change_detected"
+      },
+      {
+        "action": "No relevant change",
+        "source": "RegRadar Change Detection",
+        "target": "Closed - No Action",
+        "control_attribute": "regulatory_change_status",
+        "control_attribute_value": "no_relevant_change",
+        "condition": "regulatory_change_status == no_relevant_change"
+      }
+    ],
+    "id": 29,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "RegRadar",
+    "entity": "Regulatory Change",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-9-UC6",
+        "similarity": 1.0,
+        "text_english": "RegRadar detects regulatory change affecting a product, region, or application.",
+        "source_section": "9 Use Case 6",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-8.2",
+        "similarity": 1.0,
+        "text_english": "RegRadar tracks regulatory changes by jurisdiction, product, chemical family, and application.",
+        "source_section": "8.2 RegRadar",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "regulatory_change_status": "change_detected|no_relevant_change"
+    },
+    "additional_rego_rules": {
+      "regulatory_change_status": "change_detected|no_relevant_change"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Regulatory Change Validation": {
+    "name": "Regulatory Change Validation",
+    "description": "Regulatory team validates the interpretation of a detected regulatory change and determines whether PAC rules, customer-facing answers, or product recommendations must be updated.",
+    "type": "process",
+    "functions": [
+      "route_change_to_regulatory_team",
+      "validate_regulatory_interpretation",
+      "determine_policy_update_need"
+    ],
+    "control_attribute": {
+      "attribute_name": "interpretation_status",
+      "description": "Runtime decision value for Regulatory Change Validation; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "validated",
+        "rejected",
+        "needs_legal_review"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "determine_policy_update_need"
+    },
+    "transitions": [
+      {
+        "action": "Interpretation validated",
+        "source": "Regulatory Change Validation",
+        "target": "PAC Policy Update",
+        "control_attribute": "interpretation_status",
+        "control_attribute_value": "validated",
+        "condition": "interpretation_status == validated"
+      },
+      {
+        "action": "Interpretation rejected",
+        "source": "Regulatory Change Validation",
+        "target": "Closed - No Action",
+        "control_attribute": "interpretation_status",
+        "control_attribute_value": "rejected",
+        "condition": "interpretation_status == rejected"
+      },
+      {
+        "action": "Needs Legal review",
+        "source": "Regulatory Change Validation",
+        "target": "Regulatory or Legal Escalation",
+        "control_attribute": "interpretation_status",
+        "control_attribute_value": "needs_legal_review",
+        "condition": "interpretation_status == needs_legal_review"
+      }
+    ],
+    "id": 30,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "RegRadar",
+    "entity": "Regulatory Validation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-9-UC6",
+        "similarity": 1.0,
+        "text_english": "Regulatory team validates interpretation before PAC updates rules and ChemAssist updates answers.",
+        "source_section": "9 Use Case 6",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "interpretation_status": "validated|rejected|needs_legal_review"
+    },
+    "additional_rego_rules": {
+      "interpretation_status": "validated|rejected|needs_legal_review"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "PAC Policy Update": {
+    "name": "PAC Policy Update",
+    "description": "Update PAC policy rules after approved regulatory interpretation, including versioning, approval status, source rule linkage, simulation, and publication.",
+    "type": "process",
+    "functions": [
+      "draft_policy_rule_update",
+      "run_policy_tests_and_simulation",
+      "capture_policy_approval",
+      "publish_policy_version"
+    ],
+    "control_attribute": {
+      "attribute_name": "policy_update_status",
+      "description": "Runtime decision value for PAC Policy Update; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "approved_and_published",
+        "pending_approval",
+        "rejected"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "publish_policy_version"
+    },
+    "transitions": [
+      {
+        "action": "Policy approved and published",
+        "source": "PAC Policy Update",
+        "target": "Regulatory Impact Propagation",
+        "control_attribute": "policy_update_status",
+        "control_attribute_value": "approved_and_published",
+        "condition": "policy_update_status == approved_and_published"
+      },
+      {
+        "action": "Policy approval pending",
+        "source": "PAC Policy Update",
+        "target": "Regulatory Change Validation",
+        "control_attribute": "policy_update_status",
+        "control_attribute_value": "pending_approval",
+        "condition": "policy_update_status == pending_approval"
+      },
+      {
+        "action": "Policy update rejected",
+        "source": "PAC Policy Update",
+        "target": "Closed - Denied by Policy",
+        "control_attribute": "policy_update_status",
+        "control_attribute_value": "rejected",
+        "condition": "policy_update_status == rejected"
+      }
+    ],
+    "id": 31,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "PAC",
+    "entity": "Policy Lifecycle",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR040-BR043",
+        "similarity": 1.0,
+        "text_english": "PAC versions policies, maintains approval status, and supports policy testing, simulation, and approval workflows before production deployment.",
+        "source_section": "10.5 Policy-as-Code Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "policy_update_status": "approved_and_published|pending_approval|rejected"
+    },
+    "additional_rego_rules": {
+      "policy_update_status": "approved_and_published|pending_approval|rejected"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Regulatory Impact Propagation": {
+    "name": "Regulatory Impact Propagation",
+    "description": "Propagate approved regulatory changes to ChemAssist answers, product selector rules, supply-chain checks, Sales/Technical Service impact briefs, and customer guidance where approved.",
+    "type": "process",
+    "functions": [
+      "update_chemassist_regulatory_answers",
+      "adjust_product_recommendation_rules",
+      "check_affected_inventory_and_customer_commitments",
+      "prepare_account_impact_briefs"
+    ],
+    "control_attribute": {
+      "attribute_name": "impact_propagation_status",
+      "description": "Runtime decision value for Regulatory Impact Propagation; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "chemassist_updated",
+        "product_recommendations_adjusted",
+        "supply_chain_check_required"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "prepare_account_impact_briefs"
+    },
+    "transitions": [
+      {
+        "action": "ChemAssist answers updated",
+        "source": "Regulatory Impact Propagation",
+        "target": "Downstream Notification",
+        "control_attribute": "impact_propagation_status",
+        "control_attribute_value": "chemassist_updated",
+        "condition": "impact_propagation_status == chemassist_updated"
+      },
+      {
+        "action": "Product recommendations adjusted",
+        "source": "Regulatory Impact Propagation",
+        "target": "Downstream Notification",
+        "control_attribute": "impact_propagation_status",
+        "control_attribute_value": "product_recommendations_adjusted",
+        "condition": "impact_propagation_status == product_recommendations_adjusted"
+      },
+      {
+        "action": "Supply chain check required",
+        "source": "Regulatory Impact Propagation",
+        "target": "Supply Chain Availability & Risk Check",
+        "control_attribute": "impact_propagation_status",
+        "control_attribute_value": "supply_chain_check_required",
+        "condition": "impact_propagation_status == supply_chain_check_required"
+      }
+    ],
+    "id": 32,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "RegRadar",
+    "entity": "Impact Propagation",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-9-UC6",
+        "similarity": 1.0,
+        "text_english": "After PAC updates compliance rules, ChemAssist answers are updated, Product Selector adjusts recommendations, Supply Chain checks affected inventory, and Sales/Technical Service receive impact briefs.",
+        "source_section": "9 Use Case 6",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "impact_propagation_status": "chemassist_updated|product_recommendations_adjusted|supply_chain_check_required"
+    },
+    "additional_rego_rules": {
+      "impact_propagation_status": "chemassist_updated|product_recommendations_adjusted|supply_chain_check_required"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Audit Logging & Closure": {
+    "name": "Audit Logging & Closure",
+    "description": "Store full audit trail for user interaction, sources, retrieved passages, policy checks, approvals, agent actions, system writes, feedback, and timestamps.",
+    "type": "process",
+    "functions": [
+      "log_user_interaction",
+      "log_source_citations",
+      "log_agent_decisions",
+      "log_policy_checks",
+      "log_human_approvals_and_system_writes",
+      "validate_audit_completeness"
+    ],
+    "control_attribute": {
+      "attribute_name": "audit_status",
+      "description": "Runtime decision value for Audit Logging & Closure; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "complete",
+        "incomplete",
+        "policy_audit_exception"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "validate_audit_completeness"
+    },
+    "transitions": [
+      {
+        "action": "Audit complete",
+        "source": "Audit Logging & Closure",
+        "target": "Closed - Completed",
+        "control_attribute": "audit_status",
+        "control_attribute_value": "complete",
+        "condition": "audit_status == complete"
+      },
+      {
+        "action": "Audit incomplete",
+        "source": "Audit Logging & Closure",
+        "target": "Audit Logging & Closure",
+        "control_attribute": "audit_status",
+        "control_attribute_value": "incomplete",
+        "condition": "audit_status == incomplete"
+      },
+      {
+        "action": "Policy audit exception",
+        "source": "Audit Logging & Closure",
+        "target": "Human Escalation Router",
+        "control_attribute": "audit_status",
+        "control_attribute_value": "policy_audit_exception",
+        "condition": "audit_status == policy_audit_exception"
+      }
+    ],
+    "id": 33,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Audit/Observability",
+    "entity": "Audit",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR007",
+        "similarity": 1.0,
+        "text_english": "The platform must log interactions, citations, agent decisions, policy checks, approvals, and system writes.",
+        "source_section": "10.1 Platform-Level Requirements",
+        "pages": []
+      },
+      {
+        "chunk_id": "BRD-23",
+        "similarity": 1.0,
+        "text_english": "Customer-facing, supply-chain, and governance acceptance criteria require logging sources, policy checks, recommendations, approvals, and decisions.",
+        "source_section": "23 Acceptance Criteria",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "audit_status": "complete|incomplete|policy_audit_exception"
+    },
+    "additional_rego_rules": {
+      "audit_status": "complete|incomplete|policy_audit_exception"
+    },
+    "ruleset_ids": [
+      "RS_RUNTIME_TASK_INSTANCE_CREATION",
+      "RS_RUNTIME_APPLY_TASK_RESULT_WRITES",
+      "RS_RUNTIME_TRANSITION_ENABLEMENT",
+      "RS_POLICY_APPLICABLE_CONTROLS",
+      "RS_POLICY_REQUIRED_TASKS",
+      "RS_POLICY_BLOCKED_TRANSITIONS",
+      "RS_POLICY_EVIDENCE_REQUIREMENTS",
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Closed - Completed": {
+    "name": "Closed - Completed",
+    "description": "Final state: request, answer, action, notification, or escalation completed with audit trail stored.",
+    "type": "final",
+    "functions": [
+      "close_case_completed"
+    ],
+    "control_attribute": {
+      "attribute_name": "case_close_status",
+      "description": "Runtime decision value for Closed - Completed; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "completed"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "close_case_completed"
+    },
+    "transitions": [],
+    "id": 34,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Closure",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-BR004-BR007",
+        "similarity": 1.0,
+        "text_english": "All answers and agentic actions require traceability and logging.",
+        "source_section": "10.1 Platform-Level Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "case_close_status": "completed"
+    },
+    "additional_rego_rules": {
+      "case_close_status": "completed"
+    },
+    "ruleset_ids": [
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Closed - Denied by Policy": {
+    "name": "Closed - Denied by Policy",
+    "description": "Final state: PAC, Regulatory, Legal, or governance rules denied the response/action; reason chain is stored for audit.",
+    "type": "final",
+    "functions": [
+      "close_case_denied_by_policy"
+    ],
+    "control_attribute": {
+      "attribute_name": "case_close_status",
+      "description": "Runtime decision value for Closed - Denied by Policy; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "denied_by_policy"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "close_case_denied_by_policy"
+    },
+    "transitions": [],
+    "id": 35,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "PAC",
+    "entity": "Closure",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-10.5",
+        "similarity": 1.0,
+        "text_english": "PAC must return allow, deny, or route-to-human decisions and reason chains.",
+        "source_section": "10.5 Policy-as-Code Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "case_close_status": "denied_by_policy"
+    },
+    "additional_rego_rules": {
+      "case_close_status": "denied_by_policy"
+    },
+    "ruleset_ids": [
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Closed - Access Denied": {
+    "name": "Closed - Access Denied",
+    "description": "Final state: user or account was not authorized for requested account-specific, commercial, operational, or regulated information.",
+    "type": "final",
+    "functions": [
+      "close_case_access_denied"
+    ],
+    "control_attribute": {
+      "attribute_name": "case_close_status",
+      "description": "Runtime decision value for Closed - Access Denied; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "access_denied"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "close_case_access_denied"
+    },
+    "transitions": [],
+    "id": 36,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Identity",
+    "entity": "Closure",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-DQ005",
+        "similarity": 1.0,
+        "text_english": "Customer data must be permissioned by account, user role, geography, and contractual rules.",
+        "source_section": "13.2 Data Quality Requirements",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "case_close_status": "access_denied"
+    },
+    "additional_rego_rules": {
+      "case_close_status": "access_denied"
+    },
+    "ruleset_ids": [
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  },
+  "Closed - No Action": {
+    "name": "Closed - No Action",
+    "description": "Final state: no relevant anomaly, reorder opportunity, regulatory change, or next action was found; audit record is retained.",
+    "type": "final",
+    "functions": [
+      "close_case_no_action"
+    ],
+    "control_attribute": {
+      "attribute_name": "case_close_status",
+      "description": "Runtime decision value for Closed - No Action; used to unlock this state's outgoing transitions.",
+      "allowed_values": [
+        "no_action"
+      ],
+      "current_value": null,
+      "allowed_operations": [
+        "=="
+      ],
+      "set_by": "close_case_no_action"
+    },
+    "transitions": [],
+    "id": 37,
+    "journey_id": "dow_agentic_intelligence_platform_v1",
+    "module": "Platform",
+    "entity": "Closure",
+    "relevant_chunks": [
+      {
+        "chunk_id": "BRD-23",
+        "similarity": 1.0,
+        "text_english": "All recommendations, decisions, and approvals must be logged, including cases where no action is taken.",
+        "source_section": "23 Acceptance Criteria",
+        "pages": []
+      }
+    ],
+    "transition_rego_rules": {
+      "case_close_status": "no_action"
+    },
+    "additional_rego_rules": {
+      "case_close_status": "no_action"
+    },
+    "ruleset_ids": [
+      "RS_AUDIT_EVENT_LOGGING"
+    ]
+  }
+}

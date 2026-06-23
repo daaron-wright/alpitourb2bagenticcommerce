@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlpiGPT 2.0 — Wireframe Prototype</title>
+  <link rel="stylesheet" href="alpitour/wireframe.css" />
+  <style>
+    .anno-strip { width: 1180px; max-width: 100%; margin: 18px auto 0; display: flex; flex-wrap: wrap; gap: 10px; }
+    .anno-strip.phone { width: 460px; }
+    .anno-item { display: flex; align-items: flex-start; gap: 9px; background: #fbfbf9; border: 2px dashed #d9492f; border-radius: 10px 8px 11px 7px; padding: 9px 13px; max-width: 360px; }
+    .anno-item .n { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #d9492f; color: #d9492f; display: grid; place-items: center; font-family: var(--wf-script); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+    .anno-item .t { font-family: var(--wf-hand); font-size: 13.5px; color: #a23c28; line-height: 1.3; }
+    /* embed mode — show only the screen, for the deck iframes */
+    body.embed { background: #fff; }
+    body.embed .proto-bar, body.embed .proto-hint, body.embed #annos { display: none; }
+    body.embed .proto-stage { padding: 0; }
+    body.embed .scr { box-shadow: none; border: none; border-radius: 0; width: 100%; }
+    body.embed .wf-anno { display: none; }
+    body.embed .scr-fade { animation: none; }
+  </style>
+</head>
+<body class="proto-body wf">
+  <div class="proto-bar">
+    <span class="pt">AlpiGPT <span class="v">2.0</span> · wireframe</span>
+    <div class="seg" id="seg">
+      <button data-flow="b2b" class="on">B2B · Agent console</button>
+      <button data-flow="b2c">B2C · Traveler</button>
+    </div>
+    <div class="steps" id="steps"></div>
+    <div class="nav">
+      <span class="sl" id="slabel">—</span>
+      <button id="prev">‹ Prev</button>
+      <button id="next">Next ›</button>
+    </div>
+  </div>
+
+  <div class="proto-hint" id="hint">Click the <b>highlighted</b> action on each screen to advance — or use Prev / Next.</div>
+  <div class="proto-stage"><div id="mount"></div></div>
+  <div class="anno-strip" id="annos"></div>
+
+  <script>
+  /* ============================================================
+     Wireframe screen library + step controller.
+     ============================================================ */
+  const E = (s) => s; // identity for readability
+
+  /* ---------- shared chrome ---------- */
+  function browserChrome(url) {
+    return `<div class="scr-chrome"><div class="dotrow"><i></i><i></i><i></i></div><div class="url">${url}</div></div>`;
+  }
+  function consoleShell(active, main) {
+    const nav = [["Worklist","worklist"],["Quotes","quote"],["Bookings","book"],["Clients","group"],["Knowledge","kb"]];
+    return `
+    <div class="row" style="min-height:660px">
+      <div class="col" style="width:210px;border-right:2px solid var(--wf-line-soft);padding:18px 14px;gap:8px;background:var(--wf-fill-2)">
+        <div class="wf-agent-badge" style="margin-bottom:14px"><span class="spark">✦</span> AlpiGPT 2.0</div>
+        ${nav.map(([t,k])=>`<div class="${k===active?'wf-box fill':''}" style="padding:9px 12px;border-radius:9px;font-size:15px;color:${k===active?'var(--wf-ink)':'var(--wf-ink-2)'};${k===active?'':'border:2px solid transparent'}">${t}</div>`).join("")}
+        <div class="gr"></div>
+        <div class="row ac gap8"><span class="wf-av" style="width:30px;height:30px">M</span><span style="font-size:13px;color:var(--wf-mute)">Marco · agency</span></div>
+      </div>
+      <div class="col gr" style="min-width:0">${main}</div>
+    </div>`;
+  }
+  function topbar(title, sub) {
+    return `<div class="row ac jb" style="padding:16px 24px;border-bottom:2px solid var(--wf-line-soft)">
+      <div><div class="wf-h" style="font-size:24px">${title}</div>${sub?`<div style="font-size:14px;color:var(--wf-mute);margin-top:2px">${sub}</div>`:''}</div>
+      <div class="wf-box soft" style="padding:8px 14px;font-size:14px;color:var(--wf-mute);width:240px">Search…</div>
+    </div>`;
+  }
+  function lines(n, cls="") { let o=""; const w=["w90","w80","w65","w50","w40"]; for(let i=0;i<n;i++) o+=`<span class="wf-ln ${w[i%w.length]} ${cls}" style="margin:7px 0"></span>`; return o; }
+
+  /* ============================================================
+     FLOW A — B2B quote-building console (desktop)
+     ============================================================ */
+  const B2B = [
+    { label:"Worklist", frame:"desktop", url:"app.alpigpt.com / worklist",
+      annos:[{n:1,top:88,left:560,text:"Super-Agent triages email + portal + phone into ONE ranked worklist — each item with a reason."}],
+      body: () => consoleShell("worklist", `
+        ${topbar("Your worklist","Ranked by AlpiGPT · 7 open requests · Tue 14 Oct")}
+        <div class="col gap12" style="padding:22px 24px">
+          <div class="wf-box hot pulse" data-next style="padding:16px;border-color:var(--wf-agent)">
+            <div class="row ac jb gap12">
+              <div class="row ac gap12" style="min-width:0"><span class="wf-av">R</span><div style="min-width:0"><div style="font-size:17px;color:var(--wf-ink)">Rossi family · Sharm el-Sheikh</div><div style="font-size:13px;color:var(--wf-mute)">2 adults + 2 children · late July</div></div></div>
+              <div class="row ac gap10" style="flex-shrink:0"><span class="wf-chip mark">★ Priority · 6h</span><span class="wf-btn agent primary">Build quote ›</span></div>
+            </div>
+            <div class="row gap8 wrap" style="margin-top:12px"><span class="wf-chip agent">~€5.8k value</span><span class="wf-chip">repeat client</span><span class="wf-chip">sea-view · direct flight</span></div>
+          </div>
+          ${[["Bianchi · Maldives","honeymoon · quote sent","€9.2k"],["Conti · Greece islands","new request · 1 adult","€2.1k"],["Greco group · ski week","hotel price changed","€14k"]].map(([a,b,c])=>`
+          <div class="wf-box soft hot" data-next style="padding:14px">
+            <div class="row ac jb gap12"><div class="row ac gap12" style="min-width:0"><span class="wf-av" style="background:#fff">${a[0]}</span><div style="min-width:0"><div style="font-size:16px;color:var(--wf-ink-2)">${a}</div><div style="font-size:13px;color:var(--wf-mute)">${b}</div></div></div><span class="wf-chip" style="flex-shrink:0">${c}</span></div>
+          </div>`).join("")}
+        </div>`)
+    },
+    { label:"Brief", frame:"desktop", url:"app.alpigpt.com / worklist / rossi",
+      annos:[{n:1,top:120,left:610,text:"AlpiGPT reads the free-text request into structured, editable constraints."}],
+      body: () => consoleShell("worklist", `
+        ${topbar("Rossi family","New request → build a quote")}
+        <div class="row gap16" style="padding:22px 24px;align-items:stretch">
+          <div class="wf-box gr" style="padding:18px">
+            <div class="wf-kick">The request · email</div>
+            <div style="margin-top:10px;font-size:15px;color:var(--wf-ink-2);line-height:1.5">"Hi, we'd like a week in Sharm in late July — me, my wife and our two kids (8 &amp; 11). Sea-view room please, and a direct flight from Milan if possible. Budget around €6,000. Some excursions for the kids would be great."</div>
+            <div style="margin-top:14px">${lines(2)}</div>
+          </div>
+          <div class="wf-agentcard" style="width:380px;padding:18px;flex-shrink:0">
+            <div class="wf-agent-badge"><span class="spark">✦</span> I read this as</div>
+            <div class="col gap10" style="margin-top:14px">
+              ${[["Party","2 adults + 2 children (8, 11)"],["Destination","Sharm el-Sheikh"],["Dates","Late July · 7 nights"],["Budget","≤ €6,000"],["Must-haves","Sea-view · direct from Milan"],["Interests","Family excursions"]].map(([k,v])=>`<div class="row jb ac wf-box" style="padding:9px 12px;background:#fff"><span style="font-size:13px;color:var(--wf-mute)">${k}</span><span style="font-size:14px;color:var(--wf-ink)">${v}</span></div>`).join("")}
+            </div>
+            <button class="wf-btn agent primary lg hot pulse" data-next style="margin-top:16px;width:100%;justify-content:center">Assemble package ›</button>
+          </div>
+        </div>`)
+    },
+    { label:"Orchestration", frame:"desktop", url:"app.alpigpt.com / … / assembling",
+      annos:[{n:1,top:300,left:70,text:"The Super-Agent decomposes the brief and delegates."},{n:2,top:300,left:470,text:"4 read agents run IN PARALLEL — the plan is visible, not a black box."}],
+      body: () => consoleShell("worklist", `
+        ${topbar("Assembling the package","AlpiGPT is orchestrating 4 domain agents")}
+        <div class="row ac" style="padding:46px 30px;gap:24px">
+          <div class="wf-agentcard col ac jc" style="width:150px;height:150px;padding:14px;text-align:center;flex-shrink:0">
+            <span class="spark" style="width:34px;height:34px;border:2px solid var(--wf-agent);border-radius:50%;display:grid;place-items:center;color:var(--wf-agent);font-size:18px">✦</span>
+            <div class="wf-h" style="font-size:19px;color:var(--wf-agent);margin-top:8px">Super-Agent</div>
+            <div style="font-size:12px;color:var(--wf-mute)">plan · delegate</div>
+          </div>
+          <div class="col gap10" style="align-self:center"><hr class="wf-dash" style="width:40px"><hr class="wf-dash" style="width:40px"><hr class="wf-dash" style="width:40px"><hr class="wf-dash" style="width:40px"></div>
+          <div class="col gap10 gr">
+            ${[["Flight","Milan → Sharm · direct found","done"],["Stay","Sea-view resort · 7 nt · 3 options","done"],["Transfer","Airport → resort · private","done"],["Experience","2 family excursions","working"]].map(([t,d,s])=>`
+            <div class="wf-box row ac jb" style="padding:12px 15px;${s==='working'?'border-color:var(--wf-agent)':''}">
+              <div class="row ac gap10"><span class="wf-av" style="width:30px;height:30px;font-size:13px">${t[0]}</span><div><div style="font-size:15px;color:var(--wf-ink)">${t} agent</div><div style="font-size:12px;color:var(--wf-mute)">${d}</div></div></div>
+              ${s==='done'?'<span class="wf-chip ok">✓ done</span>':'<span class="wf-chip agent">…working</span>'}
+            </div>`).join("")}
+          </div>
+          <div class="col gap10" style="align-self:center"><hr class="wf-dash" style="width:34px"></div>
+          <div class="wf-box fill col ac jc hot pulse" data-next style="width:130px;height:130px;text-align:center;padding:12px;flex-shrink:0;border-color:var(--wf-ink)">
+            <div class="wf-h" style="font-size:18px">Quote</div><div style="font-size:12px;color:var(--wf-mute)">assembling…</div>
+            <span class="wf-btn primary" style="margin-top:10px;font-size:13px;padding:7px 12px">View ›</span>
+          </div>
+        </div>`)
+    },
+    { label:"Quote", frame:"desktop", url:"app.alpigpt.com / quotes / QT-2048",
+      annos:[{n:1,top:90,left:600,text:"Multi-domain quote assembled + priced — with an alternative the agent can switch to."}],
+      body: () => consoleShell("quote", `
+        ${topbar("Quote QT-2048 · Rossi family","Assembled by AlpiGPT · v1")}
+        <div class="row gap16" style="padding:20px 24px;align-items:stretch">
+          <div class="col gap10 gr">
+            ${[["Flight","Milan MXP → Sharm SSH · direct · 2+2 pax","€1,840"],["Stay","Reef Resort · sea-view · 7 nights · all-incl","€2,560"],["Transfer","Private airport ↔ resort","€120"],["Experience","Desert safari + snorkel trip (family)","€460"]].map(([t,d,p])=>`
+            <div class="wf-box row ac jb" style="padding:13px 15px">
+              <div class="row ac gap12"><div class="wf-img" style="width:54px;height:42px"></div><div><div style="font-size:16px;color:var(--wf-ink)">${t}</div><div style="font-size:13px;color:var(--wf-mute)">${d}</div></div></div>
+              <span style="font-family:var(--wf-script);font-weight:700;font-size:20px;color:var(--wf-ink)">${p}</span>
+            </div>`).join("")}
+            <div class="wf-box soft row ac gap10" style="padding:12px 15px;border-style:dashed"><span class="wf-chip agent">✦ Alternative</span><span style="font-size:14px;color:var(--wf-ink-2)">Option B — 4★ resort, €380 cheaper, pool-view</span><span class="gr"></span><span class="wf-btn" style="font-size:13px;padding:6px 12px">Compare</span></div>
+          </div>
+          <div class="wf-box" style="width:300px;padding:18px;flex-shrink:0;align-self:flex-start">
+            <div class="wf-kick">Price summary</div>
+            <div class="col gap8" style="margin-top:12px">
+              <div class="row jb"><span style="color:var(--wf-mute);font-size:14px">Subtotal</span><span style="font-size:15px">€4,980</span></div>
+              <div class="row jb"><span style="color:var(--wf-mute);font-size:14px">Margin</span><span style="font-size:15px;color:var(--wf-ok)">€720 · 14%</span></div>
+              <hr class="wf-dash" style="margin:6px 0">
+              <div class="row jb ac"><span style="font-size:16px;color:var(--wf-ink)">Total</span><span style="font-family:var(--wf-script);font-weight:700;font-size:26px;color:var(--wf-ink)">€4,980</span></div>
+              <div style="font-size:12px;color:var(--wf-ok)">✓ under the €6,000 budget</div>
+            </div>
+            <button class="wf-btn agent primary lg hot pulse" data-next style="margin-top:16px;width:100%;justify-content:center">Edit with AlpiGPT ›</button>
+            <button class="wf-btn lg" style="margin-top:8px;width:100%;justify-content:center">Send to client</button>
+          </div>
+        </div>`)
+    },
+    { label:"Edit + gate", frame:"desktop", url:"app.alpigpt.com / quotes / QT-2048",
+      annos:[{n:1,top:150,left:618,text:"Conversational edit — re-prices live, swaps the flight, adds a night."},{n:2,top:430,left:618,text:"8% discount exceeds the agent's 5% bound → a human gate. The agent won't cross it alone."}],
+      body: () => consoleShell("quote", `
+        ${topbar("Quote QT-2048 · Rossi family","Editing · v2")}
+        <div class="row gap16" style="padding:20px 24px;align-items:stretch">
+          <div class="col gap10 gr">
+            ${[["Flight ✎","Swapped → cheaper carrier · still direct","€1,610"],["Stay ✎","Reef Resort · 8 nights (+1)","€2,925"],["Transfer","Private airport ↔ resort","€120"],["Experience","Desert safari + snorkel trip","€460"]].map(([t,d,p])=>`
+            <div class="wf-box row ac jb" style="padding:13px 15px;${t.includes('✎')?'border-color:var(--wf-agent)':''}">
+              <div class="row ac gap12"><div class="wf-img" style="width:54px;height:42px"></div><div><div style="font-size:16px;color:var(--wf-ink)">${t}</div><div style="font-size:13px;color:var(--wf-mute)">${d}</div></div></div>
+              <span style="font-family:var(--wf-script);font-weight:700;font-size:20px;color:var(--wf-ink)">${p}</span>
+            </div>`).join("")}
+          </div>
+          <div class="col gap12" style="width:340px;flex-shrink:0">
+            <div class="wf-agentcard" style="padding:14px">
+              <div class="row gap8" style="justify-content:flex-end"><span class="wf-box fill" style="padding:8px 12px;font-size:13px;max-width:240px">"Cheaper flight, add a day, apply 8% loyalty discount"</span></div>
+              <div class="row gap8 ac" style="margin-top:12px"><span class="wf-agent-badge"><span class="spark">✦</span></span><span style="font-size:13.5px;color:var(--wf-ink-2);line-height:1.4">Done — swapped the flight, added 1 night. The 8% discount needs sign-off ↓</span></div>
+            </div>
+            <div class="wf-box warn" data-anno style="padding:14px;border-color:var(--wf-warn);background:var(--wf-warn-fill)">
+              <div class="wf-kick" style="color:var(--wf-warn)">⚠ Human gate</div>
+              <div style="font-size:14.5px;color:#7a5a12;margin-top:6px;line-height:1.4">8% discount &gt; your <b>5% bound</b>. Approve to apply, or modify.</div>
+              <div class="row gap8" style="margin-top:12px"><button class="wf-btn primary hot pulse" data-next style="background:var(--wf-warn);border-color:var(--wf-warn)">Approve discount</button><button class="wf-btn">Modify</button></div>
+            </div>
+          </div>
+        </div>`)
+    },
+    { label:"Confirmed", frame:"desktop", url:"app.alpigpt.com / quotes / QT-2048 ✓",
+      annos:[{n:1,top:250,left:600,text:"Execution confirmation — what happened, written back and logged to the audit trail."}],
+      body: () => consoleShell("quote", `
+        ${topbar("Quote sent ✓","QT-2048 · v2 · Rossi family")}
+        <div class="col" style="padding:30px 24px;gap:16px;align-items:center">
+          <div class="wf-box ok col ac jc" style="width:80px;height:80px;border:2px solid var(--wf-ok);background:#eaf5ee"><span class="wf-h" style="font-size:40px;color:var(--wf-ok)">✓</span></div>
+          <div class="wf-h" style="font-size:28px">Quote sent to the Rossi family</div>
+          <div class="wf-box" style="width:560px;max-width:100%;padding:18px">
+            <div class="wf-kick">What happened</div>
+            <div class="col gap10" style="margin-top:12px">
+              ${[["Quote versioned","v2 · €4,605 · saved to quote store"],["Discount approved","8% · signed off by Marco · logged to audit"],["Client emailed","secure link · valid 7 days"],["On accept","→ Booking agent confirms flight + resort + transfer"]].map(([a,b])=>`<div class="row ac gap10"><span class="wf-chip ok">✓</span><div><span style="font-size:15px;color:var(--wf-ink)">${a}</span> <span style="font-size:13px;color:var(--wf-mute)">— ${b}</span></div></div>`).join("")}
+            </div>
+          </div>
+          <button class="wf-btn lg hot pulse" data-goto="0" style="margin-top:4px">‹ Back to worklist</button>
+        </div>`)
+    },
+  ];
+
+  /* ============================================================
+     FLOW B — B2C discovery → personalized itinerary (phone)
+     ============================================================ */
+  function phoneShell(main) {
+    return `<div class="col" style="min-height:720px">
+      <div class="row ac jb" style="padding:14px 18px;border-bottom:2px solid var(--wf-line-soft)">
+        <div class="wf-agent-badge" style="font-size:18px"><span class="spark">✦</span> AlpiGPT 2.0</div>
+        <span class="wf-av" style="width:30px;height:30px;font-size:13px">G</span>
+      </div>
+      <div class="col gr">${main}</div>
+    </div>`;
+  }
+  const B2C = [
+    { label:"Discovery", frame:"phone", url:"alpitour.com",
+      annos:[{n:1,top:300,left:480,text:"An open-ended desire — no product, dates or destination in mind."}],
+      body: () => phoneShell(`
+        <div class="col gr jc" style="padding:24px 20px;gap:18px">
+          <div class="wf-h" style="font-size:34px;line-height:1.05">Where to,<br>Giulia?</div>
+          <div style="font-size:15px;color:var(--wf-mute)">Tell me what you're after — I'll do the rest.</div>
+          <div class="wf-agentcard" style="padding:14px">
+            <div style="font-size:16px;color:var(--wf-ink);line-height:1.45">"Somewhere warm in October, relaxed, good food, and not a long flight."</div>
+          </div>
+          <div class="row gap8 wrap"><span class="wf-chip">🏖 Beach</span><span class="wf-chip">🍝 Food</span><span class="wf-chip">🏛 Culture</span><span class="wf-chip">⛰ Nature</span></div>
+          <button class="wf-btn agent primary lg hot pulse" data-next style="justify-content:center">Find my trip ›</button>
+        </div>`)
+    },
+    { label:"Understanding", frame:"phone", url:"alpitour.com / chat",
+      annos:[{n:1,top:120,left:480,text:"AlpiGPT reflects its understanding back."},{n:2,top:360,left:480,text:"Persona from booking history — read-only, explainable. Sharpens the match."}],
+      body: () => phoneShell(`
+        <div class="col" style="padding:20px;gap:14px">
+          <div class="wf-agentcard" style="padding:16px">
+            <div class="wf-agent-badge"><span class="spark">✦</span> Here's what I understand</div>
+            <div class="row gap8 wrap" style="margin-top:12px">${["Warm","October","Relaxed","Food-focused","Short flight from Milan"].map(c=>`<span class="wf-chip agent">${c}</span>`).join("")}</div>
+          </div>
+          <div class="wf-box fill2" style="padding:14px">
+            <div class="wf-kick">From your trips</div>
+            <div style="font-size:14.5px;color:var(--wf-ink-2);margin-top:8px;line-height:1.45">You loved <b>Greece '23</b> &amp; <b>Sicily '24</b> — boutique stays, local food, slow pace. I'll weight for that.</div>
+            <div class="row gap6 wrap" style="margin-top:10px"><span class="wf-chip">boutique stays</span><span class="wf-chip">food &amp; wine</span><span class="wf-chip">slow travel</span></div>
+          </div>
+          <button class="wf-btn agent primary lg hot pulse" data-next style="justify-content:center">Show me itineraries ›</button>
+        </div>`)
+    },
+    { label:"Results", frame:"phone", url:"alpitour.com / results",
+      annos:[{n:1,top:150,left:480,text:"One recommendation, with the reason it won — cited to data (explainability)."}],
+      body: () => phoneShell(`
+        <div class="col" style="padding:18px;gap:12px">
+          <div class="wf-h" style="font-size:22px">3 trips for you</div>
+          <div class="wf-agentcard hot pulse" data-next style="padding:14px">
+            <div class="row jb ac"><div class="wf-h" style="font-size:21px">Puglia · 7 nights</div><span class="wf-chip mark">★ 94% match</span></div>
+            <div class="wf-img" style="height:96px;margin:10px 0"></div>
+            <div class="wf-kick" style="color:var(--wf-agent)">✦ Why this fits</div>
+            <div class="col gap6" style="margin-top:8px">
+              ${[["Warm in October","24°C avg"],["Short flight","1h 50 from Milan"],["Food region","orecchiette, burrata, wine"],["Boutique stay","restored masseria"]].map(([a,b])=>`<div class="row ac gap8"><span style="color:var(--wf-agent)">✓</span><span style="font-size:14px;color:var(--wf-ink)">${a}</span><span style="font-size:12px;color:var(--wf-mute)">· ${b}</span></div>`).join("")}
+            </div>
+            <button class="wf-btn agent primary" style="margin-top:12px;width:100%;justify-content:center">See itinerary ›</button>
+          </div>
+          ${[["Malta · 6 nights","88% · culture + sea"],["Crete · 7 nights","85% · food + beaches"]].map(([a,b])=>`<div class="wf-box soft row ac gap12" style="padding:11px"><div class="wf-img" style="width:60px;height:46px"></div><div><div style="font-size:16px;color:var(--wf-ink-2)">${a}</div><div style="font-size:12px;color:var(--wf-mute)">${b}</div></div></div>`).join("")}
+        </div>`)
+    },
+    { label:"Itinerary", frame:"phone", url:"alpitour.com / puglia",
+      annos:[{n:1,top:430,left:480,text:"Contextual upsell — ranked by fit (Offer agent), not a wall of add-ons."}],
+      body: () => phoneShell(`
+        <div class="col" style="padding:18px;gap:12px">
+          <div class="wf-h" style="font-size:22px">Puglia · 7 nights</div>
+          <div class="row gap6">${["D1","D2","D3","D4","D5","D6","D7"].map(d=>`<span class="wf-box soft" style="padding:5px 8px;font-size:12px;color:var(--wf-mute)">${d}</span>`).join("")}</div>
+          ${[["Flight","Milan → Bari · direct · 1h50"],["Stay","Masseria · 7 nights · breakfast"],["Transfer","Hire car · 7 days"],["Experience","Food &amp; wine day tour"]].map(([t,d])=>`<div class="wf-box row ac gap12" style="padding:11px"><div class="wf-img" style="width:52px;height:40px"></div><div><div style="font-size:15px;color:var(--wf-ink)">${t}</div><div style="font-size:12px;color:var(--wf-mute)">${d}</div></div></div>`).join("")}
+          <div class="wf-agentcard" data-anno style="padding:13px">
+            <div class="wf-agent-badge" style="font-size:15px"><span class="spark">✦</span> You might add</div>
+            <div class="col gap8" style="margin-top:10px">
+              <div class="row ac jb"><div><div style="font-size:14px;color:var(--wf-ink)">Cooking class</div><div style="font-size:12px;color:var(--wf-mute)">fits your food interest</div></div><span class="wf-chip agent">+€85</span></div>
+              <div class="row ac jb"><div><div style="font-size:14px;color:var(--wf-ink)">Airport lounge</div><div style="font-size:12px;color:var(--wf-mute)">relaxed start</div></div><span class="wf-chip agent">+€40</span></div>
+            </div>
+          </div>
+          <button class="wf-btn agent primary lg hot pulse" data-next style="justify-content:center">Continue to book ›</button>
+        </div>`)
+    },
+    { label:"Book & pay", frame:"phone", url:"alpitour.com / checkout",
+      annos:[{n:1,top:360,left:480,text:"Self-serve booking with TIGHTER guardrails — payment + fraud check before confirm."}],
+      body: () => phoneShell(`
+        <div class="col" style="padding:18px;gap:12px">
+          <div class="wf-h" style="font-size:22px">Review &amp; book</div>
+          <div class="wf-box" style="padding:14px">
+            <div class="row jb"><span style="font-size:14px;color:var(--wf-mute)">Puglia · 7 nt · 2 pax</span><span style="font-size:14px">€2,180</span></div>
+            <div class="row jb"><span style="font-size:14px;color:var(--wf-mute)">+ Cooking class</span><span style="font-size:14px">€85</span></div>
+            <hr class="wf-dash" style="margin:8px 0">
+            <div class="row jb ac"><span style="font-size:16px;color:var(--wf-ink)">Total</span><span class="wf-h" style="font-size:24px">€2,265</span></div>
+          </div>
+          <div class="wf-box soft" style="padding:13px">${lines(2)}<div class="wf-kick" style="margin-top:6px">Traveler details</div></div>
+          <div class="wf-box" style="padding:13px"><div class="wf-kick">Payment</div><div class="wf-box fill2" style="padding:10px;margin-top:8px;font-size:14px;color:var(--wf-mute)">•••• •••• •••• ____</div></div>
+          <div class="row gap8 wrap"><span class="wf-chip ok">🔒 Secure · fraud check</span><span class="wf-chip">Free cancel to 30 Sep</span></div>
+          <button class="wf-btn agent primary lg hot pulse" data-next style="justify-content:center">Pay &amp; confirm ›</button>
+        </div>`)
+    },
+    { label:"Confirmed", frame:"phone", url:"alpitour.com / confirmed ✓",
+      annos:[{n:1,top:430,left:480,text:"Confirmation + documents — and proactive in-trip cover (ties to the disruption flow)."}],
+      body: () => phoneShell(`
+        <div class="col gr" style="padding:22px;gap:14px;align-items:center">
+          <div class="wf-box ok col ac jc" style="width:74px;height:74px;border:2px solid var(--wf-ok);background:#eaf5ee"><span class="wf-h" style="font-size:36px;color:var(--wf-ok)">✓</span></div>
+          <div class="wf-h" style="font-size:26px;text-align:center">Puglia — you're going!</div>
+          <div style="font-size:14px;color:var(--wf-mute);text-align:center">Booking PG-7741 · 12–19 Oct</div>
+          <div class="row gap8 wrap jc">${["✈ E-ticket","🏨 Voucher","🚗 Car","🧾 Invoice"].map(c=>`<span class="wf-chip ok">${c}</span>`).join("")}</div>
+          <div class="wf-agentcard" style="padding:14px;width:100%">
+            <div class="row gap8 ac"><span class="wf-agent-badge"><span class="spark">✦</span></span><span style="font-size:14px;color:var(--wf-ink-2);line-height:1.4">I'll watch your trip. If a flight changes, I'll re-book around it and tell you.</span></div>
+          </div>
+          <button class="wf-btn lg hot pulse" data-goto="0" style="margin-top:2px">↺ Start over</button>
+        </div>`)
+    },
+  ];
+
+  /* ============================================================
+     Controller
+     ============================================================ */
+  const FLOWS = { b2b: B2B, b2c: B2C };
+  const KEY = "alpigpt-proto";
+  let state = { flow: "b2b", step: 0 };
+  const params = new URLSearchParams(location.search);
+  const EMBED = params.get("embed")==="1";
+  if (EMBED) document.body.classList.add("embed");
+  if (!EMBED) { try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && FLOWS[s.flow]) state = s; } catch(e){} }
+  if (params.get("flow") && FLOWS[params.get("flow")]) state.flow = params.get("flow");
+  if (params.get("step") != null) state.step = parseInt(params.get("step"),10) || 0;
+
+  const mount = document.getElementById("mount");
+  const annoStrip = document.getElementById("annos");
+  const stepsEl = document.getElementById("steps");
+  const slabel = document.getElementById("slabel");
+
+  function save(){ if (EMBED) return; localStorage.setItem(KEY, JSON.stringify(state)); }
+
+  function render(){
+    const flow = FLOWS[state.flow];
+    state.step = Math.max(0, Math.min(state.step, flow.length-1));
+    const screen = flow[state.step];
+
+    // screen frame
+    const phone = screen.frame === "phone";
+    const annoPins = (screen.annos||[]).map(a=>`<div class="wf-anno" style="top:${a.top}px;left:${a.left>440&&phone?430:a.left}px"><span class="wf-pin">${a.n}</span></div>`).join("");
+    mount.innerHTML = `<div class="scr ${phone?'phone':''} scr-fade">${browserChrome(screen.url)}<div class="scr-body">${screen.body()}${annoPins}</div></div>`;
+
+    // annotation legend
+    annoStrip.className = "anno-strip" + (phone?" phone":"");
+    annoStrip.innerHTML = (screen.annos||[]).map(a=>`<div class="anno-item"><span class="n">${a.n}</span><span class="t">${a.text}</span></div>`).join("");
+
+    // step dots
+    stepsEl.innerHTML = flow.map((s,i)=>`<span class="sdot ${i===state.step?'on':(i<state.step?'done':'')}" data-step="${i}" title="${s.label}"></span>`).join("");
+    slabel.textContent = `${state.step+1}/${flow.length} · ${screen.label}`;
+
+    document.getElementById("prev").disabled = state.step===0 && state.flow==="b2b";
+    document.querySelectorAll("#seg button").forEach(b=>b.classList.toggle("on", b.dataset.flow===state.flow));
+
+    // wire hotspots
+    mount.querySelectorAll("[data-next]").forEach(el=>el.addEventListener("click", ()=>go(state.step+1)));
+    mount.querySelectorAll("[data-goto]").forEach(el=>el.addEventListener("click", ()=>go(parseInt(el.dataset.goto,10))));
+    save();
+  }
+  function go(step){
+    const flow = FLOWS[state.flow];
+    if (step >= flow.length) { state.step = flow.length-1; }
+    else if (step < 0) { state.step = 0; }
+    else state.step = step;
+    render();
+  }
+  document.getElementById("next").addEventListener("click", ()=>go(state.step+1));
+  document.getElementById("prev").addEventListener("click", ()=>go(state.step-1));
+  document.querySelectorAll("#seg button").forEach(b=>b.addEventListener("click", ()=>{ state.flow=b.dataset.flow; state.step=0; render(); }));
+  stepsEl.addEventListener("click", e=>{ const d=e.target.closest(".sdot"); if(d) go(parseInt(d.dataset.step,10)); });
+  document.addEventListener("keydown", e=>{ if(e.key==="ArrowRight") go(state.step+1); if(e.key==="ArrowLeft") go(state.step-1); });
+
+  render();
+  </script>
+</body>
+</html>

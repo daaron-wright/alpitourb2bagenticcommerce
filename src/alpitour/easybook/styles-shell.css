@@ -1,0 +1,88 @@
+/* ============================================================
+   EasyBook Next — shell, top bar, dashboard, left summary rail
+   ============================================================ */
+
+.eb-app { display: grid; grid-template-rows: 52px minmax(0,1fr); height: 100vh; }
+
+/* ---------------- top bar ---------------- */
+.eb-top { display: flex; align-items: center; gap: 12px; background: var(--color-bg-panel); border-bottom: 1px solid var(--color-border-subtle); padding: 0 16px; min-width: 0; }
+.eb-logo { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.eb-logo .mark { width: 26px; height: 26px; border-radius: 7px; background: var(--color-accent-primary); color: #fff; display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+.eb-logo .t { font-family: var(--font-head); font-size: 14.5px; font-weight: 600; white-space: nowrap; }
+.eb-logo .t small { color: var(--color-text-muted); font-weight: 400; font-family: var(--font-ui); }
+.eb-crumb { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; }
+.eb-crumb .sep { color: var(--color-text-muted); }
+.eb-crumb b { color: var(--color-text-primary); font-weight: 600; }
+.eb-top-r { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.eb-stage { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: var(--color-text-primary); background: var(--color-bg-canvas); border: 1px solid var(--color-border-subtle); border-radius: 999px; padding: 5px 12px; white-space: nowrap; }
+.eb-stage .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-success); }
+.eb-stage .dot.busy { background: var(--color-warning); animation: eb-pulse 1s ease-in-out infinite; }
+@keyframes eb-pulse { 50% { opacity: .35; } }
+.eb-agency { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
+.eb-agency .gold { font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #8a6116; background: #fdf3d8; border: 1px solid #ecd9a0; border-radius: 4px; padding: 2px 7px; }
+
+.eb-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 12.5px; font-weight: 600; border-radius: var(--radius-sm); padding: 8px 14px; border: 1px solid var(--color-border-subtle); background: var(--color-bg-panel); color: var(--color-text-primary); white-space: nowrap; min-height: 32px; }
+.eb-btn:hover { border-color: var(--color-accent-primary); background: var(--color-accent-soft); }
+.eb-btn.primary { background: var(--color-accent-primary); border-color: var(--color-accent-primary); color: #fff; }
+.eb-btn.primary:hover { background: #0046B0; }
+.eb-btn.danger { color: var(--color-danger); }
+.eb-btn.sm { font-size: 11.5px; padding: 5px 10px; min-height: 26px; }
+
+/* ---------------- dashboard ---------------- */
+.eb-dash { overflow-y: auto; padding: 22px 24px 40px; }
+.eb-dash-in { max-width: 1080px; margin: 0 auto; }
+.eb-dash-head { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+.eb-dash-head h1 { font-size: 22px; }
+.eb-dash-head .sub { font-size: 12.5px; color: var(--color-text-secondary); margin-top: 4px; }
+.eb-dash-head .eb-btn.primary { margin-left: auto; }
+.eb-dash-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 14px; align-items: start; }
+@media (max-width: 920px) { .eb-dash-grid { grid-template-columns: 1fr; } }
+.eb-panel { background: var(--color-bg-panel); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.eb-panel-h { display: flex; align-items: center; gap: 8px; padding: 13px 16px 10px; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-text-muted); white-space: nowrap; }
+.eb-panel-h .count { margin-left: auto; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.eb-wp { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--color-border-faint); cursor: pointer; }
+.eb-wp:hover { background: var(--color-accent-soft); }
+.eb-wp .id { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-muted); flex-shrink: 0; white-space: nowrap; }
+.eb-wp .t { font-size: 13px; font-weight: 600; }
+.eb-wp .m { font-size: 11.5px; color: var(--color-text-secondary); margin-top: 2px; }
+.eb-wp .stage { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--color-text-secondary); background: var(--color-bg-canvas); border: 1px solid var(--color-border-subtle); border-radius: 999px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.eb-wp.hot .stage { color: var(--color-accent-primary); background: var(--color-accent-soft); border-color: var(--color-accent-border); }
+.eb-hold { display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-top: 1px solid var(--color-border-faint); font-size: 12.5px; }
+.eb-hold .ref { font-family: var(--font-mono); font-weight: 600; font-size: 12px; white-space: nowrap; }
+.eb-hold .exp { white-space: nowrap; }
+.eb-hold .exp { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--color-text-secondary); white-space: nowrap; }
+.eb-hold.urgent .exp { color: var(--color-warning); }
+.eb-sig { display: flex; gap: 9px; padding: 10px 16px; border-top: 1px solid var(--color-border-faint); font-size: 12px; }
+.eb-sig .ki { margin-top: 1px; }
+.eb-sig.success .ki { color: var(--color-success); }
+.eb-sig.warn .ki { color: var(--color-warning); }
+.eb-sig .t { font-weight: 600; }
+.eb-sig .s { color: var(--color-text-secondary); margin-top: 1px; }
+
+/* ---------------- workbench grid ---------------- */
+.eb-bench { display: grid; grid-template-columns: 296px minmax(0,1fr) 384px; min-height: 0; }
+
+/* ---------------- left summary rail ---------------- */
+.eb-rail-l { background: var(--color-bg-panel); border-right: 1px solid var(--color-border-subtle); overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
+.eb-sec { display: flex; flex-direction: column; gap: 8px; }
+.eb-sec-h { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px; }
+.eb-sec-h .right { margin-left: auto; }
+.eb-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 500; color: var(--color-text-primary); background: var(--color-bg-canvas); border: 1px solid var(--color-border-subtle); border-radius: 999px; padding: 5px 11px; }
+.eb-chip .ki { width: 12px; height: 12px; color: var(--color-success); }
+.eb-chip.blocker { color: var(--color-warning); background: var(--color-warning-soft); border-color: #ecd9a0; font-weight: 600; cursor: pointer; }
+.eb-chip.signal { color: var(--color-ai); background: var(--color-ai-soft); border-color: #D8CCEF; font-weight: 600; }
+.eb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.eb-fresh { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; border-radius: 4px; padding: 2px 7px; white-space: nowrap; }
+.eb-fresh.live { color: var(--color-success); background: var(--color-success-soft); }
+.eb-fresh.recent { color: var(--color-text-secondary); background: var(--color-bg-canvas); border: 1px solid var(--color-border-subtle); }
+.eb-fresh.stale { color: var(--color-warning); background: var(--color-warning-soft); }
+.eb-selpkg { border: 1px solid var(--color-accent-border); background: var(--color-accent-soft); border-radius: var(--radius-md); padding: 11px 13px; }
+.eb-selpkg .t { font-size: 12.5px; font-weight: 600; }
+.eb-selpkg .s { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.eb-selpkg .p { font-family: var(--font-head); font-size: 17px; margin-top: 6px; }
+.eb-empty-note { font-size: 11.5px; color: var(--color-text-muted); line-height: 1.5; }
+
+/* responsive overrides — keep LAST so they beat base rules at equal specificity */
+@media (max-width: 1150px) { .eb-bench { grid-template-columns: 264px minmax(0,1fr) 348px; } }
+@media (max-width: 1000px) { .eb-bench { grid-template-columns: 218px minmax(0,1fr) 308px; } .eb-rail-l { padding: 12px 10px; } .eb-kv { grid-template-columns: 110px 1fr; } }
+@media (max-width: 840px) { .eb-bench { grid-template-columns: minmax(0,1fr) 308px; } .eb-rail-l { display: none; } }

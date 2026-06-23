@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alpitour Platform — one trip, two sides</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="alpitour/storefront/styles.css" />
+  <link rel="stylesheet" href="alpitour/platform/traveler.css" />
+  <script src="assets/ds/icons/ki.js"></script>
+  <script src="alpitour/platform/image-slot.js"></script>
+  <style>
+    html, body { margin: 0; }
+    .pl-bar { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 14px; height: 46px; padding: 0 16px; background: var(--k-dark-stone-90, #1F2426); color: #fff; font-family: var(--font-sans); }
+    .pl-bar .t { font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
+    .pl-bar .t i { font-style: normal; color: rgba(255,255,255,.55); font-weight: 400; }
+    .pl-seg { display: flex; background: rgba(255,255,255,.12); border-radius: 999px; padding: 3px; margin-left: 6px; }
+    .pl-seg button { border: none; background: none; color: rgba(255,255,255,.75); font-size: 12px; font-weight: 600; padding: 6px 16px; border-radius: 999px; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 7px; }
+    .pl-seg button.on { background: #fff; color: var(--k-dark-stone-90, #1F2426); }
+    .pl-seg button .d { width: 7px; height: 7px; border-radius: 50%; background: var(--k-warm-red-50, #FF462D); }
+    .pl-seg button:nth-child(2) .d { background: var(--k-spruce-50, #4D9AA5); }
+    .pl-thread { margin-left: auto; font-size: 11.5px; color: rgba(255,255,255,.75); display: inline-flex; align-items: center; gap: 8px; }
+    .pl-thread .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.35); }
+    .pl-thread.live .dot { background: #2FB344; animation: pl-pulse 1.4s ease-in-out infinite; }
+    @keyframes pl-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+    .pl-pane { display: none; }
+    .pl-pane.on { display: block; }
+    .pl-toast { position: fixed; left: 18px; bottom: 18px; z-index: 200; display: flex; align-items: center; gap: 9px; background: var(--k-dark-stone-90, #1F2426); color: #fff; font-family: var(--font-sans); font-size: 12.5px; padding: 11px 16px; border-radius: 8px; box-shadow: 0 8px 26px rgba(15,23,42,.3); max-width: 420px; animation: pl-toast-in .25s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    .pl-toast .who { font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,.65); white-space: nowrap; }
+    .pl-toast .who.tv { color: #FF8A75; }
+    .pl-toast .who.ag { color: #7FC4CE; }
+    @keyframes pl-toast-in { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="pl-bar" data-screen-label="Platform toggle">
+    <span class="t">Alpitour <i>· one trip, two sides</i></span>
+    <div class="pl-seg" role="tablist" aria-label="Persona view">
+      <button id="pl-b2c" role="tab" aria-selected="true" class="on"><span class="d"></span> Traveler · Alpitour.it</button>
+      <button id="pl-b2b" role="tab" aria-selected="false"><span class="d"></span> Agent · EasyBook Next</button>
+    </div>
+    <span class="pl-thread" id="pl-thread"><span class="dot"></span><span id="pl-thread-txt">Thread: Famiglia Bianchi — inquiry not sent yet</span></span>
+    <a href="Alpitour Operations on KAF.html" style="margin-left: 14px; display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.85); font-size: 11.5px; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 5px 12px;" title="Open the operator back end — same record, under the hood">Under the hood · KAF ↗</a>
+  </div>
+
+  <div id="pane-b2c" class="pl-pane on" data-screen-label="Traveler view"><div id="b2c-root"></div></div>
+  <div id="pane-b2b" class="pl-pane" data-screen-label="Agent view"><div id="root"></div></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="alpitour/platform/bus.js"></script>
+  <script src="alpitour/platform/traveler-data.js"></script>
+  <script src="alpitour/storefront/data.js"></script>
+  <script type="text/babel" src="alpitour/storefront/tweaks-panel.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/primitives.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/charts.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/journey.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/agentic.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/tredi.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/shelf.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/detail.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/rail.jsx"></script>
+  <script type="text/babel" src="alpitour/storefront/app.jsx"></script>
+  <script type="text/babel" src="alpitour/platform/traveler.jsx"></script>
+
+  <script>
+    (function () {
+      const panes = { b2c: document.getElementById("pane-b2c"), b2b: document.getElementById("pane-b2b") };
+      const btns = { b2c: document.getElementById("pl-b2c"), b2b: document.getElementById("pl-b2b") };
+      let active = "b2c";
+      function show(which) {
+        active = which;
+        Object.keys(panes).forEach((k) => {
+          panes[k].classList.toggle("on", k === which);
+          btns[k].classList.toggle("on", k === which);
+          btns[k].setAttribute("aria-selected", String(k === which));
+        });
+        window.dispatchEvent(new Event("resize")); /* let Leaflet/Chart.js re-measure */
+      }
+      btns.b2c.addEventListener("click", () => show("b2c"));
+      btns.b2b.addEventListener("click", () => show("b2b"));
+
+      const txt = document.getElementById("pl-thread-txt");
+      const chip = document.getElementById("pl-thread");
+      function render(s) {
+        let m = "Thread: Famiglia Bianchi — inquiry not sent yet";
+        if (s.handoff) { m = "Thread: Bianchi — handed to Rossi Travel"; chip.classList.add("live"); }
+        if (s.accepted) m = "Thread: Bianchi — Giulia is working it";
+        if (s.hold) m = "Thread: Bianchi — hold " + s.hold.ref + " until " + s.hold.until;
+        if (s.proposal) m = "Thread: Bianchi — proposal sent to the family";
+        if (s.v2) m = "Thread: Bianchi — V2 · €" + s.v2.total.toLocaleString("it-IT");
+        txt.textContent = m;
+      }
+      window.PlatformBus && window.PlatformBus.on(render);
+
+      /* cross-view toast — pops when the OTHER side acts */
+      let toastEl = null, toastT = null;
+      window.PlatformBus && window.PlatformBus.on(function (s, key) {
+        if (key !== "feed" || !s.feed.length) return;
+        const item = s.feed[s.feed.length - 1];
+        const otherSide = (item.who === "traveler" && active === "b2b") || (item.who === "agent" && active === "b2c");
+        if (!otherSide) return;
+        if (toastEl) toastEl.remove();
+        toastEl = document.createElement("div");
+        toastEl.className = "pl-toast";
+        const who = document.createElement("span");
+        who.className = "who " + (item.who === "traveler" ? "tv" : "ag");
+        who.textContent = item.who === "traveler" ? "Alpitour.it · live" : "EasyBook · Giulia";
+        const tx = document.createElement("span");
+        tx.textContent = item.t;
+        toastEl.appendChild(who); toastEl.appendChild(tx);
+        document.body.appendChild(toastEl);
+        clearTimeout(toastT);
+        toastT = setTimeout(function () { toastEl && toastEl.remove(); toastEl = null; }, 4200);
+      });
+    })();
+  </script>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#29707A"/>
+      <circle cx="38" cy="50" r="16" fill="#fff"/>
+      <circle cx="62" cy="50" r="16" fill="#FF462D"/>
+    </svg>
+  </template>
+</body>
+</html>
