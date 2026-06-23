@@ -23,7 +23,11 @@ export function ProductCard({ p, ranked, soldout, inCompare, onCompare, onOpen, 
   return (
     <article className={`sf-card ${soldout ? 'soldout' : ''} ${ranked && p.rank === 'Best match' ? 'best' : ''}`}>
       <div className="cardtop">
-        <span className="picon" style={{ background: `color-mix(in srgb, ${b.tone} 10%, #fff)`, color: b.tone }}><Ki name="recommend" size={16} /></span>
+        <span className="picon" style={{ background: `color-mix(in srgb, ${b.tone} 10%, #fff)`, color: b.tone }}>
+          {b.logo
+            ? <img src={b.logo} alt={b.name} style={{ width: 16, height: 16, objectFit: 'contain', display: 'block' }} />
+            : <Ki name="recommend" size={16} />}
+        </span>
         <span className="brandtag" style={{ background: b.tone }}>{b.name}</span>
         {ranked && p.rank && (
           <span className="ranktag">
@@ -110,7 +114,12 @@ export function BrandBand({ filter, setFilter }: { filter: string | null; setFil
       <span className="sf-eyebrow" style={{ marginRight: 4 }}>Brands</span>
       {(brands as any[]).map((b: any) => (
         <button key={b.id} className={`sf-brandchip ${filter === b.id ? 'on' : ''}`} onClick={() => setFilter(filter === b.id ? null : b.id)}>
-          <span className="swatch" style={{ background: b.tone }}>{b.name[0]}</span> {b.name}
+          <span className="swatch" style={{ background: b.tone, overflow: 'hidden' }}>
+            {b.logo
+              ? <img src={b.logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+              : b.name[0]}
+          </span>
+          {b.name}
         </button>
       ))}
       {filter && <button className="all" onClick={() => setFilter(null)}>Clear filter</button>}

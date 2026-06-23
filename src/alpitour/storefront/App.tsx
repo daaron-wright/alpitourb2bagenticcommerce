@@ -6,6 +6,7 @@
    ============================================================ */
 import React, { useState, useRef, useEffect } from 'react';
 import { fmtEUR, products, SHELVES, STAGE_LABEL, blockers as BLOCKERS, tredi } from './data';
+import { alpitourWorldLogo } from './assets';
 import { bus } from '@/shared/bus';
 import { DemoBus } from '@/alpitour/demo/beats';
 import { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakToggle } from './TweaksPanel';
@@ -583,7 +584,7 @@ export const App: React.FC = () => {
     <div className={`sf-app ${t.density === 'dense' ? 'dense' : ''} ${t.customerSafe ? 'safe' : ''} ${t.showPhotos ? '' : 'noimg'}`}>
       <header className="sf-head">
         <div className="sf-brand" onClick={() => stage === 'browse' ? scrollTop() : showToast('Restart to return to the storefront — your work package stays in the timeline.')}>
-          <img className="sf-logo" src="assets/alpitour-world.png" alt="Alpitour World" />
+          <img className="sf-logo" src={alpitourWorldLogo} alt="Alpitour World" />
           <span className="sf-brand-sep" aria-hidden="true"></span>
           <div className="sf-brand-name"><div className="t">AlpiConcierge</div><div className="s">Travel Advisor Workspace</div></div>
         </div>
