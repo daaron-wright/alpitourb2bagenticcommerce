@@ -5,6 +5,7 @@
    ============================================================ */
 import type { Persona } from '@/shared/types';
 import { claudeComplete } from '@/claude/bridge';
+import { personaPhotos } from './assets';
 
 const DEMO =
   'You are taking part in a live validation of the AlpiConcierge 2.0 demo for Alpitour World. ' +
@@ -18,7 +19,7 @@ export const PEOPLE: Persona[] = [
     id: 'francesco', code: 'P-ALP-01', idx: 1,
     name: 'Francesco Ciuccarelli', role: 'CIO · Alpitour World',
     archetype: 'The Platform Steward',
-    img: 'alpitour/storefront/personas/francesco-ciuccarelli.png',
+    img: personaPhotos.francesco,
     tone: '#FF462D', toneSoft: 'rgba(255,70,45,.16)',
     moodLine: 'MEASURED · COST-AWARE', orbMood: 'engaged',
     tags: ['Governance', 'Cost'], pron: 'he/him · Milano',
@@ -44,7 +45,7 @@ export const PEOPLE: Persona[] = [
     id: 'fabio', code: 'P-ALP-02', idx: 2,
     name: 'Fabio Olgiati', role: 'AI Lead · Alpitour World',
     archetype: 'The Orchestration Lead',
-    img: 'alpitour/storefront/personas/fabio-olgiati.png',
+    img: personaPhotos.fabio,
     tone: '#29707A', toneSoft: 'rgba(41,112,122,.16)',
     moodLine: 'CURIOUS · PRECISE', orbMood: 'cautious',
     tags: ['AI', 'Controls'], pron: 'he/him · Torino',
@@ -121,7 +122,7 @@ export const PEOPLE: Persona[] = [
     id: 'giuseppe', code: 'P-ALP-06', idx: 6,
     name: 'Giuseppe Parello', role: 'Enterprise Architect · Alpitour World',
     archetype: 'The Systems Architect', init: 'GP',
-    img: 'alpitour/storefront/personas/giuseppe-parello.png', tone: '#6B36A8', toneSoft: 'rgba(107,54,168,.15)',
+    img: personaPhotos.giuseppe, tone: '#6B36A8', toneSoft: 'rgba(107,54,168,.15)',
     moodLine: 'STRUCTURED · LONG-VIEW', orbMood: 'cautious',
     tags: ['Architecture', 'Integration'], pron: 'he/him · Milano',
     quote: 'Show me the contracts and the blast radius before you show me the demo.',

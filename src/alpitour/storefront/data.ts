@@ -9,11 +9,11 @@ export const fmtEUR = (n: number): string => '€' + n.toLocaleString('en-IE');
 
 /* ---- brands (Alpitour World) ---- */
 export const brands = [
-  { id: 'alpitour', name: 'Alpitour', tone: '#FF462D' },
-  { id: 'francorosso', name: 'Francorosso', tone: '#7A2048' },
-  { id: 'bravo', name: 'Bravo', tone: '#0F62FE' },
-  { id: 'eden', name: 'Eden Viaggi', tone: '#1F8A5B' },
-  { id: 'turisanda', name: 'Turisanda', tone: '#8a6116' },
+  { id: 'alpitour',    name: 'Alpitour',    tone: '#FF462D', logo: 'assets/alpitour-logo.png' },
+  { id: 'francorosso', name: 'Francorosso', tone: '#7A2048', logo: 'assets/francorosso-logo.png' },
+  { id: 'bravo',       name: 'Bravo',       tone: '#0F62FE', logo: 'assets/bravo-logo.png' },
+  { id: 'eden',        name: 'Eden Viaggi', tone: '#1F8A5B', logo: null },
+  { id: 'turisanda',   name: 'Turisanda',   tone: '#8a6116', logo: 'assets/turisanda-logo.png' },
 ];
 
 /* ---- provenance receipts ---- */
