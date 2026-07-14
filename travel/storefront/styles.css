@@ -418,7 +418,7 @@ button { font-family: var(--font-sans); cursor: pointer; }
 .bd-trend .d { width: 8px; height: 8px; border-radius: 50%; background: var(--tc); flex-shrink: 0; }
 .bd-trend:hover { border-color: var(--tc); background: color-mix(in srgb, var(--tc) 8%, #fff); }
 
-.ov-mapbox { flex: 1; min-height: 300px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-1); background: var(--k-cool-gray-10, #F1F5F9); }
+.ov-mapbox { flex: 1; min-height: 300px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-1); background: var(--k-cool-gray-10, #F1F5F9); position: relative; isolation: isolate; z-index: 0; }
 /* B&W GIS basemap — grayscale the tiles, leave the client pins in colour */
 .ov-mapbox .leaflet-tile-pane, .mpmap .leaflet-tile-pane { filter: grayscale(1) contrast(1.05) brightness(1.03); }
 .ov-pin { display: block; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(15,23,42,.35); }
@@ -543,7 +543,7 @@ button { font-family: var(--font-sans); cursor: pointer; }
 .cpv-imgload-mid { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; }
 .cpv-imgload-cap { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: var(--k-spruce-80); background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); padding: 3px 10px; border-radius: 999px; }
 @media (prefers-reduced-motion: reduce) { .cpv-imgload-scan { animation-duration: 4s; } }
-.cpv-hero { position: relative; height: 150px; background: #fff; }
+.cpv-hero { position: relative; height: 190px; background: #fff; }
 .cpv-hero image-slot { width: 100%; height: 100%; display: block; }
 .cpv-hero::after { content: none; }
 .cpv-hero-top { position: absolute; top: 0; left: 0; right: 0; padding: 44px 16px 0; display: flex; align-items: center; justify-content: space-between; z-index: 3; }
@@ -914,7 +914,7 @@ button { font-family: var(--font-sans); cursor: pointer; }
 .sf-map .mph .livechip { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--k-spruce-70); background: var(--k-ai-spruce-06); border: 1px solid var(--k-spruce-20); border-radius: 999px; padding: 4px 10px; }
 .sf-map .mph .livechip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--k-spruce-60); animation: sf-pulse 1.4s ease-in-out infinite; }
 .sf-map .mpbody { display: grid; grid-template-columns: minmax(0, 1fr) 280px; }
-.sf-map .mpmap { height: 380px; background: var(--slate-100); }
+.sf-map .mpmap { height: 380px; background: var(--slate-100); position: relative; isolation: isolate; z-index: 0; }
 .sf-map .mpmap .leaflet-container, .sf-map .mpmap.leaflet-container { font-family: var(--font-sans); }
 .sf-map .mpside { border-left: 1px solid var(--border-1); display: flex; flex-direction: column; overflow-y: auto; max-height: 380px; }
 .sf-map .mprow { display: flex; align-items: flex-start; gap: 10px; text-align: left; background: none; border: none; border-bottom: 1px solid var(--border-1); padding: 10px 12px; cursor: pointer; }

@@ -5,6 +5,7 @@
    proposal → holding → held → repricing → v2 → completed
    ============================================================ */
 import React, { useState, useRef, useEffect } from 'react';
+import kyndrylLogo from '../../../assets/kyndryl-logo.png';
 import { fmtGBP, products, SHELVES, STAGE_LABEL, blockers as BLOCKERS, orchestrator } from './data';
 import { bus } from '@/shared/bus';
 import { DemoBus } from '@/travel/demo/beats';
@@ -583,7 +584,7 @@ export const App: React.FC = () => {
     <div className={`sf-app ${t.density === 'dense' ? 'dense' : ''} ${t.customerSafe ? 'safe' : ''} ${t.showPhotos ? '' : 'noimg'}`}>
       <header className="sf-head">
         <div className="sf-brand" onClick={() => stage === 'browse' ? scrollTop() : showToast('Restart to return to the storefront — your work package stays in the timeline.')}>
-          <img className="sf-logo" src="assets/kyndryl-logo.png" alt="Kyndryl" />
+          <img className="sf-logo" src={kyndrylLogo} alt="Kyndryl" />
           <span className="sf-brand-sep" aria-hidden="true"></span>
           <div className="sf-brand-name"><div className="t">Travel Concierge</div><div className="s">Travel Advisor Workspace</div></div>
         </div>
