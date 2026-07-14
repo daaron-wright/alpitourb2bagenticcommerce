@@ -48,7 +48,7 @@ function ChatTab({ msgs, working, quick, onQuick, onSend }: any) {
       <div className="eb-msgs" ref={ref}>
         {msgs.map((m: any, i: number) => (
           <div key={i} className={`eb-msg ${m.role}`}>
-            {m.role === 'agent' && <div className="who"><Ki name="chat-bot" size={11} /> Travel Assistant{m.skill ? ` · ${m.skill}` : ''}</div>}
+            {m.role === 'agent' && <div className="who"><Ki name="ai" size={11} /> Travel Assistant{m.skill ? ` · ${m.skill}` : ''}</div>}
             <span dangerouslySetInnerHTML={{ __html: m.html }} />
           </div>
         ))}

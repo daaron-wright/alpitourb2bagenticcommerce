@@ -77,7 +77,7 @@ export function Rail({
 
   if (!open) return (
     <div className="sf-rail-collapsed">
-      <button onClick={() => setOpen(true)} aria-label={`Open ${agent}`} title={`Open ${agent}`}><Inf size={17} /></button>
+      <button onClick={() => setOpen(true)} aria-label={`Open ${agent}`} title={`Open ${agent}`}><Ki name="ai" size={18} /></button>
     </div>
   );
 
@@ -86,7 +86,7 @@ export function Rail({
   return (
     <aside className="sf-rail" data-screen-label={`${agent} rail`} aria-label={`${agent} orchestration panel`}>
       <div className="sf-rail-head">
-        <span className="ic orchestrator"><Inf size={15} /></span>
+        <span className="ic orchestrator"><Ki name="ai" size={18} /></span>
         <div><div className="t">{agent}</div></div>
         <button className="min" onClick={() => setOpen(false)} aria-label="Collapse panel">→</button>
       </div>
@@ -115,11 +115,11 @@ export function Rail({
                 m.role === 'user'
                   ? <div className="sf-msg user" key={i} dangerouslySetInnerHTML={{ __html: m.html }} />
                   : m.role === 'tool'
-                  ? <ChatFold key={i} icon={m.t.status === 'err' ? 'error-filled' : 'recommend'} label={m.t.title || 'Tool call'} meta={m.t.tool}><ToolCallCard t={m.t} /></ChatFold>
+                  ? <ChatFold key={i} icon={m.t.status === 'err' ? 'error-filled' : 'ai'} label={m.t.title || 'Tool call'} meta={m.t.tool}><ToolCallCard t={m.t} /></ChatFold>
                   : m.role === 'attachment'
                   ? <div className="sf-attach" key={i} data-screen-label="Attached transcript"><span className="ic"><Ki name="document-chart" size={15} /></span><span className="tx"><b>{m.file}</b><i>{m.meta}</i></span><span className="ok"><Ki name="checkmark-filled" size={13} /> Attached</span></div>
                   : m.role === 'handoff'
-                  ? <ChatFold key={i} icon="chat-bot" label={m.h.dir === 'in' ? 'Handoff received' : 'Handoff sent'} meta={m.h.meta}><HandoffCard h={m.h} /></ChatFold>
+                  ? <ChatFold key={i} icon="ai" label={m.h.dir === 'in' ? 'Handoff received' : 'Handoff sent'} meta={m.h.meta}><HandoffCard h={m.h} /></ChatFold>
                   : m.role === 'inquiry'
                   ? <ChatInquiry key={i} done={inquiryDone} onAccept={onAcceptInquiry} />
                   : m.role === 'brandpick'
@@ -131,7 +131,7 @@ export function Rail({
                   : m.role === 'nba'
                   ? <NextBestAction key={i} n={m.n} onCta={onQuick} />
                   : <div className="sf-msg agent" key={i}>
-                      <div className="who"><Inf size={11} /> {m.skill && /^Travel Orchestrator/.test(m.skill) ? m.skill : `${agent} · ${m.skill || 'Travel Orchestrator · supervisor'}`}</div>
+                      <div className="who"><Ki name="ai" size={12} /> {m.skill && /^Travel Orchestrator/.test(m.skill) ? m.skill : `${agent} · ${m.skill || 'Travel Orchestrator · supervisor'}`}</div>
                       <div dangerouslySetInnerHTML={{ __html: m.html }} />
                       {m.sticky && <StickyMsg text={m.sticky} />}
                     </div>

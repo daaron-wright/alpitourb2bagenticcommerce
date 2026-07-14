@@ -95,7 +95,7 @@
           <div className="v-evo">
             <span className="from">Cerca: destinazione · date · ospiti</span>
             <span className="arr">→</span>
-            <span className="to"><span className="spark">✦</span> Dillo con parole tue</span>
+            <span className="to"><span className="spark"><Ki name="ai" size={13} /></span> Dillo con parole tue</span>
           </div>
           <h1>Raccontaci il viaggio.<br /><em>Al resto pensiamo noi.</em></h1>
           <p className="sub">Describe the holiday you're imagining. Travel Assistant understands it, searches every Travel Group brand, and puts together a trip made for you — then you book it, hold it, or hand it to your agency.</p>
@@ -112,7 +112,7 @@
 
           <div className="v-ask">
             <div className="v-askbar">
-              <span className="v-askbadge"><span className="spark">✦</span> Travel Assistant</span>
+              <span className="v-askbadge"><span className="spark"><Ki name="ai" size={13} /></span> Travel Assistant</span>
               <input className="v-askinput" placeholder="Somewhere warm in October, relaxed, good food…" value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => { if (e.key === "Enter") run(detectScenario(query), query); }} />
@@ -123,7 +123,7 @@
           </div>
 
           <div className="v-trust">
-            <span className="it"><Ki name="recommend" size={15} /> <b>One conversation</b>, every brand</span>
+            <span className="it"><Ki name="ai" size={15} /> <b>One conversation</b>, every brand</span>
             <span className="it"><Ki name="document-chart" size={15} /> Answers <b>grounded</b> in our own catalogues</span>
             <span className="it"><Ki name="group" size={15} /> Hand to a <b>human agency</b> anytime — context intact</span>
           </div>
@@ -146,14 +146,14 @@
           {/* conversation */}
           <div className="v-chat">
             <div className="v-chat-h">
-              <span className="spark">✦</span>
+              <span className="spark"><Ki name="ai" size={18} /></span>
               <div style={{ flex: 1 }}><div className="t">Travel Assistant</div><div className="s">Your concierge · every Travel Group brand</div></div>
               <button className="v-chip" style={{ padding: "5px 11px" }} onClick={reset}>↺ New</button>
             </div>
             <div className="v-chat-b">
               {msgs.map((m, i) => (
                 <div key={i} className={`v-msg ${m.role}`}>
-                  {m.role === "ai" && m.agent && <div className="agentline"><Ki name="recommend" size={11} /> {m.agent}</div>}
+                  {m.role === "ai" && m.agent && <div className="agentline"><Ki name="ai" size={11} /> {m.agent}</div>}
                   <span dangerouslySetInnerHTML={{ __html: m.html }} />
                 </div>
               ))}
@@ -222,7 +222,7 @@
             {/* orchestration panel (toggle-gated) */}
             {showOrch && stageIdx >= 0 && (
               <div className="v-card v-orch">
-                <div className="v-card-h"><span className="ic"><Ki name="recommend" size={16} /></span><div><h3>Orchestration</h3><div className="sub">Ten specialised agents, coordinated by KAF</div></div></div>
+                <div className="v-card-h"><span className="ic"><Ki name="ai" size={16} /></span><div><h3>Orchestration</h3><div className="sub">Ten specialised agents, coordinated by KAF</div></div></div>
                 <div className="v-orch-cast">
                   {ALL_AGENTS.map((a) => {
                     const liveAgents = stageIdx >= 0 && phase !== "done" ? STAGES[stageIdx].agents : [];
@@ -258,7 +258,7 @@
                 <div className="v-card v-result">
                   <div className="v-card-h" style={{ marginBottom: 14 }}>
                     <span className={`v-brandbadge ${res.brand}`}>{res.brandName}</span>
-                    <span className="v-match" style={{ marginLeft: "auto" }}><Ki name="recommend" size={12} /> {res.match}% match for you</span>
+                    <span className="v-match" style={{ marginLeft: "auto" }}><Ki name="ai-insight" size={12} /> {res.match}% match for you</span>
                   </div>
                   <div className="v-res-hero">
                     <image-slot id={`fd2-${sc.id}`} shape="rounded" radius="12" placeholder="Destination photo" style={{ width: "100%", height: 150 }}></image-slot>

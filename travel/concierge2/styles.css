@@ -66,6 +66,7 @@ button:disabled { cursor: default; }
 .cg-brand { display: flex; align-items: center; gap: 11px; min-width: 0; flex-shrink: 1; }
 .cg-brand > div { min-width: 0; }
 .cg-brand .mark { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--teal-600), #3FA9A0); color: #fff; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 15px; flex-shrink: 0; }
+.cg-brand .mark .ki { --ai-icon-base: #fff; }
 .cg-brand .t { font-family: var(--font-display); font-size: 15px; font-weight: 600; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cg-brand .t .psub { color: rgba(255,255,255,.55); font-weight: 400; }
 .cg-brand .s { font-size: 10px; color: rgba(255,255,255,.5); letter-spacing: 0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

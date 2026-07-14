@@ -22,18 +22,18 @@
     return (
       <div className="cg-chat">
         <div className="cg-chat-head">
-          <span className="ic"><Ki name="chat-bot" size={15} /></span>
+          <span className="ic"><Ki name="ai" size={15} /></span>
           <div style={{ flex: 1 }}>
             <div className="t">Travel Assistant</div>
             <div className="s">B2B concierge · orchestrated by KAF</div>
           </div>
-          <span className="cg-badge ai"><Ki name="network" size={11} /> 10 agents</span>
+          <span className="cg-badge ai"><Ki name="ai" size={11} /> 10 agents</span>
         </div>
 
         <div className="cg-msgs" ref={scrollRef}>
           {msgs.map((m, i) => (
             <div key={i} className={`cg-msg ${m.role}`}>
-              {m.role === "agent" && <div className="who"><Ki name="chat-bot" size={12} /> Travel Assistant</div>}
+              {m.role === "agent" && <div className="who"><Ki name="ai" size={12} /> Travel Assistant</div>}
               <span dangerouslySetInnerHTML={{ __html: m.html }} />
             </div>
           ))}

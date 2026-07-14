@@ -593,7 +593,7 @@
                   <SfFitMatrix onSource={onSource} />
                   <section>
                     <div className="sf-shelf-h">
-                      <span className="ic"><Ki name="recommend" size={14} /></span>
+                      <span className="ic"><Ki name="ai" size={14} /></span>
                       <h2>Ranked for the Family A brief</h2>
                       <span className="sub">Hard constraints kept · family rooms &amp; short transfers weighted first · Gold-tier pricing</span>
                       <span className="sf-stepchip" style={{ marginLeft: "auto", alignSelf: "center" }}>Step 4 · Search & Recommend</span>

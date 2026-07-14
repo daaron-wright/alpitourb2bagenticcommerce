@@ -77,7 +77,7 @@
   function AiRender({ label = "Sketching it out", compact = false }) {
     return (
       <div className={`panel-load ${compact ? "compact" : ""}`} aria-live="polite" data-screen-label="AI panel render">
-        <span className="label">{label}</span>
+        <span className="label"><Ki name="ai" size={16} />{label}</span>
         <div className="grid"></div>
         <div className="grid tint"></div>
         <div className="grid spruce"></div>

@@ -6,7 +6,7 @@
    ============================================================ */
 (function () {
 
-  function AiGlyph() { return <span className="sf-aiglyph" aria-hidden="true"></span>; }
+  function AiGlyph() { return <Ki name="ai" size={13} />; }
 
   /* ---------- AgentStatusBar ---------- */
   function AgentStatusBar({ state, label, meta, onToast }) {

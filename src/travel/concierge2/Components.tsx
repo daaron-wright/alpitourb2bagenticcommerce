@@ -4,8 +4,10 @@
    ============================================================ */
 import React from 'react';
 import { fmtGBP, agency, requirements, hotels, flight, addOns as allAddOns } from './data';
+import { AiIcon } from '@/shared/AiIcon';
 
 export function Ki({ name, size = 16, className = '' }: { name: string; size?: number; className?: string }) {
+  if (name === 'ai' || name === 'ai-insight') return <AiIcon size={size} className={className} insight={name === 'ai-insight'} />;
   return <svg className={`ki ${className}`} style={size !== 16 ? { width: size, height: size } : undefined}><use href={`#icon-${name}`} /></svg>;
 }
 
@@ -31,7 +33,7 @@ export function WelcomeCard() {
       <h2 style={{ marginTop: 8 }}>Welcome back.</h2>
       <p>I can help you build, check, modify, or hold a travel proposal — across packages, hotels, Airline Partner flights, transfers and excursions. Describe the customer request to begin; I'll orchestrate the rest.</p>
       <div className="caps">
-        {([['chat-bot', 'Build', 'Brief → ranked options → priced package'], ['analytics', 'Check', 'Availability, amenities & policy answers'], ['recommend', 'Modify', 'Self-service changes after proposal'], ['checkmark-filled', 'Hold', '24-hour booking holds from the chat']] as [string, string, string][]).map(([ic, t, s]) => (
+        {([['ai', 'Build', 'Brief → ranked options → priced package'], ['analytics', 'Check', 'Availability, amenities & policy answers'], ['recommend', 'Modify', 'Self-service changes after proposal'], ['checkmark-filled', 'Hold', '24-hour booking holds from the chat']] as [string, string, string][]).map(([ic, t, s]) => (
           <div className="cg-cap" key={t}><Ki name={ic} size={18} /><div className="t">{t}</div><div className="s">{s}</div></div>
         ))}
       </div>
@@ -42,7 +44,7 @@ export function WelcomeCard() {
 export function RequestCapturedCard() {
   const r = requirements;
   return (
-    <Card icon="document-chart" title="Request captured" sub="Work package wpkg_travel_001 · classified standard_package_quote" badges={<span className="cg-badge ai"><Ki name="recommend" size={11} /> Intent Agent</span>}>
+    <Card icon="document-chart" title="Request captured" sub="Work package wpkg_travel_001 · classified standard_package_quote" badges={<span className="cg-badge ai"><Ki name="ai" size={11} /> Intent Agent</span>}>
       <dl className="cg-kv">
         <dt>Destination</dt><dd>Egypt</dd>
         <dt>Departure</dt><dd>London</dd>
@@ -79,7 +81,7 @@ export function TripStrip({ signals }: { signals: string[] }) {
       <span className="cg-fact">Sharm el-Sheikh · 12–19 Aug · 7nt</span>
       <span className="cg-fact">All inclusive</span>
       <span className="cg-fact">≤ £3,500</span>
-      {signals.includes('baby_pool') && <span className="cg-fact signal"><Ki name="recommend" size={12} /> baby-friendly priority</span>}
+      {signals.includes('baby_pool') && <span className="cg-fact signal"><Ki name="ai-insight" size={12} /> baby-friendly priority</span>}
     </div>
   );
 }
@@ -113,7 +115,7 @@ export function HotelKnowledgeCard() {
   const h = hotels.jaz;
   return (
     <>
-      <Card icon="lightbulb" title={h.name} sub="Amenity check · grounded in the Travel Group product catalogue (rag-mcp)" badges={<span className="cg-badge ai"><Ki name="recommend" size={11} /> Retrieval Agent</span>}>
+      <Card icon="lightbulb" title={h.name} sub="Amenity check · grounded in the Travel Group product catalogue (rag-mcp)" badges={<span className="cg-badge ai"><Ki name="ai" size={11} /> Retrieval Agent</span>}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
           <image-slot id="hotel-jaz" shape="rounded" radius="8" placeholder="Hotel photo" style={{ width: 168, height: 112, flexShrink: 0 }}></image-slot>
           <div className="cg-know" style={{ flex: 1 }}>
@@ -124,7 +126,7 @@ export function HotelKnowledgeCard() {
         </div>
       </Card>
       <div className="cg-signal">
-        <Ki name="recommend" size={16} />
+        <Ki name="ai-insight" size={16} />
         <span><b>Preference detected:</b> baby-friendly amenities — added to the Travel Work Context and <b>applied to search ranking</b>.</span>
       </div>
     </>
@@ -165,7 +167,7 @@ function HotelOptionCard({ hotel, onSelect, busy }: any) {
 export function AlternativesGrid({ onSelect, busy }: { onSelect: (id: string) => void; busy: boolean }) {
   return (
     <>
-      <div className="cg-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>Ranked alternatives <span className="cg-badge ai" style={{ textTransform: 'none', letterSpacing: 0 }}><Ki name="recommend" size={11} /> ranked on family fit · budget · baby-pool signal</span></div>
+      <div className="cg-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>Ranked alternatives <span className="cg-badge ai" style={{ textTransform: 'none', letterSpacing: 0 }}><Ki name="ai" size={11} /> ranked on family fit · budget · baby-pool signal</span></div>
       <div className="cg-opts">
         {[hotels.coral, hotels.redsea, hotels.sinai].map((h) => <HotelOptionCard key={h.id} hotel={h} onSelect={onSelect} busy={busy} />)}
       </div>
@@ -210,7 +212,7 @@ export function PackageBuilder({ hotel, addOns, compact, onEdit }: any) {
 
 export function AddOnsPanel({ selected, onToggle, onGenerate, busy }: any) {
   return (
-    <Card icon="recommend" title="Suggested add-ons" sub="Upsell Agent · ranked by family context — travelling with a 2-year-old" badges={<span className="cg-badge ai"><Ki name="lightbulb" size={11} /> Contextual</span>}>
+    <Card icon="ai-insight" title="Suggested add-ons" sub="Upsell Agent · ranked by family context — travelling with a 2-year-old" badges={<span className="cg-badge ai"><Ki name="ai" size={11} /> Contextual</span>}>
       <div className="cg-addons">
         {allAddOns.map((a) => {
           const sel = selected.includes(a.id);

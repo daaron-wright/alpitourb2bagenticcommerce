@@ -4,8 +4,10 @@
    ============================================================ */
 import React from 'react';
 import { fmtGBP, receipts, offers } from './data';
+import { AiIcon } from '@/shared/AiIcon';
 
 export function Ki({ name, size = 16 }: { name: string; size?: number }) {
+  if (name === 'ai' || name === 'ai-insight') return <AiIcon size={size} insight={name === 'ai-insight'} />;
   return <svg className="ki" style={size !== 16 ? { width: size, height: size } : undefined}><use href={`#icon-${name}`} /></svg>;
 }
 
@@ -55,7 +57,7 @@ export function SummaryRail({ stageIdx, needs, blockers, signals, selected, onFi
         <div className="eb-sec-h">Customer intent</div>
         <div className="eb-chips">
           {needs.map((n: any) => <span className="eb-chip" key={n.id}><Ki name="checkmark-filled" size={12} /> {n.label}</span>)}
-          {signals.includes('baby_pool') && <span className="eb-chip signal"><Ki name="recommend" size={12} /> baby-friendly priority</span>}
+          {signals.includes('baby_pool') && <span className="eb-chip signal"><Ki name="ai-insight" size={12} /> baby-friendly priority</span>}
         </div>
       </div>
       {blockers.length > 0 && (
@@ -89,7 +91,7 @@ export function SummaryRail({ stageIdx, needs, blockers, signals, selected, onFi
 
 export function IntakeCard() {
   return (
-    <Card icon="document-chart" title="Work package WP-2231 · Traveler Family A" sub="Seeded lead · natural-language brief captured below" badges={<span className="eb-badge ai"><Ki name="recommend" size={11} /> Requirement Extractor</span>}>
+    <Card icon="document-chart" title="Work package WP-2231 · Traveler Family A" sub="Seeded lead · natural-language brief captured below" badges={<span className="eb-badge ai"><Ki name="ai" size={11} /> Requirement Extractor</span>}>
       <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.6, background: 'var(--color-bg-canvas)', borderRadius: 8, padding: '10px 13px', fontStyle: 'italic' }}>
         "Family of 3 — two adults and a 2-year-old — wants an all-inclusive week in Sharm el-Sheikh, 12–19 August, budget £3,500 max. They loved Jaz Mirabel Beach and want it again."
       </div>

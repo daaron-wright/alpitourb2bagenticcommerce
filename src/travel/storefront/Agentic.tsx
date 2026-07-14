@@ -9,7 +9,7 @@ import { Ki } from './Primitives';
 import { overnight } from './data';
 
 export function AiGlyph() {
-  return <span className="sf-aiglyph" aria-hidden="true"></span>;
+  return <Ki name="ai" size={13} />;
 }
 
 /* ---------- AgentStatusBar ---------- */

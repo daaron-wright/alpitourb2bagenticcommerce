@@ -150,7 +150,7 @@
             <div className="ttl">{b.title}</div>
           </div>
 
-          {showSeed && <button className="dd-seed" onClick={seedInquiry}><Ki name="chat-bot" size={13} /> Seed the Family A inquiry</button>}
+          {showSeed && <button className="dd-seed" onClick={seedInquiry}><Ki name="ai" size={13} /> Seed the Family A inquiry</button>}
 
           {atLive ? null : <button className="dd-live show" onClick={() => setCur(live)}><span className="d" /> Live · beat {BEATS[live].n}</button>}
 

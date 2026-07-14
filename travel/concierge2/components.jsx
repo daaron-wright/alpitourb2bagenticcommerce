@@ -44,7 +44,7 @@
   function RequestCapturedCard() {
     const r = window.CG.requirements;
     return (
-      <Card icon="document-chart" title="Request captured" sub="Work package wpkg_travel_001 · classified standard_package_quote" badges={<span className="cg-badge ai"><Ki name="recommend" size={11} /> Intent Agent</span>}>
+      <Card icon="document-chart" title="Request captured" sub="Work package wpkg_travel_001 · classified standard_package_quote" badges={<span className="cg-badge ai"><Ki name="ai" size={11} /> Intent Agent</span>}>
         <dl className="cg-kv">
           <dt>Destination</dt><dd>Egypt</dd>
           <dt>Departure</dt><dd>London</dd>
@@ -82,7 +82,7 @@
         <span className="cg-fact">Sharm el-Sheikh · 12–19 Aug · 7nt</span>
         <span className="cg-fact">All inclusive</span>
         <span className="cg-fact">≤ £3,500</span>
-        {signals.includes("baby_pool") && <span className="cg-fact signal"><Ki name="recommend" size={12} /> baby-friendly priority</span>}
+        {signals.includes("baby_pool") && <span className="cg-fact signal"><Ki name="ai-insight" size={12} /> baby-friendly priority</span>}
       </div>
     );
   }
@@ -118,7 +118,7 @@
     const h = window.CG.hotels.jaz;
     return (
       <>
-        <Card icon="lightbulb" title={h.name} sub="Amenity check · grounded in the Travel Group product catalogue (rag-mcp)" badges={<span className="cg-badge ai"><Ki name="recommend" size={11} /> Retrieval Agent</span>}>
+        <Card icon="lightbulb" title={h.name} sub="Amenity check · grounded in the Travel Group product catalogue (rag-mcp)" badges={<span className="cg-badge ai"><Ki name="ai" size={11} /> Retrieval Agent</span>}>
           <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
             <image-slot id="hotel-jaz" shape="rounded" radius="8" placeholder="Hotel photo" style={{ width: 168, height: 112, flexShrink: 0 }}></image-slot>
             <div className="cg-know" style={{ flex: 1 }}>
@@ -129,7 +129,7 @@
           </div>
         </Card>
         <div className="cg-signal">
-          <Ki name="recommend" size={16} />
+          <Ki name="ai-insight" size={16} />
           <span><b>Preference detected:</b> baby-friendly amenities — added to the Travel Work Context and <b>applied to search ranking</b>.</span>
         </div>
       </>
@@ -172,7 +172,7 @@
     const H = window.CG.hotels;
     return (
       <>
-        <div className="cg-eyebrow" style={{ display: "flex", alignItems: "center", gap: 8 }}>Ranked alternatives <span className="cg-badge ai" style={{ textTransform: "none", letterSpacing: 0 }}><Ki name="recommend" size={11} /> ranked on family fit · budget · baby-pool signal</span></div>
+        <div className="cg-eyebrow" style={{ display: "flex", alignItems: "center", gap: 8 }}>Ranked alternatives <span className="cg-badge ai" style={{ textTransform: "none", letterSpacing: 0 }}><Ki name="ai" size={11} /> ranked on family fit · budget · baby-pool signal</span></div>
         <div className="cg-opts">
           {[H.coral, H.redsea, H.sinai].map((h) => <HotelOptionCard key={h.id} hotel={h} onSelect={onSelect} busy={busy} />)}
         </div>
@@ -219,7 +219,7 @@
   /* ---------- 8 · add-ons ---------- */
   function AddOnsPanel({ selected, onToggle, onGenerate, busy }) {
     return (
-      <Card icon="recommend" title="Suggested add-ons" sub="Upsell Agent · ranked by family context — travelling with a 2-year-old" badges={<span className="cg-badge ai"><Ki name="lightbulb" size={11} /> Contextual</span>}>
+      <Card icon="ai-insight" title="Suggested add-ons" sub="Upsell Agent · ranked by family context — travelling with a 2-year-old" badges={<span className="cg-badge ai"><Ki name="ai" size={11} /> Contextual</span>}>
         <div className="cg-addons">
           {window.CG.addOns.map((a) => {
             const sel = selected.includes(a.id);
