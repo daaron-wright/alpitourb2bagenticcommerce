@@ -1,12 +1,12 @@
-AlpiGPT
+Travel Assistant
 B2B Travel Agent ConciergeAgentic Orchestration Blueprint
-AI Lab Initiative — Alpitour WorldPrepared for: Alpitour Leadership · Kyndryl Stakeholders · AI Lab ParticipantsOrchestration Platform: KAF (Kyndryl Agentic Framework)
-Evolving AlpiGPT from information retrieval to agentic orchestrationacross the full B2B travel agent sales journey
+AI Lab Initiative — Client Travel GroupPrepared for: Travel Group Leadership · Kyndryl Stakeholders · AI Lab ParticipantsOrchestration Platform: KAF (Kyndryl Agentic Framework)
+Evolving Travel Assistant from information retrieval to agentic orchestrationacross the full B2B travel agent sales journey
 1. Executive Summary
-Alpitour World operates at the intersection of tour operating, aviation (Neos), hospitality, and a vast agency network through Welcome Travel Group. With brands including Alpitour, Eden Viaggi, Francorosso, Bravo, and Turisanda, the group serves internal teams, B2B agency partners, and B2C consumers through a multi-brand portfolio.
-This blueprint defines how AlpiGPT evolves from an information retrieval assistant into an agentic orchestration layer supporting travel agents across the full sales journey — from initial inquiry through needs capture, personalised recommendation, itinerary creation, proposal preparation, and booking support with next-best-action intelligence.
-The orchestration substrate is the Kyndryl Agentic Framework (KAF), which coordinates a specialised agent inventory through MCP toolsets against Alpitour's inventory, CRM, and booking platform services. The result is a single conversational touchpoint that delivers the right solution at the right time, reducing manual effort while increasing conversion and agent productivity.
-Strategic objective: Transform AlpiGPT into the B2B concierge orchestration layer for ~80% of agency bookings via EasyBook
+Client Travel Group operates at the intersection of tour operating, aviation (Airline Partner), hospitality, and a vast agency network through Partner Agency Network Group. With brands including Travel Group, Value Travel, Premium Travel, Family Travel, and Signature Travel, the group serves internal teams, B2B agency partners, and B2C consumers through a multi-brand portfolio.
+This blueprint defines how Travel Assistant evolves from an information retrieval assistant into an agentic orchestration layer supporting travel agents across the full sales journey — from initial inquiry through needs capture, personalised recommendation, itinerary creation, proposal preparation, and booking support with next-best-action intelligence.
+The orchestration substrate is the Kyndryl Agentic Framework (KAF), which coordinates a specialised agent inventory through MCP toolsets against Travel Group's inventory, CRM, and booking platform services. The result is a single conversational touchpoint that delivers the right solution at the right time, reducing manual effort while increasing conversion and agent productivity.
+Strategic objective: Transform Travel Assistant into the B2B concierge orchestration layer for ~80% of agency bookings via EasyBook
 Scope: Seven-stage sales journey with ten specialised AI agents coordinated through KAF
 Target impact: −50% quote turnaround, +30% agent productivity, +25% proposal acceptance
 Phase 1 pilot: Standard package quote with sold-out alternative handling — highest volume, lowest integration risk
@@ -21,7 +21,7 @@ Agent Experience
 1
 Inquiry
 Intent Agent
-Customer request arrives; agent opens AlpiGPT
+Customer request arrives; agent opens Travel Assistant
 2
 Needs Capture
 Requirements Agent
@@ -48,7 +48,7 @@ Booking · Upsell Agents
 Hold, confirm, upsell, next best actions
 1. Inquiry
 Business Goal: Capture the customer request immediately and initiate an orchestrated work package with zero friction for the travel agent.
-User Actions: Travel agent receives client inquiry; opens AlpiGPT within EasyBook; submits natural-language request describing destination, dates, and traveller profile.
+User Actions: Travel agent receives client inquiry; opens Travel Assistant within EasyBook; submits natural-language request describing destination, dates, and traveller profile.
 AI Agents Involved: Intent Agent
 Data Sources Accessed: EasyBook session context; channel authentication; agency credentials
 Inputs: Natural-language inquiry; agency ID; session metadata
@@ -74,7 +74,7 @@ Business Value: Personalisation without manual CRM lookup; agency-tier pricing a
 Business Goal: Deliver a ranked shortlist of relevant packages, alternatives, and upsell opportunities aligned to agency and client context.
 User Actions: Agent reviews ranked options; requests alternatives for sold-out properties; explores upsell suggestions.
 AI Agents Involved: Inventory Agent; Recommendation Agent; Upsell Agent
-Data Sources Accessed: Inventory API (packages, hotels, Neos flights, allotments); RAG product catalogues; yield status; CRM purchase history
+Data Sources Accessed: Inventory API (packages, hotels, Airline Partner flights, allotments); RAG product catalogues; yield status; CRM purchase history
 Inputs: Structured requirements; enriched context; search constraints
 Outputs: Ranked option shortlist; availability status; alternative proposals; upsell candidates
 Business Value: Cuts manual search time by up to 50%; intelligent alternatives prevent lost sales on sold-out inventory.
@@ -149,8 +149,8 @@ Upsell Agent
 Revenue enrichment opportunities
 Excursions, transfers, insurance, upgrades; contextual NBA suggestions
 4. Detailed Orchestration Flow
-AlpiGPT sits as the conversational layer above KAF. The orchestration router selects static workflows for standard package quotes or dynamic multi-agent graphs for custom itineraries. All agents access the same Inventory, Customer, and Booking services via MCP toolsets.
-Figure 3: KAF Alignment — Layered Architecture from AlpiGPT to Domain Systems
+Travel Assistant sits as the conversational layer above KAF. The orchestration router selects static workflows for standard package quotes or dynamic multi-agent graphs for custom itineraries. All agents access the same Inventory, Customer, and Booking services via MCP toolsets.
+Figure 3: KAF Alignment — Layered Architecture from Travel Assistant to Domain Systems
 Orchestration Lifecycle
 Phase
 Description
@@ -242,14 +242,14 @@ Recommendation Agent
 Upsell signals
 Cross-sell in search stage
 6. Systems &amp; Data Sources
-All agents access Alpitour domain systems through KAF MCP toolsets. This section catalogues the systems, data sources, and integration points required for B2B concierge orchestration.
+All agents access Travel Group domain systems through KAF MCP toolsets. This section catalogues the systems, data sources, and integration points required for B2B concierge orchestration.
 Data Source / System
 Type
 Accessed By
 Data Provided
 EasyBook Portal
 Channel / UI
-Travel Agent, AlpiGPT
+Travel Agent, Travel Assistant
 Session context, agency authentication, booking entry point
 Agency &amp; Client CRM
 Master data
@@ -258,7 +258,7 @@ Agency tier, commission, client profiles, booking history
 Inventory API
 Transactional
 Inventory Agent, Itinerary Agent
-Packages, hotels, Neos flights, allotments, yield status
+Packages, hotels, Airline Partner flights, allotments, yield status
 Pricing Engine
 Commercial rules
 Pricing Agent
@@ -321,8 +321,8 @@ Approved proposal, agent confirmation
 Booking ref, upsells, NBA alerts
 Travel Agent / Client
 7. KAF Alignment
-KAF provides the orchestration substrate for AlpiGPT. Agent inquiries become KAF work packages; agents execute via MCP toolsets against Alpitour domain services with OPA guardrails ensuring commercial and policy compliance.
-AlpiGPT Concept
+KAF provides the orchestration substrate for Travel Assistant. Agent inquiries become KAF work packages; agents execute via MCP toolsets against Travel Group domain services with OPA guardrails ensuring commercial and policy compliance.
+Travel Assistant Concept
 KAF Implementation
 MCP Toolset / Service
 Agent inquiry
@@ -358,7 +358,7 @@ Role in B2B Concierge
 Interaction Pattern
 WebsiteAPIService
 Channel ingress, authentication, work package creation
-AlpiGPT → KAF entry point
+Travel Assistant → KAF entry point
 OrchestrationService
 Complexity analysis, step generation, clarification, SSE streaming
 Routes to static or dynamic workflow
@@ -370,7 +370,7 @@ Specialised travel agent runtime with tool use
 Executes individual agents against MCP toolsets
 Custom MCP Servers
 Domain-specific tool interfaces
-Bridge agents to Alpitour systems
+Bridge agents to Travel Group systems
 OPA MCP
 Policy guardrails and compliance enforcement
 Validates pricing, commission, and policy rules
@@ -427,14 +427,14 @@ Catalogue coverage score +20%
 IT &amp; Data Operations
 Observable, governable agent platform on KAF
 Agent success rate &gt; 95%
-Alpitour Leadership
+Travel Group Leadership
 Measurable ROI on AI Lab investment
 B2B conversion rate +25%
 Kyndryl / KAF Stakeholders
 Production-grade agentic reference architecture
 End-to-end orchestration demonstrator
 9. Future Expansion Opportunities
-The B2B concierge orchestration blueprint establishes a foundation for broader agentic capabilities across the Alpitour ecosystem. The following expansion opportunities build on the shared agent inventory and KAF orchestration substrate.
+The B2B concierge orchestration blueprint establishes a foundation for broader agentic capabilities across the Travel Group ecosystem. The following expansion opportunities build on the shared agent inventory and KAF orchestration substrate.
 Expansion Opportunity
 Description
 Prerequisite
@@ -448,19 +448,19 @@ Proactive Next-Best-Action Engine
 Evolve the Upsell Agent into a continuous NBA engine that monitors booking patterns, seasonal signals, and client lifecycle events to trigger proactive agent outreach.
 Phase 1 B2B concierge pilot validated
 Multi-Brand Orchestration Profiles
-Configure brand-specific orchestration profiles (Alpitour, Francorosso, Eden Viaggi) with tailored RAG knowledge bases, pricing rules, and proposal templates within a single platform.
+Configure brand-specific orchestration profiles (Travel Group, Premium Travel, Value Travel) with tailored RAG knowledge bases, pricing rules, and proposal templates within a single platform.
 Phase 1 B2B concierge pilot validated
 Group &amp; Corporate Travel Automation
 Expand dynamic workflows for group bookings, MICE events, and corporate travel programmes with dedicated compliance and contract management agents.
 Phase 1 B2B concierge pilot validated
-Cross-Channel Continuity
+Cross-Channel Traveler Fnuity
 Enable seamless handoff between B2B agent sessions and B2C client interactions, preserving Travel Work Context across channels for unified customer experience.
 Phase 1 B2B concierge pilot validated
 Analytics &amp; Learning Loop
 Introduce an Analytics &amp; Learning Agent to capture outcome data, power A/B testing of recommendation strategies, and continuously improve agent performance.
 Phase 1 B2B concierge pilot validated
-Neos Aviation Integration
-Deepen Inventory Agent integration with Neos flight operations for real-time seat availability, yield management, and bundled package optimisation.
+Airline Partner Aviation Integration
+Deepen Inventory Agent integration with Airline Partner flight operations for real-time seat availability, yield management, and bundled package optimisation.
 Phase 1 B2B concierge pilot validated
 Recommended Roadmap
 Phase
@@ -483,4 +483,4 @@ Phase 4 — Extend
 B2C concierge + internal ops + NBA engine
 H2 2027
 Unified platform across three channels
-Platform Reference: AlpiGPT operates as the conversational front-end to KAF-orchestrated agents. "Alpitour Booking Platform" and EasyBook refer to the group's reservation layer consumed via booking-platform-mcp (~80% of agency bookings through EasyBook). This document is prepared as part of the Alpitour AI Lab initiative.
+Platform Reference: Travel Assistant operates as the conversational front-end to KAF-orchestrated agents. "Travel Group Booking Platform" and EasyBook refer to the group's reservation layer consumed via booking-platform-mcp (~80% of agency bookings through EasyBook). This document is prepared as part of the Travel Group AI Lab initiative.

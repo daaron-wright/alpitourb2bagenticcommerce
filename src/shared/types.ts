@@ -1,4 +1,4 @@
-// Shared TypeScript interfaces for the Alpitour demo project
+// Shared TypeScript interfaces for the Travel Group demo project
 
 export interface Persona {
   id: string;

@@ -9,7 +9,7 @@
    CORS issues and the need for the dangerous-direct-browser-access
    header.
 
-   Migrated from alpitour/storefront/claude-bridge.js
+   Migrated from travel/storefront/claude-bridge.js
    ============================================================ */
 
 import type { CompleteOptions } from '@/shared/types';

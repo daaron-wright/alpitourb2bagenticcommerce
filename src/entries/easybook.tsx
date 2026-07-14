@@ -1,12 +1,12 @@
 /* ============================================================
-   Entry point · EasyBook Next — AlpiGPT Workbench
+   Entry point · EasyBook Next — Travel Assistant Workbench
    ============================================================ */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from '@/alpitour/easybook/App';
-import '@/alpitour/easybook/tokens.css';
-import '@/alpitour/easybook/styles-shell.css';
-import '@/alpitour/easybook/styles-work.css';
+import { App } from '@/travel/easybook/App';
+import '@/travel/easybook/tokens.css';
+import '@/travel/easybook/styles-shell.css';
+import '@/travel/easybook/styles-work.css';
 
 const container = document.getElementById('root');
 if (container) {
