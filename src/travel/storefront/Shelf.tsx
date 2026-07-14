@@ -31,7 +31,7 @@ export function ProductCard({ p, ranked, soldout, inCompare, onCompare, onOpen, 
         <span className="brandtag" style={{ background: b.tone }}>{b.name}</span>
         {ranked && p.rank && (
           <span className="ranktag">
-            <Badge kind={p.rank === 'Best match' ? 'ai' : p.rank === 'Best value' ? 'ok' : 'warn'} icon={p.rank === 'Best match' ? 'recommend' : undefined}>
+            <Badge kind={p.rank === 'Best match' ? 'ai' : p.rank === 'Best value' ? 'ok' : 'warn'} icon={p.rank === 'Best match' ? 'ai' : undefined}>
               {p.rank}{p.match ? ` · ${p.match}%` : ''}
             </Badge>
           </span>
@@ -78,10 +78,10 @@ export function Hero() {
   return (
     <section className="sf-hero">
       <div className="sf-hero-copy">
-        <div className="sf-eyebrow" style={{ marginBottom: 8 }}>Use case · AI-Powered B2B Travel Agent Concierge</div>
+        <div className="sf-ai-kicker"><div className="sf-eyebrow"><Ki name="ai" size={13} /> Use case · AI-Powered B2B Travel Agent Concierge</div><span className="sf-ai-powered"><Ki name="ai" size={14} /> Powered by agentic AI</span></div>
         <h1>One seamless touchpoint,<br />inquiry to <em>booking</em>.</h1>
         <p>Travel Concierge, evolved from retrieval into the orchestrating layer — fronted here as Travel Orchestrator. It orchestrates information, recommendations and actions across the full journey for the travel agent, while the customer experiences one continuous thread: speak once, get the right solution at the right time.</p>
-        <div className="sf-hero-hint"><Ki name="chat-bot" size={13} /> Step 1 · Inquiry — pick a request in the Travel Orchestrator panel →</div>
+        <div className="sf-hero-hint"><Ki name="ai" size={13} /> Step 1 · Inquiry — pick a request in the Travel Orchestrator panel →</div>
       </div>
     </section>
   );
@@ -162,7 +162,7 @@ export function ChipsBar({ blockers, onFix, stage }: { blockers: any[]; onFix: (
   const expanded = open || hasQ;
 
   const acts: any[] = [
-    { ic: 'chat-bot', t: 'Spoke to a travel advisor directly', s: 'described the trip in their own words' },
+    { ic: 'ai', t: 'Spoke to a travel advisor directly', s: 'described the trip in their own words' },
     { ic: 'group', t: 'Told us what matters', s: 'family rooms, air-con and short transfers are non-negotiable' },
     { ic: 'arrow-up-right', t: 'Sent it to Partner Travel Agency', s: 'full context handed over · 24-hour hold' },
   ];
@@ -582,7 +582,7 @@ export function DeskBoard({ awaiting, busState, onAccept, onToast, stage, onResu
                           <span className="bd-chip"><Ki name="recommend" size={12} /> {c.val}</span>
                         </div>
                         <div className="bd-card-foot">
-                          <span className="bd-log">{c.srcIcon === 'chat-bot' ? <Inf size={12} /> : <Ki name={c.srcIcon} size={12} />} {waiting ? 'Live on Consumer Travel Portal' : c.src}</span>
+                          <span className="bd-log">{c.srcIcon === 'chat-bot' ? <Ki name="ai" size={12} /> : <Ki name={c.srcIcon} size={12} />} {waiting ? 'Live on Consumer Travel Portal' : c.src}</span>
                           {isFamilyA
                             ? (waiting ? <span className="bd-livedot"><span className="d" /></span> : <span className="bd-go">{c.act === 'accept' ? 'Accept →' : c.act === 'open' ? 'Open →' : 'Resume →'}</span>)
                             : <span className="bd-open">Open →</span>}

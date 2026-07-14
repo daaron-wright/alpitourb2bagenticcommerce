@@ -26,6 +26,7 @@ button { font-family: var(--font-sans); cursor: pointer; }
 .q-start { flex: 1; display: grid; place-items: center; padding: 24px; }
 .q-start-in { width: 100%; max-width: 580px; text-align: center; }
 .q-mark { width: 44px; height: 44px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 19px; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); }
+.q-mark .ki, .q-msg .av .ki, .q-status .av .ki { --ai-icon-base: #fff; }
 .q-start h1 { font-size: 32px; line-height: 1.1; }
 .q-start .sub { font-size: 15px; color: var(--fg-2); margin-top: 10px; line-height: 1.5; }
 

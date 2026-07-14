@@ -23,7 +23,7 @@
         <nav className="tv-nav">
           <button className="on">Holidays</button><button>Resorts</button><button>Tours</button><button>Last minute</button>
         </nav>
-        <button className="tv-assistant-btn" onClick={onAssistant}><Ki name="chat-bot" size={14} /> Travel Assistant</button>
+        <button className="tv-assistant-btn" onClick={onAssistant}><Ki name="ai" size={14} /> Travel Assistant</button>
       </header>
     );
   }
@@ -34,7 +34,7 @@
     const go = (boot) => onSubmit(boot);
     return (
       <section className="tv-home" data-screen-label="Search window">
-        <span className="glyph"><Ki name="chat-bot" size={22} /></span>
+        <span className="glyph"><Ki name="ai" size={22} /></span>
         <h1>Where will this summer take you?</h1>
         <p>One question is enough — Travel Assistant searches, asks what matters, and carries the request to your travel agency.</p>
         <div className="ask-box">
@@ -88,7 +88,7 @@
         )}
         <div className="ta">
           {b.proposal && <a className="tv-btn primary" href="Family A Proposal - Customer View.html">Read the proposal</a>}
-          <button className="tv-btn" onClick={onAssistant}><Ki name="chat-bot" size={13} /> A question? Travel Assistant answers</button>
+          <button className="tv-btn" onClick={onAssistant}><Ki name="ai" size={13} /> A question? Travel Assistant answers</button>
           <span className="hint">…or call {agency.agent}: {agency.phone}</span>
         </div>
       </section>
@@ -110,7 +110,7 @@
     }, []);
     return (
       <div className="card agentic" data-screen-label="Agentic search">
-        <div className="ch"><span className="aglyph" aria-hidden="true"></span> Agentic search — live, on your behalf</div>
+        <div className="ch"><Ki name="ai" size={14} /> Agentic search — live, on your behalf</div>
         {AGENTIC_STEPS.map((s, i) => (
           <div key={i} className={`as ${i < n ? "done" : i === n ? "on" : ""}`}>
             <span className="ci">{i < n ? <Ki name="checkmark-filled" size={10} /> : i === n ? <span className="spin" aria-hidden="true"></span> : <i className="num">{i + 1}</i>}</span>
@@ -296,7 +296,7 @@
     const inner = (
       <>
           <div className="sh">
-            <span className="ic"><Ki name="chat-bot" size={15} /></span>
+            <span className="ic"><Ki name="ai" size={15} /></span>
             <div><b>Travel Assistant</b><i>the Consumer Travel Portal concierge — your agency stays at the center</i></div>
             {!inline && <button className="x" onClick={onClose} aria-label="Close">✕</button>}
           </div>
@@ -306,7 +306,7 @@
               if (m.kind === "agentic") return <AgenticCard key={i} />;
               if (m.kind === "photo") return (
                 <div className="card" key={i} data-screen-label="Multimodal photo moment">
-                  <div className="ch"><Ki name="lightbulb" size={12} /> Search with a photo</div>
+                  <div className="ch"><Ki name="ai" size={12} /> Search with a photo</div>
                   <image-slot id="tv-mm-photo" shape="rounded" radius="8" placeholder="Drop your photo here" style={{ width: "100%", height: "170px" }}></image-slot>
                   {!m.locked && (
                     <>
@@ -323,7 +323,7 @@
               );
               if (m.kind === "vmatch") return (
                 <div className="card" key={i} data-screen-label="Visual match results">
-                  <div className="ch"><Ki name="recommend" size={12} /> These look like your photo</div>
+                  <div className="ch"><Ki name="ai-insight" size={12} /> These look like your photo</div>
                   <div className="vrow">
                     {visualMatch.results.map((r) => {
                       const p = packages.find((x) => x.id === r.pkg);
@@ -361,7 +361,7 @@
               );
               if (m.kind === "reco") return (
                 <div className="card" key={i} data-screen-label="Recommendation confirmation">
-                  <div className="ch"><Ki name="recommend" size={12} /> Our recommendation</div>
+                  <div className="ch"><Ki name="ai-insight" size={12} /> Our recommendation</div>
                   <div className="rr"><b>Jaz Mirabel Beach</b> — your favorite, with the price locked for 24h</div>
                   <div className="rs">If it's full on your dates, {agency.agent} already has two family alternatives on the same beach — using your criteria, not starting over.</div>
                   {!m.locked && <button className="tv-btn primary sm" onClick={sendToAgency}>Confirm — send to Partner Travel Agency</button>}

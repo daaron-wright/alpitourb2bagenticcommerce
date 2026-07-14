@@ -416,7 +416,7 @@ export function App() {
     <div className="cg-app">
       <header className="cg-head">
         <div className="cg-brand">
-          <span className="mark">A</span>
+          <span className="mark"><Ki name="ai" size={20} /></span>
           <div><div className="t">Travel Assistant <span className="psub">· B2B Travel Agent Concierge</span></div><div className="s">Embedded in EasyBook · orchestrated by KAF</div></div>
         </div>
         <span className="cg-env">AI Lab PoC</span>

@@ -99,6 +99,7 @@
 @keyframes tv-slide { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
 .tv-sheet .sh { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border-1); }
 .tv-sheet .sh .ic { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); color: #fff; display: grid; place-items: center; flex-shrink: 0; }
+.tv-sheet .sh .ic .ki, .tv-home .glyph .ki { --ai-icon-base: #fff; }
 .tv-sheet .sh b { display: block; font-family: var(--font-display); font-size: 14px; }
 .tv-sheet .sh i { display: block; font-style: normal; font-size: 10.5px; color: var(--fg-muted); }
 .tv-sheet .sh .x { margin-left: auto; border: none; background: none; font-size: 14px; color: var(--fg-muted); cursor: pointer; padding: 6px; }

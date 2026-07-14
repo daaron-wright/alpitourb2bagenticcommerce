@@ -138,7 +138,7 @@
         {view === "chat" && !started && (
           <div className="g-center">
             <div className="g-center-in">
-              <div className="g-mark">✦</div>
+              <div className="g-mark"><Ki name="ai" size={34} /></div>
               <h1>Raccontaci il viaggio.</h1>
               <p className="sub">Describe the holiday you're imagining — I'll put it together for you.</p>
               {input(false)}
@@ -158,7 +158,7 @@
               );
               if (it.kind === "ai") return (
                 <div className="g-msg" key={i}>
-                  <span className="av">✦</span>
+                  <span className="av"><Ki name="ai" size={18} /></span>
                   <div className="body">
                     {it.note && <div><span className="g-note"><Ki name="warning-alt" size={12} /> {it.note}</span></div>}
                     <span dangerouslySetInnerHTML={{ __html: it.html }} />
@@ -170,7 +170,7 @@
                 const r = it.sc.result;
                 return (
                   <div className="g-msg" key={i}>
-                    <span className="av" style={{ visibility: "hidden" }}>✦</span>
+                    <span className="av" style={{ visibility: "hidden" }}><Ki name="ai" size={18} /></span>
                     <div className="body">
                       <div className="g-card">
                         <div className="g-card-img">
@@ -210,7 +210,7 @@
               return null;
             })}
             {working && statusTxt && (
-              <div className="g-status"><span className="av">✦</span><span className="txt">{statusTxt}</span></div>
+              <div className="g-status"><span className="av"><Ki name="ai" size={18} /></span><span className="txt">{statusTxt}</span></div>
             )}
             <div ref={endRef} />
           </main>
@@ -385,7 +385,7 @@
                 <div className="a-step" style={{ marginTop: 6 }}>While it's on hold</div>
                 <div className="a-nba">
                   <button onClick={() => showToast("Reminder set — 48 hours before the hold expires.")}><Ki name="information" size={15} /><div className="t">Set a follow-up reminder</div><div className="s">Nudge before the 24h hold expires</div></button>
-                  <button onClick={() => showToast("Water park day pass added to the proposal · +£160.")}><Ki name="lightbulb" size={15} /><div className="t">Suggest the water park pass</div><div className="s">Fits the family · +£160 · adds £19 commission</div></button>
+                  <button onClick={() => showToast("Water park day pass added to the proposal · +£160.")}><Ki name="ai-insight" size={15} /><div className="t">Suggest the water park pass</div><div className="s">Fits the family · +£160 · adds £19 commission</div></button>
                   <button onClick={() => showToast("Preference saved — future proposals start from it.")}><Ki name="group" size={15} /><div className="t">Save the family's preferences</div><div className="s">Baby pool · kids club — for next time</div></button>
                 </div>
                 <div style={{ display: "flex", gap: 8 }}>

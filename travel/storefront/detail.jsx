@@ -64,7 +64,7 @@
 
             {p.allotment.status !== "sold_out" && (
               <div className="sf-sec">
-                <h3><Ki name="recommend" size={14} /> Suggested add-ons <SfBadge kind="ai" icon="lightbulb">Ranked for a 2-year-old</SfBadge></h3>
+                <h3><Ki name="ai-insight" size={14} /> Suggested add-ons <SfBadge kind="ai" icon="ai">Ranked for a 2-year-old</SfBadge></h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   {addons.map((a) => {
                     const sel = selAddons.includes(a.id);
@@ -160,7 +160,7 @@
   function DeflectionCard() {
     return (
       <section className="sf-deflect" data-screen-label="Self-service summary">
-        <h3><Ki name="recommend" size={15} /> Completed without a single support contact</h3>
+        <h3><Ki name="ai" size={15} /> Completed without a single support contact</h3>
         <ul>
           <li><Ki name="checkmark-filled" /> Sold-out recovered into a sale</li>
           <li><Ki name="checkmark-filled" /> Proposal self-served · V1 → V2</li>

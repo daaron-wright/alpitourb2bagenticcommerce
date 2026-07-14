@@ -149,7 +149,7 @@
         {!started && (
           <div className="q-start" data-screen-label="Front door start">
             <div className="q-start-in">
-              <div className="q-mark">✦</div>
+              <div className="q-mark"><Ki name="ai" size={34} /></div>
               <h1>Raccontaci il viaggio.</h1>
               <p className="sub">Tell me the holiday you're imagining — or answer three quick questions and I'll find it for you.</p>
               <div style={{ marginTop: 22 }}>
@@ -173,7 +173,7 @@
               if (it.kind === "user") return <div className="q-msg user" key={i}><div className="body" dangerouslySetInnerHTML={{ __html: it.html }} /></div>;
               if (it.kind === "ai") return (
                 <div className="q-msg" key={i}>
-                  <span className="av">✦</span>
+                  <span className="av"><Ki name="ai" size={18} /></span>
                   <div className="body">
                     {it.note && <div><span className="q-note"><Ki name="warning-alt" size={12} /> {it.note}</span></div>}
                     <span dangerouslySetInnerHTML={{ __html: it.html }} />
@@ -189,7 +189,7 @@
               );
               if (it.kind === "result") return (
                 <div className="q-msg" key={i}>
-                  <span className="av" style={{ visibility: "hidden" }}>✦</span>
+                  <span className="av" style={{ visibility: "hidden" }}><Ki name="ai" size={18} /></span>
                   <div className="body" style={{ width: "100%" }}>
                     <div className="q-card" data-screen-label="Result card">
                       <image-slot id="hotel-hero-coral" shape="rect" placeholder="Coral Bay Family Resort — photo"></image-slot>
@@ -218,10 +218,10 @@
               );
               if (it.kind === "handoff") return (
                 <div className="q-msg" key={i}>
-                  <span className="av" style={{ visibility: "hidden" }}>✦</span>
+                  <span className="av" style={{ visibility: "hidden" }}><Ki name="ai" size={18} /></span>
                   <div className="body" style={{ width: "100%" }}>
                     <div className="q-handoff" data-screen-label="Agent handoff">
-                      <div className="hh"><span className="glyph">✦</span> Your concierge handed your trip to the agency's agent</div>
+                      <div className="hh"><span className="glyph"><Ki name="ai" size={15} /></span> Your concierge handed your trip to the agency's agent</div>
                       <div className="route"><span>Travel Assistant · with you</span><svg className="ki" style={{ width: 12, height: 12 }}><use href="#icon-arrow-up-right" /></svg><span className="to">EasyBook agent · Partner Travel Agency</span></div>
                       <div className="chips">
                         <span>Your answers</span><span>The trip you liked</span><span>Held price · 24h</span><span>Nothing re-typed</span>
@@ -232,7 +232,7 @@
               );
               if (it.kind === "agency") return (
                 <div className="q-msg" key={i}>
-                  <span className="av" style={{ visibility: "hidden" }}>✦</span>
+                  <span className="av" style={{ visibility: "hidden" }}><Ki name="ai" size={18} /></span>
                   <div className="body" style={{ width: "100%" }}>
                     <div className="q-agency" data-screen-label="Agency handoff">
                       <span className="am">R</span>
@@ -249,7 +249,7 @@
               );
               return null;
             })}
-            {working && statusTxt && <div className="q-status"><span className="av">✦</span><span className="txt">{statusTxt}</span></div>}
+            {working && statusTxt && <div className="q-status"><span className="av"><Ki name="ai" size={18} /></span><span className="txt">{statusTxt}</span></div>}
             <div ref={endRef} />
           </main>
         )}

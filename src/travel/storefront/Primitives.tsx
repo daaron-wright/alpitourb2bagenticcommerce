@@ -4,8 +4,10 @@
    ============================================================ */
 import React from 'react';
 import { receipts } from './data';
+import { AiIcon } from '@/shared/AiIcon';
 
 export function Ki({ name, size = 16, className = '' }: { name: string; size?: number; className?: string }) {
+  if (name === 'ai' || name === 'ai-insight') return <AiIcon size={size} className={className} insight={name === 'ai-insight'} />;
   return (
     <svg className={`ki ${className}`} style={size !== 16 ? { width: size, height: size } : undefined}>
       <use href={`#icon-${name}`} />
@@ -112,7 +114,7 @@ export function Toast({ text, delta }: { text: string; delta?: boolean }) {
 export function AiRender({ label = 'Sketching it out', compact = false }: { label?: string; compact?: boolean }) {
   return (
     <div className={`panel-load ${compact ? 'compact' : ''}`} aria-live="polite" data-screen-label="AI panel render">
-      <span className="label">{label}</span>
+      <span className="label"><Ki name="ai" size={16} />{label}</span>
       <div className="grid"></div>
       <div className="grid tint"></div>
       <div className="grid spruce"></div>

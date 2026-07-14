@@ -26,6 +26,7 @@ button { font-family: var(--font-sans); cursor: pointer; }
 .g-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
 .g-center-in { width: 100%; max-width: 660px; text-align: center; }
 .g-mark { width: 46px; height: 46px; border-radius: 50%; margin: 0 auto 22px; display: grid; place-items: center; color: #fff; font-size: 22px; background: linear-gradient(135deg, var(--k-spruce-60), var(--k-warm-red-50)); }
+.g-mark .ki, .g-msg .av .ki, .g-status .av .ki { --ai-icon-base: #fff; }
 .g-center h1 { font-size: 34px; line-height: 1.1; }
 .g-center .sub { font-size: 15px; color: var(--fg-muted); margin-top: 10px; }
 

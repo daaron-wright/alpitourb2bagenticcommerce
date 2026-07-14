@@ -240,7 +240,7 @@
             <div className="eb-dash-in">
               <div className="eb-dash-head">
                 <div><h1>Welcome back.</h1><div className="sub">3 work packages in flight · 1 hold expiring today · Travel Assistant resolved 2 of your last 3 cases without support.</div></div>
-                <button className="eb-btn primary" onClick={openLead}><Ki name="chat-bot" size={14} /> Start new quote</button>
+                <button className="eb-btn primary" onClick={openLead}><Ki name="ai" size={14} /> Start new quote</button>
               </div>
               <div className="eb-dash-grid">
                 <div className="eb-panel">

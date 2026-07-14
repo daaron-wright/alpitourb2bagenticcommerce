@@ -15,7 +15,7 @@
         <div className="cardtop">
           <span className="picon" style={{ background: `color-mix(in srgb, ${b.tone} 10%, #fff)`, color: b.tone }}><Ki name="recommend" size={16} /></span>
           <span className="brandtag" style={{ background: b.tone }}>{b.name}</span>
-          {ranked && p.rank && <span className="ranktag"><SfBadge kind={p.rank === "Best match" ? "ai" : p.rank === "Best value" ? "ok" : "warn"} icon={p.rank === "Best match" ? "recommend" : null}>{p.rank}{p.match ? ` · ${p.match}%` : ""}</SfBadge></span>}
+          {ranked && p.rank && <span className="ranktag"><SfBadge kind={p.rank === "Best match" ? "ai" : p.rank === "Best value" ? "ok" : "warn"} icon={p.rank === "Best match" ? "ai" : null}>{p.rank}{p.match ? ` · ${p.match}%` : ""}</SfBadge></span>}
           {soldout && <span className="ranktag"><SfBadge kind="err" icon="error-filled">Sold out</SfBadge></span>}
         </div>
         <div className="body">
@@ -58,10 +58,10 @@
     return (
       <section className="sf-hero">
         <div className="sf-hero-copy">
-          <div className="sf-eyebrow" style={{ marginBottom: 8 }}>Use case · AI-Powered B2B Travel Agent Concierge</div>
+          <div className="sf-ai-kicker"><div className="sf-eyebrow"><Ki name="ai" size={13} /> Use case · AI-Powered B2B Travel Agent Concierge</div><span className="sf-ai-powered"><Ki name="ai" size={14} /> Powered by agentic AI</span></div>
           <h1>One seamless touchpoint,<br />inquiry to <em>booking</em>.</h1>
           <p>Travel Concierge, evolved from retrieval into the orchestrating layer — fronted here as Travel Orchestrator. It orchestrates information, recommendations and actions across the full journey for the travel agent, while the customer experiences one continuous thread: speak once, get the right solution at the right time.</p>
-          <div className="sf-hero-hint"><Ki name="chat-bot" size={13} /> Step 1 · Inquiry — pick a request in the Travel Orchestrator panel →</div>
+          <div className="sf-hero-hint"><Ki name="ai" size={13} /> Step 1 · Inquiry — pick a request in the Travel Orchestrator panel →</div>
         </div>
       </section>
     );
