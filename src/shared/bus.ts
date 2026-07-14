@@ -1,15 +1,15 @@
 /* ============================================================
-   Alpitour Platform · shared trip thread (PlatformBus)
-   One Bianchi thread, two lenses: traveler (Alpitour.it) and
+   Travel Group Platform · shared trip thread (PlatformBus)
+   One Family A thread, two lenses: traveler (Consumer Travel Portal) and
    agent (EasyBook Next). In-memory pub/sub — demo theatre.
    ============================================================ */
 import type { PlatformBusState } from './types';
 
 type BusSub = (state: PlatformBusState, key?: string) => void;
 
-const THREAD_KEY = 'alpitour.platform.thread';
-const SPINE_KEY = 'alpitour.spine.event';
-const WF_KEY = 'alpitour.agentic.activeWf';
+const THREAD_KEY = 'travel.platform.thread';
+const SPINE_KEY = 'travel.spine.event';
+const WF_KEY = 'travel.agentic.activeWf';
 
 // FE milestone → the spine workflow it lights up in the Agentic Pipeline
 const WF_FOR: Record<string, string> = {

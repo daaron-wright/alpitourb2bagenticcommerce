@@ -5,7 +5,7 @@
    ============================================================ */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from '@/alpitour/storefront/App';
+import { App } from '@/travel/storefront/App';
 import '@/shared/image-slot';
 import 'leaflet/dist/leaflet.css';
 

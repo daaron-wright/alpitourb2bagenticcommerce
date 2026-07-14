@@ -1,17 +1,17 @@
 /* ============================================================
-   Entry point · Alpitour Platform — one trip, two sides
+   Entry point · Travel Group Platform — one trip, two sides
    Mounts the traveler (B2C) app to #b2c-root and the agent
    (B2B) storefront App to #root, and wires the PlatformBus
    thread label + cross-view toast in the top bar.
    ============================================================ */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { TravelerApp } from '@/alpitour/platform/Traveler';
-import { App as StorefrontApp } from '@/alpitour/storefront/App';
+import { TravelerApp } from '@/travel/platform/Traveler';
+import { App as StorefrontApp } from '@/travel/storefront/App';
 import { bus } from '@/shared/bus';
 import '@/shared/image-slot';
 import 'leaflet/dist/leaflet.css';
-import '@/alpitour/platform/traveler.css';
+import '@/travel/platform/traveler.css';
 
 /* ---------- mount B2C traveler view ---------- */
 const b2cRoot = document.getElementById('b2c-root');
@@ -54,12 +54,12 @@ if (b2bRoot) {
   const txt = document.getElementById('pl-thread-txt');
   const chip = document.getElementById('pl-thread');
   function renderThread(s: any) {
-    let m = 'Thread: Famiglia Bianchi — inquiry not sent yet';
-    if (s.handoff) { m = 'Thread: Bianchi — handed to Rossi Travel'; chip?.classList.add('live'); }
-    if (s.accepted) m = 'Thread: Bianchi — Giulia is working it';
-    if (s.hold) m = `Thread: Bianchi — hold ${s.hold.ref} until ${s.hold.until}`;
-    if (s.proposal) m = 'Thread: Bianchi — proposal sent to the family';
-    if (s.v2) m = `Thread: Bianchi — V2 · €${s.v2.total.toLocaleString('it-IT')}`;
+    let m = 'Thread: Traveler Family A — inquiry not sent yet';
+    if (s.handoff) { m = 'Thread: Family A — handed to Partner Travel Agency'; chip?.classList.add('live'); }
+    if (s.accepted) m = 'Thread: Family A — the travel advisor is working it';
+    if (s.hold) m = `Thread: Family A — hold ${s.hold.ref} until ${s.hold.until}`;
+    if (s.proposal) m = 'Thread: Family A — proposal sent to the family';
+    if (s.v2) m = `Thread: Family A — V2 · £${s.v2.total.toLocaleString('en-GB')}`;
     if (txt) txt.textContent = m;
   }
   bus.on(renderThread);
@@ -77,7 +77,7 @@ if (b2bRoot) {
     toastEl.className = 'pl-toast';
     const who = document.createElement('span');
     who.className = 'who ' + (item.who === 'traveler' ? 'tv' : 'ag');
-    who.textContent = item.who === 'traveler' ? 'Alpitour.it · live' : 'EasyBook · Giulia';
+    who.textContent = item.who === 'traveler' ? 'Consumer Travel Portal · live' : 'EasyBook · the travel advisor';
     const tx = document.createElement('span');
     tx.textContent = item.t;
     toastEl.appendChild(who); toastEl.appendChild(tx);

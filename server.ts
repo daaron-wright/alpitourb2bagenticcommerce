@@ -1,5 +1,5 @@
 /**
- * server.ts — Production server for alpitour-demo
+ * server.ts — Production server for travel-demo
  *
  * Serves the Vite-built static files from ./dist and exposes a
  * server-side proxy endpoint at POST /api/claude/complete so the

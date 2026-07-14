@@ -3,9 +3,9 @@
 /**
  * <image-slot> — user-fillable image placeholder.
  *
- * Migrated from alpitour/platform/image-slot.js to TypeScript.
+ * Migrated from travel/platform/image-slot.js to TypeScript.
  * Per project rules (CLAUDE.md): hotel/resort/destination photos in every
- * Alpitour prototype should be genAI-generated photographic images.
+ * Travel Group prototype should be genAI-generated photographic images.
  * Each <image-slot> placeholder should be labelled with what the genAI
  * image should depict (e.g. "Coral Bay Family Resort — photo").
  */

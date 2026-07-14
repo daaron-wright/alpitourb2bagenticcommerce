@@ -1,7 +1,7 @@
-# Alpitour B2B & B2C — project rules
+# Travel Group B2B & B2C — project rules
 
 ## Imagery
-- The "It looks like this" / hotel / resort / destination photos in every Alpitour
+- The "It looks like this" / hotel / resort / destination photos in every Travel Group
   prototype (the `<image-slot>` elements for hotels, resorts, destinations, agency
   avatars, etc.) should be **genAI-generated photographic images** — not stock, not
   SVG/procedural placeholders, not empty drop-targets in the final deliverable.
