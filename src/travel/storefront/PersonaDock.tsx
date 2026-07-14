@@ -11,31 +11,33 @@ import { PersonaOrb } from './PersonaOrb';
 import type { Persona } from '@/shared/types';
 import { AiIcon, AiTile } from '@/shared/AiIcon';
 
-function PersonaInitials({ p, size = 40 }: { p: Persona; size?: number }) {
+function PersonaInitials({ p, size = 40, style }: { p: Persona; size?: number; style?: React.CSSProperties }) {
   const words = p.name.trim().split(/\s+/);
   const label = (p as any).init || (words[0][0] + (words[1]?.[0] || '')).toUpperCase();
   return (
     <span style={{
       width: size,
       height: size,
-      borderRadius: Math.max(7, Math.round(size * 0.22)),
+      borderRadius: '50%',
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
       flexShrink: 0,
       boxSizing: 'border-box',
-      background: `linear-gradient(135deg,${p.tone},${p.tone}cc)`,
-      color: '#fff',
+      background: p.toneSoft,
+      color: p.tone,
+      boxShadow: `inset 0 0 0 2px ${p.tone}`,
       fontFamily: 'var(--font-display,system-ui)',
       fontSize: Math.round(size * 0.38),
       fontWeight: 600,
+      ...style,
     }}>
       {label}
     </span>
   );
 }
 
-function Avatar({
+function PersonaAvatar({
   p, size, style: extraStyle,
 }: { p: Persona; size: number; style?: React.CSSProperties }) {
   const base: React.CSSProperties = {
@@ -45,7 +47,7 @@ function Avatar({
     ...extraStyle,
   };
   if (p.img) return <img src={p.img + '?v=3'} alt="" style={base} />;
-  return <AiTile size={size} style={{ boxShadow: `inset 0 0 0 1px rgba(255,255,255,.18)`, ...extraStyle }} />;
+  return <PersonaInitials p={p} size={size} style={extraStyle} />;
 }
 
 /* ---- chat panel (shared between popup and full modal) ---- */
@@ -94,7 +96,7 @@ export function ChatPanel({
       <div ref={msgsRef} style={{ flex: 1, overflowY: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 12, scrollbarWidth: 'thin' }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: 'flex', gap: 8, maxWidth: '90%', alignSelf: m.role === 'assistant' ? 'flex-start' : 'flex-end', flexDirection: m.role === 'user' ? 'row-reverse' : 'row' }}>
-            {m.role === 'assistant' && <Avatar p={p} size={24} style={{ alignSelf: 'flex-end' }} />}
+            {m.role === 'assistant' && <AiTile size={24} radius={12} style={{ alignSelf: 'flex-end', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,.18)' }} />}
             <div>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 4, color: m.role === 'assistant' ? p.tone : '#8DA0A7', textAlign: m.role === 'user' ? 'right' : 'left' }}>
                 {m.role === 'assistant' ? p.name.split(' ')[0].toUpperCase() : 'YOU'}
@@ -174,8 +176,8 @@ function Popup({ id, onClose, onExpand, onBackToCohort }: {
     <div style={{ position: 'fixed', left: 16, bottom: 130, zIndex: 461, width: 'min(384px,calc(100vw - 32px))', height: 'min(560px,calc(100vh - 160px))', background: '#14181B', color: '#E8EDEF', border: '1px solid rgba(255,255,255,.10)', borderRadius: 18, boxShadow: '0 36px 80px rgba(0,0,0,.5)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'scp-rise .22s cubic-bezier(.4,0,.2,1)', fontFamily: 'var(--font-sans,system-ui,sans-serif)', ['--tone' as any]: p.tone }}>
       {/* header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '14px 14px 12px', borderBottom: '1px solid rgba(255,255,255,.08)' }}>
-        <div style={{ position: 'relative', width: 42, height: 42, borderRadius: 9, overflow: 'hidden', flexShrink: 0 }}>
-          <Avatar p={p} size={42} />
+        <div style={{ position: 'relative', width: 42, height: 42, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+          <PersonaAvatar p={p} size={42} />
         </div>
         <div>
           <div style={{ fontFamily: 'var(--font-display,system-ui)', fontSize: 15.5, fontWeight: 500, lineHeight: 1.1 }}>{p.name}</div>
@@ -230,7 +232,6 @@ function Modal({ id, initialView = 'talk', onClose, onNav }: {
         {/* top bar */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 20px', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,.07)' }}>
           <button onClick={onClose} style={{ border: '1px solid rgba(255,255,255,.16)', background: 'transparent', color: '#D4DCDF', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 600, padding: '7px 12px', borderRadius: 9, cursor: 'pointer' }}>‹ Cohort</button>
-          <AiTile size={30} />
           <span style={{ fontFamily: 'var(--font-display,system-ui)', fontSize: 21, fontWeight: 600 }}>{p.name}</span>
           <span style={{ fontSize: 12.5, color: '#9AA7AD' }}>{p.role}</span>
           <span style={{ fontSize: 11, color: '#6E7C82' }}>{p.code} · synthetic · {p.idx}/{PEOPLE.length}</span>
@@ -310,7 +311,7 @@ function ProfileView({ p }: { p: Persona }) {
 
       <div style={{ background: '#1F2A30', border: '1px solid rgba(255,255,255,.08)', borderRadius: 16, padding: '20px 24px', display: 'grid', gridTemplateColumns: '180px 1fr 220px', gap: 24, marginBottom: 20 }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 96, height: 96, borderRadius: 16, overflow: 'hidden', boxShadow: `inset 0 0 0 2px ${p.tone}` }}><Avatar p={p} size={96} style={{ borderRadius: 16 }} /></div>
+          <div style={{ width: 96, height: 96, borderRadius: 16, overflow: 'hidden', boxShadow: `inset 0 0 0 2px ${p.tone}` }}><PersonaAvatar p={p} size={96} style={{ borderRadius: 16 }} /></div>
           <div style={{ fontSize: 16, fontWeight: 600 }}>{p.name}</div>
           <div style={{ fontSize: 11.5, color: '#6E7C82' }}>{p.pron}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, justifyContent: 'center' }}>
@@ -396,10 +397,9 @@ export function PersonaDock() {
       {state.kind === 'list' && (
         <div style={{ position: 'fixed', left: 16, bottom: 130, zIndex: 460, width: 300, background: '#14181B', color: '#E8EDEF', border: '1px solid rgba(255,255,255,.10)', borderRadius: 16, boxShadow: '0 12px 40px rgba(0,0,0,.5)', overflow: 'hidden', animation: 'scp-rise .2s cubic-bezier(.4,0,.2,1)', fontFamily: 'var(--font-sans,system-ui,sans-serif)', maxHeight: 'calc(100vh - 160px)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px 14px 12px', borderBottom: '1px solid rgba(255,255,255,.08)', flexShrink: 0 }}>
-            <AiTile size={34} />
             <div>
               <div style={{ fontFamily: 'var(--font-display,system-ui)', fontSize: 15, fontWeight: 500 }}>Synthetic Persona Cohort</div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 10.5, color: '#A7C9CE', marginTop: 3 }}><AiIcon size={11} /> Powered by agentic AI · synthetic stand-ins</div>
+              <div style={{ fontSize: 10.5, color: '#8C99A0', marginTop: 2 }}>Validate the demo · AI stand-ins, not real people</div>
             </div>
             <button onClick={close} style={{ marginLeft: 'auto', width: 26, height: 26, borderRadius: 7, border: '1px solid rgba(255,255,255,.14)', background: 'transparent', color: '#C7D0D4', cursor: 'pointer', fontSize: 12, flexShrink: 0 }}>✕</button>
           </div>
@@ -409,12 +409,12 @@ export function PersonaDock() {
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,.06)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
-                <PersonaInitials p={p} size={40} />
+                <PersonaAvatar p={p} size={40} />
                 <div style={{ minWidth: 0, flex: 1 }}>
                   <b style={{ display: 'block', fontSize: 13, fontWeight: 600, lineHeight: 1.15 }}>{p.name}</b>
                   <i style={{ display: 'block', fontStyle: 'normal', fontSize: 11, color: '#8C99A0' }}>{p.role}</i>
                 </div>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11, fontWeight: 600, color: '#A7C9CE', flexShrink: 0 }}><AiIcon size={12} /> Talk →</span>
+                <span style={{ fontSize: 11, fontWeight: 600, color: p.tone, flexShrink: 0 }}>Talk →</span>
               </button>
             ))}
           </div>
@@ -427,7 +427,7 @@ export function PersonaDock() {
           <span style={{ display: 'inline-flex' }}>
             {fabPeople.map((p, i) => (
               <span key={p.id} style={{ display: 'inline-block', width: 30, height: 30, borderRadius: '50%', overflow: 'hidden', border: '2px solid #14181B', marginLeft: i === 0 ? 0 : -10, position: 'relative', zIndex: fabPeople.length - i }}>
-                <PersonaInitials p={p} size={30} />
+                <PersonaAvatar p={p} size={30} style={{ boxShadow: 'none' }} />
               </span>
             ))}
           </span>
